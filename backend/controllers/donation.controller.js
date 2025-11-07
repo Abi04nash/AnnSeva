@@ -61,31 +61,34 @@ export const postDonation = async (req, res) => {
 };
 
 // NGO will view all donations
+// In donation.controller.js
+
 export const getAllDonations = async (req, res) => {
-  try {
-    const keyword = req.query.keyword || "";
-    const query = {
-      $or: [
-        { title: { $regex: keyword, $options: "i" } },
-        { description: { $regex: keyword, $options: "i" } },
-      ],
-    };
+  try {
+    const keyword = req.query.keyword || "";
+    const query = {
+      $or: [
+        { title: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ],
+    };
 
-    const donations = await Donation.find(query)
-      .populate("donor")
-      .sort({ createdAt: -1 });
+    const donations = await Donation.find(query)
+      .populate("donor")
+      .populate("applications") // <--- ✅ ADD THIS LINE
+      .sort({ createdAt: -1 });
 
-    return res.status(200).json({
-      donations,
-      success: true,
-    });
-  } catch (error) {
-    console.log("Error getting all donations:", error);
-    return res.status(500).json({
-      message: "Server error while fetching donations.",
-      success: false,
-    });
-  }
+    return res.status(200).json({
+      donations,
+      success: true,
+    });
+  } catch (error) {
+    console.log("Error getting all donations:", error);
+    return res.status(500).json({
+      message: "Server error while fetching donations.",
+      success: false,
+    });
+  }
 };
 
 // NGO will view donation by ID

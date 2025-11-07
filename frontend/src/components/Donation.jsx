@@ -20,38 +20,50 @@ const Donation = ({ donation }) => {
     const [freshDonation, setFreshDonation] = useState(donation);
 
     // ✅ Fetch fresh donation to check if current user already applied
-    useEffect(() => {
-    const fetchDonation = async () => {
-        try {
-            const res = await axios.get(
-                `${DONATION_API_END_POINT}/get/${donation._id}`,
-                { withCredentials: true }
-            );
-            if (res.data.success) {
-                const donationData = res.data.donation;
-                setFreshDonation(donationData);
-                dispatch(setSingleDonation(donationData));
+        useEffect(() => {
+        const fetchDonation = async () => {
+            try {
+                const res = await axios.get(
+                    `${DONATION_API_END_POINT}/get/${donation._id}`,
+                    { withCredentials: true }
+                );
+                if (res.data.success) {
+                    const donationData = res.data.donation;
+                    setFreshDonation(donationData);
+                    dispatch(setSingleDonation(donationData));
 
-                // ✅ Check only if user exists
-                if (user?._id) {
-                    const applied = donationData?.applications?.some(
-                        app => app.applicant?._id?.toString() === user._id
-                    );
-                    setIsApplied(applied);
-                } else {
-                    setIsApplied(false);
+                    // ✅ Check only if user exists
+                    if (user?._id) {
+                        const applied = donationData?.applications?.some(
+                            app => app.applicant?._id?.toString() === user._id
+                        );
+                        setIsApplied(applied);
+                    } else {
+                        setIsApplied(false);
+                    }
                 }
+            } catch (err) {
+                console.error(err);
             }
-        } catch (err) {
-            console.error(err);
-        }
-    };
-    fetchDonation();
-}, [donation._id, dispatch, user?._id]);
+        };
+        fetchDonation();
+    }, [donation._id, dispatch, user?._id]);
 
+
+    // useEffect(() => {
+    //     if (user?._id && donation?.applications) {
+    //         const applied = donation.applications.some(
+    //             app => app.applicant?._id?.toString() === user._id
+    //         );
+    //         setIsApplied(applied);
+    //     } else {
+    //         setIsApplied(false);
+    //     }
+    // }, [donation.applications, user?._id]);
 
     // ✅ Apply donation handler
     const applyDonationHandler = async () => {
+
         try {
             setLoading(true);
             const res = await axios.post(
@@ -60,7 +72,7 @@ const Donation = ({ donation }) => {
                 { withCredentials: true }
             );
 
-            if(res.data.success){
+            if (res.data.success) {
                 setIsApplied(true);
                 toast.success(res.data.message);
 
@@ -72,7 +84,7 @@ const Donation = ({ donation }) => {
                 setFreshDonation(updatedDonation);
                 dispatch(setSingleDonation(updatedDonation));
             }
-        } catch(err){
+        } catch (err) {
             console.error(err);
             toast.error(err.response?.data?.message || "Something went wrong");
         } finally {
@@ -137,3 +149,4 @@ const Donation = ({ donation }) => {
 };
 
 export default Donation;
+
