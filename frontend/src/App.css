@@ -1,0 +1,88 @@
+/* Responsive mobile styles */
+@media screen and (max-width: 768px) {
+
+    /* Global reset */
+
+
+
+
+
+    .lado{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* background-color: black; */
+        padding: 10px;
+    }
+    .doca{
+        width: 95vw;
+        padding: 10px;
+    }
+    .dodes{
+        padding: 10px;
+        line-height: 30px;        
+        /* background-color: aquamarine; */
+    }
+    .btn{
+        padding: 10px;
+    }
+    .bad{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .nav{
+        height: 5.5vh;
+        padding: 0;
+        padding-left: 4px;
+        padding-right: 4px;
+        
+    }
+   
+    .hero{
+        background-color: rgb(0, 0, 0);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0px;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    .cal{
+        width: 90vw;
+    }
+    .head{
+        margin:8px;
+    }
+    .log{
+        padding: 10px;
+        /* background-color: aquamarine; */
+    }
+    .login{
+        height: 50vh;
+        padding: 10px;
+        /* line-height: 50px; */
+        /* background-color: aquamarine; */
+    }
+    .bro{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* background-color: black; */
+        padding: 10px;
+    }
+    .don{
+        min-width: 85vw;
+    }
+    .tab{
+        /* background-color: black; */
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        gap: 10px;
+        align-items:flex-start;
+    }
+    
+}
