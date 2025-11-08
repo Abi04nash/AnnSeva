@@ -14,7 +14,7 @@ export const register = async (req, res) => {
                 success: false
             });
         };
-
+        
         const file = req.file;
         const fileUri = getDataUri(file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
@@ -26,7 +26,6 @@ export const register = async (req, res) => {
                 success: false,
             })
         }
-
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await User.create({
@@ -35,8 +34,8 @@ export const register = async (req, res) => {
             phoneNumber,
             password: hashedPassword,
             role,
-            profile: {
-                profilePhoto: cloudResponse.secure_url,
+            profile:{
+                profilePhoto:cloudResponse.secure_url,
             }
         });
 
@@ -46,8 +45,10 @@ export const register = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        res.status(500).json({ message: "Something went wrong", success: false });
     }
 }
+
 
 
 export const login = async (req, res) => {
@@ -97,7 +98,7 @@ export const login = async (req, res) => {
             profile: user.profile
         }
 
-        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
+        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' }).json({
             message: `Welcome back ${user.fullname}`,
             user,
             success: true
@@ -117,56 +118,64 @@ export const logout = async (req, res) => {
     }
 }
 
+// user.controller.js
 export const updateProfile = async (req, res) => {
-  try {
-    console.log("File received by controller:", req.file);
-    const { fullname, email, phoneNumber, about, address } = req.body;
-    const userId = req.id; // from isAuthenticated middleware
-    let user = await User.findById(userId);
+    try {
+        console.log("File received by controller:", req.file);
+        const { fullname, email, phoneNumber, about, address } = req.body;
+        const userId = req.id;
 
-    if (!user) {
-      return res.status(400).json({
-        message: "User not found.",
-        success: false,
-      });
+        let user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found.", success: false });
+        }
+
+        const updateData = {};
+        if (fullname) updateData.fullname = fullname;
+        if (phoneNumber) updateData.phoneNumber = phoneNumber;
+        if (about) updateData['profile.about'] = about;
+        if (address) updateData['profile.address'] = address;
+
+        if (email && email !== user.email) {
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({ message: "Email already in use.", success: false });
+            }
+            updateData.email = email;
+        }
+
+        // 4. File upload handle karo (YAHAN FIX KIYA HAI)
+        if (req.file) { // <--- FIX: req.file.path ko req.file kiya
+            const fileUri = getDataUri(req.file); // <--- FIX: req.file.path ko req.file kiya
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+            updateData['profile.license'] = cloudResponse.secure_url;
+            updateData['profile.licenseOriginalName'] = req.file.originalname;
+        }
+
+        // 5. Database mein update karo
+        const updatedUser = await User.findByIdAndUpdate(userId, { $set: updateData }, { new: true });
+
+        // 6. Naya user object waapas bhejo
+        const userResponse = {
+            _id: updatedUser._id,
+            fullname: updatedUser.fullname,
+            email: updatedUser.email,
+            phoneNumber: updatedUser.phoneNumber,
+            role: updatedUser.role,
+            profile: updatedUser.profile,
+        };
+
+        return res.status(200).json({
+            message: "Profile updated successfully.",
+            user: userResponse,
+            success: true,
+        });
+
+    } catch (error) {
+        console.log("ERROR in updateProfile:", error);
+        res.status(500).json({
+            message: "Something went wrong!",
+            success: false,
+        });
     }
-
-    // Update fields
-    if (fullname) user.fullname = fullname;
-    if (email) user.email = email;
-    if (phoneNumber) user.phoneNumber = phoneNumber;
-    if (about) user.profile.about = about;
-    if (address) user.profile.address = address;
-
-    // file upload
-    if (req.file) {
-      const fileUri = getDataUri(req.file);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-      user.profile.license = cloudResponse.secure_url;
-      user.profile.licenseOriginalName = req.file.originalname;
-    }
-
-    await user.save();
-
-    user = {
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      role: user.role,
-      profile: user.profile,
-    };
-
-    return res.status(200).json({
-      message: "Profile updated successfully.",
-      user,
-      success: true,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Something went wrong!",
-      success: false,
-    });
-  }
 };

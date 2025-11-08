@@ -9,16 +9,17 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
-import { DialogDescription } from './ui/dialog' // Added for a11y warning
 
+// This component is for updating the LICENSE, not the profile photo.
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
-  // 🔥 1. Separate State for New File and Existing URL
+  // --- FIX: State for the new LICENSE file ---
   const [newFile, setNewFile] = useState(null); // Holds the new File object
-  const [existingLicenseUrl, setExistingLicenseUrl] = useState(user?.profile?.license || ""); // Holds the existing image URL
+  const [existingLicenseUrl, setExistingLicenseUrl] = useState(user?.profile?.license || "");
+  const [existingLicenseName, setExistingLicenseName] = useState(user?.profile?.licenseOriginalName || "");
 
   const [input, setInput] = useState({
     fullname: user?.fullname || "",
@@ -26,24 +27,23 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     phoneNumber: user?.phoneNumber || "",
     about: user?.profile?.about || "",
     address: user?.profile?.address || "",
-    // 🔥 Removed 'file' from here to prevent file input value conflict
   });
 
+  // Reset form when dialog opens/closes or user data changes
   useEffect(() => {
-    if (!open) {
-      // Reset input fields to current user data
-      setInput({
-        fullname: user?.fullname || "",
-        email: user?.email || "",
-        phoneNumber: user?.phoneNumber || "",
-        about: user?.profile?.about || "",
-        address: user?.profile?.address || "",
-      });
-      // Reset file states
-      setExistingLicenseUrl(user?.profile?.license || "");
-      setNewFile(null); 
-    }
-  }, [open, user]);
+    // Reset text inputs
+    setInput({
+      fullname: user?.fullname || "",
+      email: user?.email || "",
+      phoneNumber: user?.phoneNumber || "",
+      about: user?.profile?.about || "",
+      address: user?.profile?.address || "",
+    });
+    // Reset file inputs
+    setExistingLicenseUrl(user?.profile?.license || "");
+    setExistingLicenseName(user?.profile?.licenseOriginalName || "");
+    setNewFile(null);
+  }, [open, user]); // Re-run if 'open' or 'user' changes
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -51,6 +51,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   const fileChangeHandler = (e) => {
     const file = e.target.files?.[0];
+    if (!file) return; // User cancelled
+    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      toast.error("File too large! Max 5MB.");
+      return;
+    }
+    console.log("Selected file:", file);
     setNewFile(file); // Store the File object
   };
 
@@ -62,10 +68,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("about", input.about);
     formData.append("address", input.address);
-    
-    // 🔥 2. Conditional append: Use the separate state for the new file
+
     if (newFile) {
-      formData.append("license", newFile);
+      formData.append("file", newFile); // Backend expects 'file'
     }
 
     try {
@@ -76,8 +81,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       });
       if (res.data.success) {
         dispatch(setUser(res.data.user));
-        // Update the existing license URL state with the new URL from the response
+        // --- FIX: Update state with LICENSE info from response ---
         setExistingLicenseUrl(res.data.user?.profile?.license || "");
+        setExistingLicenseName(res.data.user?.profile?.licenseOriginalName || "");
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -95,12 +101,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Update Profile</DialogTitle>
-          {/* Optional: Add Description for accessibility (as discussed) */}
-          {/* <DialogDescription>Update your personal information and license image.</DialogDescription> */}
         </DialogHeader>
         <form onSubmit={submitHandler}>
           <div className='grid gap-4 py-4'>
-            {/* ... (Your existing input fields) ... */}
+            {/* ... (other input fields for name, email, etc.) ... */}
             <div className='grid grid-cols-4 items-center gap-4'>
               <Label htmlFor="fullname" className="text-right">Name</Label>
               <Input id="fullname" name="fullname" value={input.fullname} onChange={changeEventHandler} className="col-span-3" />
@@ -121,43 +125,45 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               <Label htmlFor="address" className="text-right">Address</Label>
               <Input id="address" name="address" value={input.address} onChange={changeEventHandler} className="col-span-3" />
             </div>
-            
-            {/* 🔑 License Field - Change accept to image/* and add display logic */}
+
+            {/* --- FIX: This block is for LICENSE, not profilePhoto --- */}
             <div className='grid grid-cols-4 items-center gap-4'>
               <Label htmlFor="license" className="text-right">License</Label>
-              
-              <div className="col-span-3">
-                 {/* 3. Display existing image or selected image preview */}
+             <div className="col-span-3">
+                {/* Show a text preview of the file, not an image */}
                 {(newFile || existingLicenseUrl) && (
                   <div className="flex flex-col gap-1 mb-2">
-                     <p className="text-xs text-gray-500">
-                        {newFile ? `New Image: ${newFile.name}` : "Current Image:"}
-                    </p>
-                    <img 
-                       src={newFile ? URL.createObjectURL(newFile) : existingLicenseUrl}
-                       alt="License Image Preview" 
-                       className="w-16 h-16 object-cover border rounded" 
-                    />
+                    <p className="text-xs text-gray-500">
+                      {newFile ? `New File: ${newFile.name}` : "Current File:"}
+                  </p>
+                    {/* Show the existing file name as a link */}
+                    {!newFile && existingLicenseUrl && (
+                      <a
+                        target='_blank'
+                        href={existingLicenseUrl}
+                        rel="noopener noreferrer" // Good practice for target='_blank'
+                        className='text-blue-500 text-xs hover:underline'
+                      >
+                        {existingLicenseName || "View File"}
+                      </a>
+                    )}
                   </div>
                 )}
-
-                <Input 
-                  id="license" 
-                  name="license" 
-                  type="file" 
-                  accept="image/*" // 🔥 Changed to accept images
-                  onChange={fileChangeHandler} 
-                  className="" 
-                  // ⚠️ IMPORTANT: Removed value={input.file} 
-                  // to allow new file selection after initial load
+                <Input
+                  id="license"
+                  name="license"
+                  type="file"
+                  // You can be more specific, e.g., "application/pdf,image/*"
+                  accept="image/*,application/pdf"
+                  onChange={fileChangeHandler}
+                  className=""
                 />
               </div>
-
             </div>
           </div>
           <DialogFooter>
             {loading ? (
-              <Button className="w-full my-4 bg-[#F83002]">
+              <Button className="w-full my-4 bg-[#F83002]" disabled>
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait
               </Button>
             ) : (

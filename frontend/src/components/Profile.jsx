@@ -7,10 +7,10 @@ import { Label } from './ui/label'
 import AppliedDonationTable from './AppliedDonationTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
-import useGetAppliedDonations from '@/hooks/useGetAppliedDonations'
+// import useGetAppliedDonations from '@/hooks/useGetAppliedDonations'
 
 const Profile = () => {
-  useGetAppliedDonations();
+  // useGetAppliedDonations();
   const [open, setOpen] = useState(false);
   const { user } = useSelector(store => store.auth);
 
@@ -20,8 +20,8 @@ const Profile = () => {
       <div className='max-w-4xl mx-2 lg:mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-4'>
         <div className='flex justify-between'>
           <div className='flex items-center gap-2'>
-            <Avatar className="h-16 w-16">
-              <AvatarImage src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?semt=ais_hybrid&w=740&q=80" alt="profile" />
+            <Avatar className="h-12 w-12">
+              {!user?.profile?.profilePhoto ?(<AvatarImage src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?semt=ais_hybrid&w=740&q=80" alt="profile" />):( <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> )}
             </Avatar>
             <div>
               <h1 className='font-medium text-xl'>{user?.fullname}</h1>
@@ -83,4 +83,7 @@ const Profile = () => {
 }
 
 export default Profile
+
+
+
 

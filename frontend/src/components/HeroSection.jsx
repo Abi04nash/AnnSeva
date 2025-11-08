@@ -6,7 +6,9 @@ import { setSearchedQuery } from '@/redux/donationSlice';
 import { useNavigate } from 'react-router-dom';
 import CategoryCarousel from './CategoryCarousel';
 
+
 const HeroSection = () => {
+
   const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();

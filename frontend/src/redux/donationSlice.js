@@ -1,17 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// ✅ Define initialState separately
+const initialState = {
+    allDonations: [],
+    allAdminDonations: [],
+    singleDonation: null,
+    searchDonationByText: "",
+    allAppliedDonations: [],
+    searchedQuery: "",
+    refetchTrigger: false,
+};
+
 const donationSlice = createSlice({
     name: "donation",
-    initialState: {
-        allDonations: [],
-        allAdminDonations: [],
-        singleDonation: null,
-        searchDonationByText: "",
-        allAppliedDonations: [],  
-        searchedQuery: "",
-    },
+    initialState,
     reducers: {
-        // actions
         setAllDonations: (state, action) => {
             state.allDonations = action.payload;
         },
@@ -24,12 +27,18 @@ const donationSlice = createSlice({
         setSearchDonationByText: (state, action) => {
             state.searchDonationByText = action.payload;
         },
-        setAllAppliedDonations: (state, action) => {  
+        setAllAppliedDonations: (state, action) => {
             state.allAppliedDonations = action.payload;
         },
         setSearchedQuery: (state, action) => {
             state.searchedQuery = action.payload;
         },
+        setRefetchTrigger: (state) => {
+            state.refetchTrigger = !state.refetchTrigger;
+        },
+
+        // ✅ Properly reset to initialState
+       
     },
 });
 
@@ -38,8 +47,10 @@ export const {
     setSingleDonation,
     setAllAdminDonations,
     setSearchDonationByText,
-    setAllAppliedDonations,   
+    setAllAppliedDonations,
     setSearchedQuery,
+    setRefetchTrigger,
+    clearDonationState,
 } = donationSlice.actions;
 
 export default donationSlice.reducer;

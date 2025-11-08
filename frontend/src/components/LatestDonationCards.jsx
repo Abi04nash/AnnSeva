@@ -1,9 +1,23 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Badge } from './ui/badge';
-import { useNavigate } from 'react-router-dom';
+// import Donation from './Donation'
+import { setSearchedQuery } from '@/redux/donationSlice'
+import { useNavigate} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import useGetAllDonations from '@/hooks/useGetAllDonations';
 
 const LatestDonationCard = ({ donation }) => {
     const navigate = useNavigate();
+    useGetAllDonations()
+    const { allDonations } = useSelector(store => store.donation)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        return () => {
+            dispatch(setSearchedQuery(""))
+        }
+    }, [dispatch])
 
     return (
         <div

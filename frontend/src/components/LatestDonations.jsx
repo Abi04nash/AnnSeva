@@ -2,8 +2,8 @@ import React from 'react';
 import LatestDonationCard from './LatestDonationCards';
 import { useSelector } from 'react-redux';
 
-
 const LatestDonations = () => {
+
     const { allDonations } = useSelector(store => store.donation);
 
     return (

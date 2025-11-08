@@ -16,6 +16,7 @@ const useGetAllDonors = () => {
                 }
             } catch (error) {
                 console.log(error);
+                dispatch(setDonors([]));
             }
         };
         fetchDonors();

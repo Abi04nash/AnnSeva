@@ -9,6 +9,9 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '@/utils/constant';
 import { setUser } from '@/redux/authSlice';
 import { toast } from 'sonner';
+import { clearDonorState } from '@/redux/donorSlice';
+import { clearDonationState } from '@/redux/donationSlice';
+// import { clearUserState } from "@/redux/userSlice";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
@@ -22,14 +25,19 @@ const Navbar = () => {
       const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
       if (res.data.success) {
         dispatch(setUser(null));
-        navigate('/');
+        dispatch(clearDonorState());      // Donor state clear
+        dispatch(clearDonationState());
         toast.success(res.data.message);
+        navigate('/');
+        window.location.href = '/';
       }
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message);
     }
   };
+
+ 
 
   return (
     <nav className="bg-white shadow-md">
@@ -110,7 +118,7 @@ const Navbar = () => {
               <Popover>
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
-                    <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                    {!user?.profile?.profilePhoto ?(<AvatarImage src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?semt=ais_hybrid&w=740&q=80" alt="profile" />):( <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> )}
                   </Avatar>
                 </PopoverTrigger>
                 <PopoverContent className="w-80">

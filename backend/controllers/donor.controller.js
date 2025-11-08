@@ -43,12 +43,12 @@ export const getDonors = async (req, res) => {
     try {
         const userId = req.id; // logged-in user id
         const donors = await Donor.find({ userId });
-        if (!donors || donors.length === 0) {
-            return res.status(404).json({
-                message: "No donors found.",
-                success: false
-            });
-        }
+        // if (!donors || donors.length === 0) {
+        //     return res.status(404).json({
+        //         message: "No donors found.",
+        //         success: false
+        //     });
+        // }
 
         return res.status(200).json({
             donors,
