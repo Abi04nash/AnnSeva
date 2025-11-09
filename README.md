@@ -7,7 +7,7 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 ---
 ## 🌐 Live Demo
 
-🔗 [Visit Sociova](https://annseva-edbw.onrender.com/)  
+🔗 [Visit AnnSeva](https://annseva-edbw.onrender.com/)  
 
 ---
 
@@ -45,7 +45,7 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 
 ---
 
-## 📸 Screenshots (Foodbank Side)
+## 📸 Screenshots (Foodbank's Side)
 <img width="1862" height="892" alt="Screenshot 2025-11-09 093834" src="https://github.com/user-attachments/assets/049deb72-3767-4905-ba7b-10b959ec7b15" />
 <img width="1869" height="887" alt="Screenshot 2025-11-09 093911" src="https://github.com/user-attachments/assets/8633354a-fa32-447e-8b5f-e6605dc44647" />
 <img width="1868" height="879" alt="Screenshot 2025-11-09 094124" src="https://github.com/user-attachments/assets/48a7435b-ff4c-4d96-906c-11742b3829b0" />
