@@ -3,8 +3,8 @@
 **AnnSeva** is a full-stack food donation and management web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js).
 It helps reduce food wastage by connecting individual donors, restaurants, and event organizers with NGOs and food banks, who then distribute the food to underprivileged people.
 The platform ensures transparency, real-time updates, and a seamless donation process for all users.
----
 
+---
 ## 🌐 Live Demo
 
 🔗 [Visit Sociova](https://annseva-edbw.onrender.com/)  
@@ -44,24 +44,26 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 
 ---
 
-## 📸 Screenshots (Overview)
+## 📸 Screenshots (Foodbank Side)
+<img width="1862" height="892" alt="Screenshot 2025-11-09 093834" src="https://github.com/user-attachments/assets/049deb72-3767-4905-ba7b-10b959ec7b15" />
+<img width="1869" height="887" alt="Screenshot 2025-11-09 093911" src="https://github.com/user-attachments/assets/8633354a-fa32-447e-8b5f-e6605dc44647" />
+<img width="1868" height="879" alt="Screenshot 2025-11-09 094124" src="https://github.com/user-attachments/assets/48a7435b-ff4c-4d96-906c-11742b3829b0" />
+<img width="1866" height="887" alt="Screenshot 2025-11-09 094144" src="https://github.com/user-attachments/assets/4867d4f7-9bc5-43bd-9727-0fdfbf5a624b" />
 
-<img width="1664" height="844" alt="Screenshot 2025-07-11 183418" src="https://github.com/user-attachments/assets/106f1186-6448-45c2-94fd-c5325d76b621" />
-<img width="1394" height="810" alt="Screenshot 2025-07-11 183432" src="https://github.com/user-attachments/assets/e3b5813f-f39a-4013-ba38-5f6e64c88a02" />
-<img width="1871" height="883" alt="Screenshot 2025-07-11 183504" src="https://github.com/user-attachments/assets/2be3a471-d64d-42d7-b014-18cfc78014ef" />
-<img width="1886" height="870" alt="Screenshot 2025-07-11 183525" src="https://github.com/user-attachments/assets/40f0f71b-4045-487b-891e-d4458aa62985" />
-<img width="1864" height="843" alt="Screenshot 2025-07-11 183559" src="https://github.com/user-attachments/assets/d75782c6-4ccd-4027-a150-e1bd2f24a008" />
 
-## 📸 Mobile View
-<img src="https://github.com/user-attachments/assets/2f67ef7d-14d8-4e89-970e-5f35398f4aae" width="300"/>
-<img src="https://github.com/user-attachments/assets/6c60a088-1d27-4679-8533-d79ac1c36cf4" width="300"/>
-<img src="https://github.com/user-attachments/assets/b040604a-8bae-4048-b57e-aa35d72776be" width="300"/>
-<img src="https://github.com/user-attachments/assets/033f8303-55a3-419c-9f12-520ee62490e0" width="300"/>
+
+## 📸 Donor's Side
+
+
+<img width="1870" height="889" alt="Screenshot 2025-11-09 094335" src="https://github.com/user-attachments/assets/c57a1aa9-6eae-4f1c-9d1a-f39b2a263b0a" />
+<img width="1892" height="879" alt="Screenshot 2025-11-09 094250" src="https://github.com/user-attachments/assets/2a9f6ca0-08c1-46d8-9001-b3083fe9a1e6" />
+<img width="1887" height="878" alt="Screenshot 2025-11-09 094423" src="https://github.com/user-attachments/assets/637ae4dc-bea3-49c9-82d6-20c6cd4f80c4" />
+<img width="1887" height="878" alt="Screenshot 2025-11-09 094423" src="https://github.com/user-attachments/assets/215c53c3-5baa-4a83-abf1-ee410f5af226" />
 
 
 ---
 
-### Future Enhancements
+## Future Enhancements
 
 - **📬 Email Notifications on Donation Approval**
 - **🗺️ Google Maps Integration for Real-time Location**
