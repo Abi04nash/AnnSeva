@@ -57,7 +57,7 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 
 <img width="1870" height="889" alt="Screenshot 2025-11-09 094335" src="https://github.com/user-attachments/assets/c57a1aa9-6eae-4f1c-9d1a-f39b2a263b0a" />
 <img width="1892" height="879" alt="Screenshot 2025-11-09 094250" src="https://github.com/user-attachments/assets/2a9f6ca0-08c1-46d8-9001-b3083fe9a1e6" />
-<img width="1887" height="878" alt="Screenshot 2025-11-09 094423" src="https://github.com/user-attachments/assets/637ae4dc-bea3-49c9-82d6-20c6cd4f80c4" />
+<img width="1889" height="885" alt="Screenshot 2025-11-09 094409" src="https://github.com/user-attachments/assets/2978e11d-41f4-4cfa-b6ae-31d244a81883" />
 <img width="1887" height="878" alt="Screenshot 2025-11-09 094423" src="https://github.com/user-attachments/assets/215c53c3-5baa-4a83-abf1-ee410f5af226" />
 
 
