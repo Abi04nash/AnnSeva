@@ -15,7 +15,8 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 
 - ✅ User Authentication (Register/Login/Logout)
 - 🍱 Add, View, Request, and Manage Food Donations
-- 🏢 NGO Dashboard to Accept Donations
+- 🏢 Donor Dashboard to Accept/Reject Donation's Requests
+- 🏢 FoodBank Dashboard to view Applied Donations
 - 📍 Location-based Filtering of Food Donations
 - 🔍 Search Donation
 - 📱 Fully responsive design (Mobile_Friendly)
