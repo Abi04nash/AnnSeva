@@ -7,34 +7,40 @@ import { setSearchedQuery } from '@/redux/donationSlice';
 const filterData = [
   {
     filterType: "Location",
+    key: "location",
     array: ["Bhubaneswar", "Cuttack", "Hyderabad", "Pune", "Bhopal", "Kolkata"]
   },
   {
     filterType: "Category",
+    key: "category",
     array: ["Foods", "Groceries", "Snacks", "Fruits", "Vegetables", "Others"]
   }
 ];
 
 const FilterCard = () => {
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedFilters, setSelectedFilters] = useState({ type: "", value: "" });
   const dispatch = useDispatch();
 
-  const changeHandler = (value) => {
-    setSelectedValue(value);
+  const changeHandler = (type, value) => {
+    setSelectedFilters({ type, value }); // ✅ only last clicked filter matters
   };
 
   useEffect(() => {
-    dispatch(setSearchedQuery(selectedValue));
-  }, [selectedValue, dispatch]);
+    dispatch(setSearchedQuery(selectedFilters));
+  }, [selectedFilters, dispatch]);
 
   return (
     <div className='w-full bg-white p-4 rounded-md shadow-md'>
       <h1 className='font-bold text-lg mb-3 text-amber-600'>Filter Donations</h1>
       <hr className='mb-3' />
-      <RadioGroup value={selectedValue} onValueChange={changeHandler}>
-        {filterData.map((data, index) => (
-          <div key={index} className='mb-4'>
-            <h2 className='font-semibold text-md mb-1 text-gray-700'>{data.filterType}</h2>
+
+      {filterData.map((data, index) => (
+        <div key={index} className='mb-4'>
+          <h2 className='font-semibold text-md mb-1 text-gray-700'>{data.filterType}</h2>
+          <RadioGroup
+            value={selectedFilters.type === data.key ? selectedFilters.value : ''}
+            onValueChange={(val) => changeHandler(data.key, val)}
+          >
             {data.array.map((item, idx) => {
               const itemId = `id${index}-${idx}`;
               return (
@@ -44,11 +50,14 @@ const FilterCard = () => {
                 </div>
               );
             })}
-          </div>
-        ))}
-      </RadioGroup>
+          </RadioGroup>
+        </div>
+      ))}
     </div>
   );
 };
 
 export default FilterCard;
+
+
+

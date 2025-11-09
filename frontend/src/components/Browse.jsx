@@ -12,7 +12,7 @@ const Browse = () => {
 
     useEffect(() => {
         return () => {
-            dispatch(setSearchedQuery(""))
+            dispatch(setSearchedQuery(''))
         }
     }, [dispatch])
 

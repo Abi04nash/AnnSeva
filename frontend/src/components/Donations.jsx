@@ -7,22 +7,26 @@ import { motion } from 'framer-motion'
 
 const Donations = () => {
     const { allDonations, searchedQuery } = useSelector(store => store.donation)
-    const [filteredDonations, setFilteredDonations] = useState([allDonations])
+    // const [filteredDonations, setFilteredDonations] = useState([allDonations])
+    const [filteredDonations, setFilteredDonations] = useState(allDonations)
 
-    useEffect(() => {
-        if (searchedQuery) {
-            const filtered = allDonations.filter((donation) => {
-                return (
-                    donation.title?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-                    donation.pickupLocation?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-                    donation.donationType?.toLowerCase().includes(searchedQuery.toLowerCase())
-                )
-            })
-            setFilteredDonations(filtered)
-        } else {
-            setFilteredDonations(allDonations)
-        }
-    }, [allDonations, searchedQuery])
+useEffect(() => {
+  if (searchedQuery && searchedQuery.value) {
+    const filtered = allDonations.filter((donation) => {
+      if (searchedQuery.type === "location") {
+        return donation.pickupLocation?.toLowerCase().includes(searchedQuery.value.toLowerCase());
+      }
+      if (searchedQuery.type === "category") {
+        return donation.donationType?.toLowerCase().includes(searchedQuery.value.toLowerCase());
+      }
+      return true;
+    });
+    setFilteredDonations(filtered);
+  } else {
+    setFilteredDonations(allDonations);
+  }
+}, [allDonations, searchedQuery]);
+
 
     return (
         <div>
