@@ -1,14 +1,14 @@
-🍱 AnnSeva
+🍱 **AnnSeva**
 
 AnnSeva is a full-stack food donation and management web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js).
 It helps reduce food wastage by connecting individual donors, restaurants, and event organizers with NGOs and food banks, who then distribute the food to underprivileged people.
 The platform ensures transparency, real-time updates, and a seamless donation process for all users.
 
-🌐 Live Demo
+🌐 **Live Demo**
+🔗 [Visit AnnSeva](https://annseva-edbw.onrender.com/)
 
-🔗 Visit AnnSeva
 
-🚀 Features
+🚀 **Features**
 
 ✅ User Authentication (Register / Login / Logout)
 🍱 Add, View, Request, and Manage Food Donations
@@ -20,8 +20,8 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 💬 Real-time Status Updates
 📱 Fully Responsive Design (Mobile Friendly)
 
-🛠️ Tech Stack
-Frontend
+🛠️ **Tech Stack**
+*Frontend*
 
 React.js
 Redux Toolkit
@@ -29,7 +29,7 @@ React Router DOM
 Tailwind CSS
 ShadCN UI
 
-Backend
+*Backend*
 
 Node.js
 Express.js
@@ -38,16 +38,16 @@ JWT for Authentication
 Cloudinary for Image Upload
 Multer for File Handling
 
-📸 Screenshots (Overview)
-🖥️ Desktop View
+📸 **Screenshots (Overview)**
+🖥️ *Desktop View*
 
 (Add your screenshots here)
 
-📱 Mobile View
+📱 *Mobile View*
 
 (Add your mobile screenshots here)
 
-💡 Future Enhancements
+💡 **Future Enhancements**
 
 📬 Email Notifications on Donation Approval
 🗺️ Google Maps Integration for Real-time Location
