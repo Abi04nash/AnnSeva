@@ -13,7 +13,7 @@ dotenv.config({});
 
 const app = express();
 
-// const _dirname = path.resolve();
+const _dirname = path.resolve();
 
 // middleware
 app.use(express.json());
@@ -36,10 +36,10 @@ app.use("/api/v1/donation", donationRoute);
 app.use("/api/v1/application", applicationRoute);
 
 
-// app.use(express.static(path.join(_dirname , "/frontend/dist")));
-// app.get('*',(_, res) => {
-//   res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
-// });
+app.use(express.static(path.join(_dirname , "/frontend/dist")));
+app.get('*',(_, res) => {
+  res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
+});
 
 
 
