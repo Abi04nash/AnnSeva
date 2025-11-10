@@ -197,7 +197,7 @@ export const updateDonation = async (req, res) => {
       donationType, 
       freshnessLevel, 
       availableUnits,
-      donorId // 👈 include this
+      donorId  // Ise add kiya
     } = req.body;
 
     const updateData = {};
@@ -209,13 +209,13 @@ export const updateDonation = async (req, res) => {
     if (donationType) updateData.donationType = donationType;
     if (freshnessLevel) updateData.freshnessLevel = freshnessLevel;
     if (availableUnits) updateData.availableUnits = Number(availableUnits);
-    if (donorId) updateData.donor = donorId; // 👈 this line is missing
+    if (donorId) updateData.donor = donorId; 
 
     const updatedDonation = await Donation.findByIdAndUpdate(
       donationId,
       updateData,
       { new: true, runValidators: true }
-    ).populate("donor"); // 👈 optional but useful if you want updated donor info back
+    ).populate("donor"); 
 
     if (!updatedDonation) {
       return res.status(404).json({ message: "Donation not found.", success: false });

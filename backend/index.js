@@ -13,14 +13,14 @@ dotenv.config({});
 
 const app = express();
 
-const _dirname = path.resolve();
+// const _dirname = path.resolve();
 
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin:'https://annseva-edbw.onrender.com',
+    origin:'http://localhost:5173',
     credentials:true
 }
 
@@ -36,10 +36,10 @@ app.use("/api/v1/donation", donationRoute);
 app.use("/api/v1/application", applicationRoute);
 
 
-app.use(express.static(path.join(_dirname , "/frontend/dist")));
-app.get('*',(_, res) => {
-  res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
-});
+// app.use(express.static(path.join(_dirname , "/frontend/dist")));
+// app.get('*',(_, res) => {
+//   res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
+// });
 
 
 

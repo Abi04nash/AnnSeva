@@ -19,7 +19,7 @@ const Donation = ({ donation }) => {
     const [loading, setLoading] = useState(false);
     const [freshDonation, setFreshDonation] = useState(donation);
 
-    // ✅ Fetch fresh donation to check if current user already applied
+    // Fetch fresh donation to check if current user already applied
         useEffect(() => {
         const fetchDonation = async () => {
             try {
@@ -32,7 +32,7 @@ const Donation = ({ donation }) => {
                     setFreshDonation(donationData);
                     dispatch(setSingleDonation(donationData));
 
-                    // ✅ Check only if user exists
+                    // Check only if user exists
                     if (user?._id) {
                         const applied = donationData?.applications?.some(
                             app => app.applicant?._id?.toString() === user._id
@@ -61,7 +61,7 @@ const Donation = ({ donation }) => {
     //     }
     // }, [donation.applications, user?._id]);
 
-    // ✅ Apply donation handler
+    // Apply donation handler
     const applyDonationHandler = async () => {
 
         try {
@@ -94,7 +94,7 @@ const Donation = ({ donation }) => {
 
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
-            {/* Top Section */}
+            
             <div className='don flex items-center justify-between'>
                 <p className='text-sm text-gray-500'>
                     {new Date(freshDonation?.createdAt).toDateString()}
@@ -104,7 +104,7 @@ const Donation = ({ donation }) => {
                 </Button>
             </div>
 
-            {/* Donor Info */}
+            {/* Donor ke Infos */}
             <div className='flex items-center gap-2 my-2'>
                 <Button className="p-6" variant="outline" size="icon">
                     <Avatar>
@@ -117,20 +117,20 @@ const Donation = ({ donation }) => {
                 </div>
             </div>
 
-            {/* Donation Details */}
+            {/* Donation ke Details */}
             <div>
                 <h1 className='font-bold text-lg my-2'>{freshDonation?.title}</h1>
                 <p className='text-sm text-gray-600'>{freshDonation?.description}</p>
             </div>
 
-            {/* Tags */}
+           
             <div className='flex flex-wrap items-center gap-2 mt-4'>
                 <Badge className='text-blue-700 font-bold' variant="ghost">{freshDonation?.quantity} Units</Badge>
                 <Badge className='text-[#F83002] font-bold' variant="ghost">{freshDonation?.donationType}</Badge>
                 <Badge className='text-[#7209b7] font-bold' variant="ghost">{freshDonation?.pickupLocation}</Badge>
             </div>
 
-            {/* Buttons */}
+           
             <div className='flex items-center gap-4 mt-4'>
                 <Button onClick={() => navigate(`/description/${freshDonation?._id}`)} variant="outline">
                     Details

@@ -77,13 +77,13 @@ const PostDonation = () => {
 
       let res;
       if (id) {
-        // ✅ Update existing donation
+        // Update donation
         res = await axios.put(`${DONATION_API_END_POINT}/update/${id}`, payload, {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true
         });
       } else {
-        // ✅ Create new donation
+        // Create new donation
         res = await axios.post(`${DONATION_API_END_POINT}/post`, payload, {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true

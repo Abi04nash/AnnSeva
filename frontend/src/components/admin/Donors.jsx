@@ -9,13 +9,13 @@ import { useDispatch } from 'react-redux';
 import { setSearchDonorByText } from '@/redux/donorSlice';
 
 const Donors = () => {
-    useGetAllDonors(); // ✅ renamed
+    useGetAllDonors(); 
     const [input, setInput] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setSearchDonorByText(input)); // ✅ renamed action
+        dispatch(setSearchDonorByText(input)); 
     }, [input, dispatch]);
 
     return (
@@ -35,7 +35,7 @@ const Donors = () => {
                         New Donor
                     </Button>
                 </div>
-                <DonorsTable /> {/* ✅ renamed */}
+                <DonorsTable /> 
             </div>
         </div>
     );

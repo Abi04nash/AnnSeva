@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const applicationSchema = new mongoose.Schema({
-    donation: { // ✅ renamed
+    donation: { 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Donation', // ✅ updated reference
+        ref: 'Donation', 
         required: true
     },
     applicant: {

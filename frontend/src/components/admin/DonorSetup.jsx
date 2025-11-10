@@ -13,14 +13,13 @@ import useGetDonorById from '@/hooks/useGetDonorsById'
 
 const DonorSetup = () => {
     const params = useParams();
-    // This hook fetches the data and puts it in the Redux 'singleDonor'
     useGetDonorById(params.id);
 
     const { singleDonor } = useSelector(store => store.donor);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // --- 1. FIX: 'input' state is ONLY for text fields ---
+
     const [input, setInput] = useState({
         name: "",
         description: "",
@@ -28,19 +27,19 @@ const DonorSetup = () => {
         location: "",
     });
 
-    // --- 2. FIX: Separate state for the NEW file and EXISTING URL ---
-    const [newLogoFile, setNewLogoFile] = useState(null); // For the new File object
-    const [existingLogoUrl, setExistingLogoUrl] = useState(""); // For the old URL string
+
+    const [newLogoFile, setNewLogoFile] = useState(null); 
+    const [existingLogoUrl, setExistingLogoUrl] = useState(""); 
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     }
 
-    // --- 3. FIX: This handler ONLY updates the NEW file state ---
+
     const changeFileHandler = (e) => {
         const file = e.target.files?.[0];
         if (file) {
-            setNewLogoFile(file); // Only update the new file
+            setNewLogoFile(file); 
         }
     }
 
@@ -52,14 +51,13 @@ const DonorSetup = () => {
         formData.append("website", input.website);
         formData.append("location", input.location);
 
-        // --- 4. FIX: ONLY append the file if a NEW one was selected ---
-        // Your backend is expecting 'file' based on your old code
+     
         if (newLogoFile) {
             formData.append("file", newLogoFile);
         }
 
         try {
-            setLoading(true); // This re-render is what *starts* the race condition
+            setLoading(true); 
             const res = await axios.put(`${DONOR_API_END_POINT}/update/${params.id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
@@ -76,7 +74,6 @@ const DonorSetup = () => {
         }
     }
 
-    // --- 5. FIX: This useEffect ONLY sets text and the EXISTING URL ---
     useEffect(() => {
         if (singleDonor) {
             setInput({
@@ -85,12 +82,11 @@ const DonorSetup = () => {
                 website: singleDonor.website || "",
                 location: singleDonor.location || "",
             });
-            // Check your donor model. I'm guessing the URL is 'singleDonor.file'
-            // This line NO LONGER corrupts your 'input.file' state
+            
             setExistingLogoUrl(singleDonor.file || "");
             setNewLogoFile(null); // Clear any old file selection
         }
-    }, [singleDonor]); // This runs when 'singleDonor' from Redux changes
+    }, [singleDonor]); 
 
     return (
         <div>
@@ -102,7 +98,7 @@ const DonorSetup = () => {
                             <span>Back</span>
                         </Button>
                     <div className='grid grid-cols-2 gap-4'>
-                        {/* ... (Name, Description, Website, Location) ... */}
+                        {/* Name, Description, Website, Location */}
                         <div>
                             <Label>Donor Name</Label>
                             <Input
@@ -142,7 +138,7 @@ const DonorSetup = () => {
 
                         <div>
                             <Label>Logo</Label>
-                            {/* --- 6. FIX: Add a preview --- */}
+                      
                             {(newLogoFile || existingLogoUrl) && (
                                 <div className='my-2'>
                                     <img

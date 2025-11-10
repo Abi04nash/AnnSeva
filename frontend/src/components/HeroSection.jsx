@@ -29,10 +29,10 @@ const HeroSection = () => {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Overlay */}
+      {/* Overlay for dark visual */}
       <div className="absolute inset-0 bg-black opacity-60"></div>
 
-      {/* Content */}
+      {/* Content main wala */}
       <div className="relative z-10 flex flex-col gap-7 lg:gap-5 my-10 text-white items-center">
         <h1 className="text-[29px] lg:text-5xl font-bold leading-[1.4] lg:leading-[1.4]">
           Turning <span className="text-yellow-400">Surplus</span> into{' '}

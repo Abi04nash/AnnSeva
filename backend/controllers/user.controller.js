@@ -118,7 +118,8 @@ export const logout = async (req, res) => {
     }
 }
 
-// user.controller.js
+
+
 export const updateProfile = async (req, res) => {
     try {
         console.log("File received by controller:", req.file);
@@ -144,18 +145,18 @@ export const updateProfile = async (req, res) => {
             updateData.email = email;
         }
 
-        // 4. File upload handle karo (YAHAN FIX KIYA HAI)
-        if (req.file) { // <--- FIX: req.file.path ko req.file kiya
-            const fileUri = getDataUri(req.file); // <--- FIX: req.file.path ko req.file kiya
+        // File upload handle yah hua
+        if (req.file) {
+            const fileUri = getDataUri(req.file); 
             const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
             updateData['profile.license'] = cloudResponse.secure_url;
             updateData['profile.licenseOriginalName'] = req.file.originalname;
         }
 
-        // 5. Database mein update karo
+        // Database mein update
         const updatedUser = await User.findByIdAndUpdate(userId, { $set: updateData }, { new: true });
 
-        // 6. Naya user object waapas bhejo
+        // Naya user object waapas bhejna
         const userResponse = {
             _id: updatedUser._id,
             fullname: updatedUser.fullname,

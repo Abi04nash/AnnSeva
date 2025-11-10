@@ -104,7 +104,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         </DialogHeader>
         <form onSubmit={submitHandler}>
           <div className='grid gap-4 py-4'>
-            {/* ... (other input fields for name, email, etc.) ... */}
+
+            
             <div className='grid grid-cols-4 items-center gap-4'>
               <Label htmlFor="fullname" className="text-right">Name</Label>
               <Input id="fullname" name="fullname" value={input.fullname} onChange={changeEventHandler} className="col-span-3" />
@@ -126,17 +127,18 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               <Input id="address" name="address" value={input.address} onChange={changeEventHandler} className="col-span-3" />
             </div>
 
-            {/* --- FIX: This block is for LICENSE, not profilePhoto --- */}
+            {/* license / not profilePhoto */}
             <div className='grid grid-cols-4 items-center gap-4'>
               <Label htmlFor="license" className="text-right">License</Label>
              <div className="col-span-3">
-                {/* Show a text preview of the file, not an image */}
+              
+
                 {(newFile || existingLicenseUrl) && (
                   <div className="flex flex-col gap-1 mb-2">
                     <p className="text-xs text-gray-500">
                       {newFile ? `New File: ${newFile.name}` : "Current File:"}
                   </p>
-                    {/* Show the existing file name as a link */}
+                  
                     {!newFile && existingLicenseUrl && (
                       <a
                         target='_blank'
@@ -153,7 +155,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   id="license"
                   name="license"
                   type="file"
-                  // You can be more specific, e.g., "application/pdf,image/*"
                   accept="image/*,application/pdf"
                   onChange={fileChangeHandler}
                   className=""

@@ -77,10 +77,10 @@ const DonationDescription = () => {
 
     return (
         <div className="dodes p-2 max-w-7xl mx-auto my-10">
-            <div className="ga flex items-center justify-between">
-                <div>
+            <div className="des ga flex items-center justify-between">
+                <div className='des2'>
                     <h1 className="font-bold text-xl text-[#fb3003]">{singleDonation?.title}</h1>
-                    <div className="flex items-center gap-2 mt-4">
+                    <div className="flex items-center gap-2 mt-2">
                         <Badge className="bad text-blue-700 font-bold" variant="ghost">
                             {singleDonation?.quantity} Units
                         </Badge>

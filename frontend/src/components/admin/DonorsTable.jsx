@@ -16,25 +16,25 @@ import { useNavigate } from 'react-router-dom'
 
 const DonorsTable = () => {
   const { donors, searchDonorByText } = useSelector(store => store.donor);
-  // Initialize with an empty array for safety
+
   const [filteredDonors, setFilteredDonors] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 1. Check if 'donors' is actually an array before trying to filter
+  
     if (!Array.isArray(donors)) {
-      setFilteredDonors([]); // Set to empty array if data is bad
-      return; // Exit
+      setFilteredDonors([]); 
+      return; 
     }
 
-    // 2. Apply the filter
+   
     const filtered = donors.filter((donor) => {
-      if (!searchDonorByText) return true; // If search is empty, show all
-      // 3. (BUG FIX): Your model uses 'name', not 'donorName'
+      if (!searchDonorByText) return true; 
+  
       return donor?.name?.toLowerCase().includes(searchDonorByText.toLowerCase());
     });
 
-    setFilteredDonors(filtered); // This is now guaranteed to be an array
+    setFilteredDonors(filtered); 
 
   }, [donors, searchDonorByText]);
 
@@ -51,14 +51,13 @@ const DonorsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* Now this map is safe. If there are no donors, 
-            'filteredDonors' will be [] and map will just render nothing.
-          */}
+        
+
           {filteredDonors?.map((donor) => (
             <TableRow className="bg-amber-50" key={donor._id}>
               <TableCell>
                 <Avatar>
-{/* // 4. (BUG FIX): Use donor.logo, not donor.file */}
+
                   <AvatarImage src={donor.logo} alt={donor.name} />
                 </Avatar>
               </TableCell>

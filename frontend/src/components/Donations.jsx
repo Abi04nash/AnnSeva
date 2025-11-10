@@ -33,7 +33,7 @@ useEffect(() => {
             <Navbar />
             <div className='max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-8'>
                 <div className='flex flex-col md:flex-row gap-5'>
-                    {/* Filter Section */}
+                    {/* Filter wala Section */}
                     <div className='w-full md:w-[25%] lg:w-[20%]'>
                         <FilterCard />
                     </div>

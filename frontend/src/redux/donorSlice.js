@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-// ✅ Define initialState OUTSIDE the slice
+// Define initialState OUTSIDE the slice
 const initialState = {
   singleDonor: null,
   donors: [],
@@ -28,7 +28,7 @@ const donorSlice = createSlice({
         },
         
         clearDonorState: (state) => {
-            // State ko wapas initial state par reset kar dein
+            // State ko wapas initial state par reset karega 
             Object.assign(state, initialState);
         }
     },

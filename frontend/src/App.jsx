@@ -45,7 +45,7 @@ const appRouter = createBrowserRouter([
     path: "/profile",
     element: <Profile />
   },
-  // admin routes start here
+  // Admin(Donor) routes start here
   {
     path: "/admin/donors",
     element: <ProtectedRoute><Donors /></ProtectedRoute>

@@ -37,7 +37,7 @@ const donationSlice = createSlice({
             state.refetchTrigger = !state.refetchTrigger;
         },
 
-        // ✅ Properly reset to initialState
+        // Properly reset to initialState
        
     },
 });

@@ -31,12 +31,12 @@ const FilterCard = () => {
 
   return (
     <div className='w-full bg-white p-4 rounded-md shadow-md'>
-      <h1 className='font-bold text-lg mb-3 text-amber-600'>Filter Donations</h1>
-      <hr className='mb-3' />
+      <h1 className='font-bold text-lg mb-2 text-amber-600'>Filter Donations</h1>
+      <hr className='mb-2' />
 
       {filterData.map((data, index) => (
         <div key={index} className='mb-4'>
-          <h2 className='font-semibold text-md mb-1 text-gray-700'>{data.filterType}</h2>
+          <h2 className='font-semibold text-md mb-3 text-gray-900'>{data.filterType}</h2>
           <RadioGroup
             value={selectedFilters.type === data.key ? selectedFilters.value : ''}
             onValueChange={(val) => changeHandler(data.key, val)}
@@ -44,7 +44,7 @@ const FilterCard = () => {
             {data.array.map((item, idx) => {
               const itemId = `id${index}-${idx}`;
               return (
-                <div key={itemId} className='flex items-center space-x-2 my-1'>
+                <div key={itemId} className='flex items-center space-x-2 my-0'>
                   <RadioGroupItem value={item} id={itemId} />
                   <Label htmlFor={itemId} className='text-gray-600 cursor-pointer'>{item}</Label>
                 </div>

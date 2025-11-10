@@ -25,7 +25,7 @@ const Navbar = () => {
       const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
       if (res.data.success) {
         dispatch(setUser(null));
-        dispatch(clearDonorState());      // Donor state clear
+        dispatch(clearDonorState());      
         dispatch(clearDonationState());
         toast.success(res.data.message);
         navigate('/');
@@ -43,7 +43,7 @@ const Navbar = () => {
     <nav className="bg-white shadow-md">
       <div className="mx-auto max-w-7xl ">
         <div className="nav p-1 flex justify-between h-15 items-center">
-          {/* Logo */}
+        
           <div className="w-[15%]  shrink-0">
             <h1 className="text-lg sm:text-3xl font-bold flex items-center gap-1">
               <span className="text-yellow-400">Ann</span>
@@ -52,7 +52,7 @@ const Navbar = () => {
             </h1>
           </div>
 
-          {/* Desktop Menu */}
+          
           <ul className="hidden w-[30%]  md:flex font-medium justify-center items-center gap-6">
             {user && user.role === 'donor' ? (
               <>
@@ -153,7 +153,7 @@ const Navbar = () => {
               </Popover>
             )}
 
-            {/* Mobile menu button */}
+          
             <button
               className="md:hidden flex items-center p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -164,7 +164,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+   
       {mobileMenuOpen && (
         <div className=" md:hidden px-4 pt-2 pb-4 space-y-2 bg-white shadow-md">
           <ul className="mod flex flex-col gap-3 font-medium">
