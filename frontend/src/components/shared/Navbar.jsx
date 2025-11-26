@@ -48,7 +48,6 @@ const Navbar = () => {
             <h1 className="text-lg sm:text-3xl font-bold flex items-center gap-1">
               <span className="text-yellow-400">Ann</span>
               <span className="text-[#F83002]">Seva</span>
-              <i className="fa-solid fa-bowl-food"></i>
             </h1>
           </div>
 
@@ -155,7 +154,7 @@ const Navbar = () => {
 
           
             <button
-              className="md:hidden flex items-center p-2"
+              className="md:hidden flex items-center p-0.5"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}

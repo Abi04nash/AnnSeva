@@ -33,16 +33,16 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-black opacity-60"></div>
 
       {/* Content main wala */}
-      <div className="relative z-10 flex flex-col gap-7 lg:gap-5 my-10 text-white items-center">
-        <h1 className="text-[29px] lg:text-5xl font-bold leading-[1.4] lg:leading-[1.4]">
+      <div className="relative z-10 flex flex-col gap-7 lg:pt-20 lg:gap-5 my-10 text-white items-center">
+        <h1 className="text-[40px] lg:text-5xl font-bold leading-[1.4] lg:leading-[1.4]">
           Turning <span className="text-yellow-400">Surplus</span> into{' '}
           <span className="text-yellow-400">Smiles</span>
           <br />
-          <span className="text-[#F83002]">
+          <span className="text-3xl text-[#F83002]">
             One Click at a Time{' '}
-            <span className="text-pink-400">
+            {/* <span className="text-pink-400">
               <i className="fa-solid fa-heart-circle-check"></i>
-            </span>
+            </span> */}
           </span>
         </h1>
 

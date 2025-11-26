@@ -14,15 +14,16 @@ const Footer = () => {
       </div>
 
 
-      <div className="flex space-x-6 text-white">
+      <div className="flex space-x-3 text-white">
         <a href="https://www.linkedin.com/in/abinash-mishra-880a5b291/" className="hover:text-gray-800 transition-colors" aria-label="LinkedIn">
-          <i class="fa-brands fa-linkedin text-2xl text-black"></i>
+          <i class="i fa-brands fa-linkedin text-2xl text-black"></i>
         </a>
         <a href="https://github.com/Abi04nash" className="hover:text-gray-800 transition-colors" aria-label="Github">
-         <i class="fa-brands fa-square-github text-2xl text-black"></i>
+         <i class="i fa-brands fa-square-github text-2xl text-black"></i>
         </a>
         <a href="https://abi04nash.github.io/AviPortfolio/" className="hover:text-gray-800 transition-colors" aria-label="Portfolio">
-          <i class="fa-solid fa-address-card text-2xl text-black"></i>
+          {/* <i class="i fa-solid fa-address-card text-2xl text-black"></i> */}
+          <i class="i fa-solid fa-circle-user text-2xl text-black"></i>
         </a>
       </div>
 
