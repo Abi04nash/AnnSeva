@@ -38,7 +38,7 @@ const HeroSection = () => {
           Turning <span className="text-yellow-400">Surplus</span> into{' '}
           <span className="text-yellow-400">Smiles</span>
           <br />
-          <span className="text-3xl text-[#F83002]">
+          <span className="text-3xl lg:text-5xl text-[#F83002]">
             One Click at a Time{' '}
             {/* <span className="text-pink-400">
               <i className="fa-solid fa-heart-circle-check"></i>
