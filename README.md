@@ -14,7 +14,9 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 ## 🚀 Features
 
 - User Authentication (Register/Login/Logout)
-- Add, View, Request, and Manage Food Donations
+- Add, Remove, Update, View, Request, and Manage Food Donations
+- Time or quantity-based automatic donation expiry(Active/Expired)
+- Categorized donations by source type
 - Donor Dashboard to Accept/Reject Donation's Requests
 - FoodBank Dashboard to view Applied Donations
 - Location-based Filtering of Food Donations
@@ -61,14 +63,6 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 <img width="1889" height="885" alt="Screenshot 2025-11-09 094409" src="https://github.com/user-attachments/assets/2978e11d-41f4-4cfa-b6ae-31d244a81883" />
 <img width="1887" height="878" alt="Screenshot 2025-11-09 094423" src="https://github.com/user-attachments/assets/215c53c3-5baa-4a83-abf1-ee410f5af226" />
 
-
----
-
-## Future Enhancements
-
-- **📬 Email Notifications on Donation Approval**
-- **🗺️ Google Maps Integration for Real-time Location**
-- **💬 Chat System between Donor & NGO**
 
 
 
