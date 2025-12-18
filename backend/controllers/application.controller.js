@@ -1,5 +1,6 @@
 import { Application } from "../models/application.model.js";
 import { Donation } from "../models/donation.model.js";
+import { handleDonationExpiry } from "../utils/donationExpiry.js";
 
 // (NGO) applies for a donation
 export const applyDonation = async (req, res) => {
@@ -14,7 +15,7 @@ export const applyDonation = async (req, res) => {
             });
         }
 
-      
+
         const existingApplication = await Application.findOne({ donation: donationId, applicant: userId });
         if (existingApplication) {
             return res.status(400).json({
@@ -40,11 +41,32 @@ export const applyDonation = async (req, res) => {
 
         donation.applications.push(newApplication._id);
         await donation.save();
+        // after application is saved
+        if (donation.quantity <= donation.applications.length) {
+            donation.status = "expired";
+            await donation.save();
+        }
+
+        if (donation.expiryAt && new Date(donation.expiryAt) <= new Date()) {
+            donation.status = "expired";
+            await donation.save();
+        }
+
+        await handleDonationExpiry();
+
+        const updatedDonation = await Donation.findById(donationId)
+            .populate({
+                path: "applications",
+                populate: { path: "applicant" }
+            })
+            .populate("donor");
 
         return res.status(201).json({
             message: "Donation requested successfully.",
-            success: true
+            success: true,
+            donation: updatedDonation
         });
+
     } catch (error) {
         console.log(error);
     }

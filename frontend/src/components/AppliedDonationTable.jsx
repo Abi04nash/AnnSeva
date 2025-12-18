@@ -16,7 +16,7 @@ const AppliedDonationTable = () => {
                     <TableRow>
                         <TableHead className="text-black font-bold text-lg">Date</TableHead>
                         <TableHead className="text-black font-bold text-lg">Donation Type</TableHead>
-                        <TableHead className="text-black font-bold text-lg">Donor</TableHead>
+                        <TableHead className="text-black font-bold text-lg">Source</TableHead>
                         <TableHead className="text-black font-bold text-lg">Location</TableHead>
                         <TableHead className="text-black text-right font-bold text-lg">Status</TableHead>
                     </TableRow>

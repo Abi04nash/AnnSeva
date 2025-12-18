@@ -8,6 +8,9 @@ import donorRoute from "./routes/donor.route.js";
 import donationRoute from "./routes/donation.route.js";
 import applicationRoute from "./routes/application.route.js";
 import path from "path";
+import { handleDonationExpiry } from "./utils/donationExpiry.js";
+
+
 
 dotenv.config({});
 
@@ -43,7 +46,18 @@ app.get('*',(_, res) => {
 
 
 
-app.listen(PORT,()=>{
-    connectDB();
-    console.log(`Server running at port ${PORT}`);
-})
+// Yahh se update for the server
+const startServer = async () => {
+  try {
+    await connectDB();                 // 1. DB connect
+    await handleDonationExpiry();      // 2. Expiry logic run once
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running at port ${PORT}`);
+    });
+  } catch (error) {
+    console.log("Server start failed ❌", error);
+  }
+};
+
+startServer();

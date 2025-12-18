@@ -133,16 +133,16 @@ const Navbar = () => {
                     </div>
                     <div className="flex flex-col my-2 px-1 text-gray-600">
                       {user && user.role === 'ngo' && (
-                        <div className="flex w-fit items-center gap-2 cursor-pointer">
+                        <div className="mb-1 flex w-fit items-center gap-2 cursor-pointer">
                           <User2 />
-                          <Button variant="link">
+                          <Button className="bg-orange-100 " variant="link">
                             <Link to="/profile">View Profile</Link>
                           </Button>
                         </div>
                       )}
-                      <div className="flex w-fit items-center gap-2 cursor-pointer">
+                      <div className="mb-1 flex w-fit items-center gap-2 cursor-pointer">
                         <LogOut />
-                        <Button onClick={logoutHandler} variant="link">
+                        <Button className="bg-orange-100 " onClick={logoutHandler} variant="link">
                           Logout
                         </Button>
                       </div>
@@ -154,7 +154,7 @@ const Navbar = () => {
 
           
             <button
-              className="md:hidden flex items-center p-0.5"
+              className="md:hidden flex items-center p-0"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}

@@ -33,12 +33,12 @@ useEffect(() => {
             <Navbar />
             <div className='max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-8'>
                 <div className='flex flex-col md:flex-row gap-5'>
-                    {/* Filter wala Section */}
+                     {/* Filter wala Section  */}
                     <div className='w-full md:w-[25%] lg:w-[20%]'>
                         <FilterCard />
                     </div>
 
-                    {/* Donation Cards Section */}
+                    {/* Donation Cards wala Section */}
                     {
                         filteredDonations.length <= 0 ? (
                             <span className='text-center w-full mt-10 text-gray-500 text-lg'>No donations found</span>

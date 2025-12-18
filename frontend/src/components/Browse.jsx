@@ -2,33 +2,57 @@ import React, { useEffect } from 'react'
 import Navbar from './shared/Navbar'
 import Donation from './Donation'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchedQuery } from '@/redux/donationSlice'
-import useGetAllDonations from '@/hooks/useGetAllDonations'
+import axios from 'axios'
+import { setAllDonations } from '@/redux/donationSlice'
+import { DONATION_API_END_POINT } from '@/utils/constant'
 
 const Browse = () => {
-    useGetAllDonations()
-    const { allDonations } = useSelector(store => store.donation)
     const dispatch = useDispatch()
+    const { allDonations } = useSelector(store => store.donation)
 
     useEffect(() => {
-        return () => {
-            dispatch(setSearchedQuery(''))
+        const fetchAllDonations = async () => {
+            try {
+                const res = await axios.get(
+                    `${DONATION_API_END_POINT}/get`,
+                    { withCredentials: true }
+                )
+
+                if (res.data.success) {
+                    dispatch(setAllDonations(res.data.donations))
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
+
+        fetchAllDonations()
     }, [dispatch])
 
     return (
-        <div>
+        <div className="min-h-screen">
             <Navbar />
-            <div className='md:px-2 max-w-7xl mx-auto my-10'>
-                <h1 className='text-center lg:text-left font-bold text-xl my-10'>
-                    Search Results ({allDonations.length})
+
+            <div className="px-4 sm:px-6 lg:px-2 max-w-7xl mx-auto my-10">
+                <h1 className="text-center lg:text-left font-bold text-xl my-6">
+                    All Donations ({allDonations.length})
                 </h1>
-                <div className='bro grid grid-cols-3 gap-4'>
-                    {
-                        allDonations.map((donation) => (
-                            <Donation key={donation._id} donation={donation} />
-                        ))
-                    }
+
+                <div
+                    className="
+                        grid
+                        grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-3
+                        gap-4
+                    "
+                >
+                    {allDonations.map((donation) => (
+                        <Donation
+                            key={donation._id}
+                            donation={donation}
+                        />
+                    ))}
                 </div>
             </div>
         </div>
@@ -36,4 +60,3 @@ const Browse = () => {
 }
 
 export default Browse
-

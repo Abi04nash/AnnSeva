@@ -35,6 +35,7 @@ import {
   getDonationById,
   getDonorDonations,
   updateDonation,
+  deleteDonation,
 } from "../controllers/donation.controller.js";
 
 const router = express.Router();
@@ -53,5 +54,8 @@ router.route("/getdonordonations").get(isAuthenticated, getDonorDonations);
 
 // Donor can update a donation
 router.route("/update/:id").put(isAuthenticated, updateDonation);
+// Now donor can delete it's donation
+router.route("/delete/:id").delete(isAuthenticated, deleteDonation);
+
 
 export default router;

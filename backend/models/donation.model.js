@@ -10,14 +10,14 @@ const donationSchema = new mongoose.Schema({
         required: true
     },
     items: [{
-        type: String    
+        type: String
     }],
     quantity: {
-        type: Number,   
+        type: Number,
         required: true
     },
     freshnessLevel: {
-        type: Number,   
+        type: Number,
         required: true
     },
     pickupLocation: {
@@ -25,13 +25,25 @@ const donationSchema = new mongoose.Schema({
         required: true
     },
     donationType: {
-        type: String, 
+        type: String,
         required: true
     },
     availableUnits: {
-        type: Number,   
+        type: Number,
         required: true
     },
+
+    expiryAt: {
+        type: Date,
+        required: true
+    },
+
+    status: {
+        type: String,
+        enum: ["active", "expired"],
+        default: "active"
+    },
+
     donor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Donor',

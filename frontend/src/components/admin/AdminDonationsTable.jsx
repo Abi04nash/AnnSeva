@@ -9,14 +9,41 @@ import {
   TableRow
 } from '../ui/table'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
+import { Delete, Edit2, Eye, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { DONATION_API_END_POINT } from '@/utils/constant'
+import { useDispatch } from 'react-redux'
+import { setAllAdminDonations } from '@/redux/donationSlice'
+
 
 const AdminDonationsTable = () => {
   const { allAdminDonations, searchDonationByText } = useSelector(store => store.donation);
+  const dispatch = useDispatch();
+
   const [filterDonations, setFilterDonations] = useState(allAdminDonations);
   const navigate = useNavigate();
+
+  useEffect(() => {
+  const fetchAdminDonations = async () => {
+    try {
+      const res = await axios.get(
+        `${DONATION_API_END_POINT}/admin`,
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        dispatch(setAllAdminDonations(res.data.donations));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchAdminDonations();
+}, []);
+
 
   useEffect(() => {
     const filtered = allAdminDonations.filter((donation) => {
@@ -29,6 +56,32 @@ const AdminDonationsTable = () => {
     setFilterDonations(filtered);
   }, [allAdminDonations, searchDonationByText]);
 
+  const handleDelete = async (donationId) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this donation? All requests will also be deleted."
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    const res = await axios.delete(
+      `${DONATION_API_END_POINT}/delete/${donationId}`,
+      { withCredentials: true }
+    );
+
+    if (res.data.success) {
+      // 🔥 UI se bhi remove kar
+      const updatedDonations = allAdminDonations.filter(
+        (d) => d._id !== donationId
+      );
+      dispatch(setAllAdminDonations(updatedDonations));
+    }
+  } catch (error) {
+    console.log("Delete error:", error);
+  }
+};
+
+
   return (
     <div>
       <Table>
@@ -40,6 +93,7 @@ const AdminDonationsTable = () => {
             <TableHead className="text-black font-bold text-lg">Freshness(10)</TableHead>
             <TableHead className="font-bold text-black text-lg">Quantity</TableHead>
             <TableHead className="font-bold text-black text-lg">Location</TableHead>
+            <TableHead className="text-black font-bold text-lg">Status</TableHead>
             <TableHead className="font-bold text-black text-lg">Date</TableHead>
             <TableHead className=" font-bold text-black text-lg text-right">Action</TableHead>
           </TableRow>
@@ -52,6 +106,14 @@ const AdminDonationsTable = () => {
               <TableCell>{donation?.freshnessLevel}</TableCell>
               <TableCell>{donation?.quantity}</TableCell>
               <TableCell>{donation?.pickupLocation}</TableCell>
+              <TableCell>
+  <span className={`px-2 py-1 rounded-md ${
+    donation.status === "active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+  }`}>
+    {donation.status}
+  </span>
+</TableCell>
+
               <TableCell>{donation?.createdAt?.split("T")[0]}</TableCell>
               <TableCell className="text-right cursor-pointer">
                 <Popover>
@@ -72,6 +134,11 @@ const AdminDonationsTable = () => {
                       <Eye className='w-4' />
                       <span>Receivers</span>
                     </div>
+
+                    <button className='flex items-center w-fit gap-2 cursor-pointer mt-2' onClick={() => handleDelete(donation._id)}>
+ <Delete className='w-4' /><span>Delete</span>
+</button>
+
                   </PopoverContent>
                 </Popover>
               </TableCell>

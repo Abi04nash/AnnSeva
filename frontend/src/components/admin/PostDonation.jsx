@@ -21,15 +21,16 @@ const PostDonation = () => {
     donationType: "",
     freshnessLevel: "",
     availableUnits: "",
-    donorId: ""
+    donorId: "",
+    expiryHours: 1
   });
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { donors } = useSelector(store => store.donor);
-  const { id } = useParams(); // ✅ if id exists => edit mode
+  const { id } = useParams(); // if id exists => edit mode
 
-  // 🔹 Fetch donation data if updating
+  // Fetch donation data if updating
   useEffect(() => {
     if (id) {
       const fetchDonation = async () => {
@@ -37,6 +38,13 @@ const PostDonation = () => {
           const res = await axios.get(`${DONATION_API_END_POINT}/get/${id}`, { withCredentials: true });
           if (res.data.success) {
             const d = res.data.donation;
+
+            const now = new Date();
+            const expiryDate = new Date(d.expiryAt);
+            let remainingHours = Math.ceil((expiryDate - now) / (1000 * 60 * 60));
+            if (remainingHours < 1) remainingHours = 1;
+
+
             setInput({
               title: d.title,
               description: d.description,
@@ -46,7 +54,8 @@ const PostDonation = () => {
               donationType: d.donationType,
               freshnessLevel: d.freshnessLevel,
               availableUnits: d.availableUnits,
-              donorId: d.donor?._id || ""
+              donorId: d.donor?._id || "",
+              expiryHours: remainingHours
             });
           }
         } catch (error) {
@@ -73,6 +82,7 @@ const PostDonation = () => {
       const payload = {
         ...input,
         items: input.items.split(",").map(i => i.trim()),
+        expiryAt: new Date(Date.now() + input.expiryHours * 60 * 60 * 1000) // ✅ yahi add kar do
       };
 
       let res;
@@ -93,7 +103,7 @@ const PostDonation = () => {
       if (res.data.success) {
         toast.success(res.data.message);
         navigate("/admin/donations");
-        
+
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong!");
@@ -192,6 +202,28 @@ const PostDonation = () => {
             </div>
 
             <div>
+              <Label>Expiry Time (in hours)</Label>
+              <Select value={String(input.expiryHours)} onValueChange={(value) => setInput({ ...input, expiryHours: Number(value) })}>
+                <SelectTrigger className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1 w-[180px]">
+                  <SelectValue placeholder="Select hours">
+                    {input.expiryHours ? `${input.expiryHours} hour(s)` : "Select hours"}
+                  </SelectValue>
+
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {Array.from({ length: 25 }, (_, i) => i + 1).map(hour => (
+                      <SelectItem key={hour} value={hour}>
+                        {hour} hour{hour > 1 ? "s" : ""}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+
+            <div>
               <Label>Available Units</Label>
               <Input
                 type="number"
@@ -202,22 +234,28 @@ const PostDonation = () => {
               />
             </div>
 
-            {donors.length > 0 && (
-              <Select onValueChange={selectChangeHandler}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a Donor" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {donors.map((donor) => (
-                      <SelectItem key={donor._id} value={donor?.name?.toLowerCase()}>
-                        {donor.name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            )}
+
+            <div>
+              <Label>Source</Label>
+
+              {donors.length > 0 && (
+                <Select onValueChange={selectChangeHandler}>
+                  <SelectTrigger className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1 w-[180px]">
+                    <SelectValue placeholder="Select a Donor" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {donors.map((donor) => (
+                        <SelectItem key={donor._id} value={donor?.name?.toLowerCase()}>
+                          {donor.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+
+            </div>
           </div>
 
           {loading ? (

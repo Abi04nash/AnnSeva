@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { useParams } from 'react-router-dom';
@@ -14,28 +14,41 @@ const DonationDescription = () => {
     const dispatch = useDispatch();
     const params = useParams();
     const donationId = params.id;
+    const [remainingTime, setRemainingTime] = useState("");
 
-    const [isApplied, setIsApplied] = useState(false);
 
-    // ✅ Apply / Request Donation Handler
+    // Expiry Check
+    const isExpired = singleDonation
+        ? new Date(singleDonation.expiryAt).getTime() <= Date.now() ||
+        (singleDonation.quantity - (singleDonation.applications?.length || 0)) <= 0
+        : false;
+
+    // Yeh check karega ki user ne apply kiya hai ya nahi, chahe ID string ho ya Object
+    const isApplied = singleDonation?.applications?.some(app => {
+        // Agar applicant object hai (populated) toh ._id lo, nahi toh direct string lo
+        const applicantId = app.applicant?._id || app.applicant;
+        // Dono ko string mein convert karke compare karo
+        return applicantId?.toString() === user?._id?.toString();
+    }) || false;
+
+    // Apply Handler
     const applyDonationHandler = async () => {
+        if (!user) {
+            toast.error("Please login first");
+            return;
+        }
+        
         try {
             const res = await axios.post(
                 `${APPLICATION_API_END_POINT}/apply/${donationId}`,
-                {}, // empty body
-                { withCredentials: true } // ✅ correct config placement
+                {},
+                { withCredentials: true }
             );
 
             if (res.data.success) {
-                setIsApplied(true);
-                const updatedDonation = {
-                    ...singleDonation,
-                    applications: [
-                        ...(singleDonation?.applications || []),
-                        { applicant: user?._id },
-                    ],
-                };
-                dispatch(setSingleDonation(updatedDonation));
+                // Backend se jo naya donation data aaya, use seedha Redux mein daal do
+                // Isse UI apne aap update ho jayega aur button "Already Requested" ban jayega
+                dispatch(setSingleDonation(res.data.donation)); 
                 toast.success(res.data.message);
             }
         } catch (error) {
@@ -44,7 +57,7 @@ const DonationDescription = () => {
         }
     };
 
-    // ✅ Fetch Single Donation
+    // Fetch Data on Load
     useEffect(() => {
         const fetchSingleDonation = async () => {
             try {
@@ -54,31 +67,45 @@ const DonationDescription = () => {
                 );
 
                 if (res.data.success) {
-                    const donationData = res.data.donation;
-                    dispatch(setSingleDonation(donationData));
-
-                    // const applied = donationData?.applications?.some(
-                    //     (application) => application.applicant === user?._id
-                    // );
-
-                       // ✅ FIXED: check if logged-in user already applied
-                const applied = donationData?.applications?.some(
-                    (application) =>
-                        application.applicant?._id?.toString() === user?._id
-                );
-                    setIsApplied(applied);
+                    dispatch(setSingleDonation(res.data.donation));
                 }
             } catch (error) {
                 console.error("Error fetching donation:", error);
             }
         };
         if (donationId) fetchSingleDonation();
-    }, [donationId, dispatch, user?._id]);
+    }, [donationId, dispatch]);
+
+
+    useEffect(() => {
+  if (!singleDonation?.expiryAt) return;
+
+  const interval = setInterval(() => {
+    const diff = new Date(singleDonation.expiryAt).getTime() - Date.now();
+
+    if (diff <= 0) {
+      setRemainingTime("Expired");
+      clearInterval(interval);
+      return;
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    setRemainingTime(`${hours}h ${minutes}m ${seconds}s`);
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [singleDonation]);
+
+
 
     return (
         <div className="dodes p-2 max-w-7xl mx-auto my-10">
             <div className="des ga flex items-center justify-between">
                 <div className='des2'>
+                    
                     <h1 className="font-bold text-xl text-[#fb3003]">{singleDonation?.title}</h1>
                     <div className="flex items-center gap-2 mt-2">
                         <Badge className="bad text-blue-700 font-bold" variant="ghost">
@@ -91,22 +118,41 @@ const DonationDescription = () => {
                             {singleDonation?.pickupLocation}
                         </Badge>
                     </div>
-
                 </div>
 
                 <Button
-                    onClick={!isApplied ? applyDonationHandler : undefined}
-                    disabled={isApplied}
-                    className={` btn rounded-lg ${isApplied
+                    onClick={!isApplied && !isExpired ? applyDonationHandler : undefined}
+                    disabled={isApplied || isExpired}
+                    className={`btn rounded-lg ${isApplied || isExpired
                         ? 'bg-gray-600 cursor-not-allowed'
                         : 'bg-[#F83002] hover:bg-[rgb(248,48,2)]'
                         }`}
                 >
-                    {isApplied ? 'Already Requested' : 'Request Donation'}
+                    {isApplied
+                        ? 'Already Requested'
+                        : isExpired
+                            ? 'Expired'
+                            : 'Request Donation'}
                 </Button>
+                
             </div>
+            
 
             <h1 className="border-b-2 border-b-gray-300 font-bold lg:text-lg py-4">Donation Details</h1>
+            <div className="flex items-center gap-2 my-2">
+                <span className="font-bold">Status:</span>
+                <Badge className={`${isExpired ? 'bg-red-500' : 'bg-green-500'} text-white`}>
+                    {isExpired ? 'Expired' : 'Active'}
+                </Badge>
+
+                <div className="flex items-center gap-2 my-2">
+  <span className="font-bold">Time Left:</span>
+  <Badge className="bg-orange-500 text-white">
+    {remainingTime || "Calculating..."}
+  </Badge>
+</div>
+
+            </div>
             <div className="my-4">
                 <h1 className='font-bold my-1'>
                     Title: <span className='pl-4 font-normal text-gray-800'>{singleDonation?.title}</span>
@@ -126,7 +172,7 @@ const DonationDescription = () => {
                 <h1 className='font-bold my-1'>
                     Freshness Level: <span className='pl-4 font-normal text-gray-800'>{singleDonation?.freshnessLevel}</span>
                 </h1>
-               <div className='flex my-2'>
+                <div className='flex my-2'>
                     <h1 className='font-bold my-1'>Items:</h1>
                     <div className='pl-4 flex flex-wrap gap-2'>
                         {Array.isArray(singleDonation?.items) && singleDonation.items.length > 0 ? (
@@ -146,7 +192,6 @@ const DonationDescription = () => {
                 <h1 className='font-bold my-1'>
                     Posted On: <span className='pl-4 font-normal text-gray-800'>{singleDonation?.createdAt?.split("T")[0]}</span>
                 </h1>
-
             </div>
         </div>
     );

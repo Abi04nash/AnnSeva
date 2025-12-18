@@ -36,9 +36,16 @@ const donationSlice = createSlice({
         setRefetchTrigger: (state) => {
             state.refetchTrigger = !state.refetchTrigger;
         },
+        // clearDonationState: () => initialState,
 
-        // Properly reset to initialState
-       
+        updateDonationInList: (state, action) => {
+            state.allDonations = state.allDonations.map(donation =>
+                // Ensure hum dono ko string mein convert karke match karein
+                donation._id.toString() === action.payload._id.toString()
+                    ? action.payload
+                    : donation
+            );
+        },
     },
 });
 
@@ -51,6 +58,7 @@ export const {
     setSearchedQuery,
     setRefetchTrigger,
     clearDonationState,
+    updateDonationInList,
 } = donationSlice.actions;
 
 export default donationSlice.reducer;
