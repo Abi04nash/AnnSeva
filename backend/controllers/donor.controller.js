@@ -5,10 +5,10 @@ import cloudinary from "../utils/cloudinary.js";
 // Register Donor
 export const registerDonor = async (req, res) => {
     try {
-        const { donorName } = req.body;
-        if (!donorName) {
+        const { donorName, donorType } = req.body;
+        if (!donorName || !donorType) {
             return res.status(400).json({
-                message: "Donor name is required.",
+                message: "Donor name and donor type are required.",
                 success: false
             });
         }
@@ -23,8 +23,10 @@ export const registerDonor = async (req, res) => {
 
         donor = await Donor.create({
             name: donorName,
+            donorType,
             userId: req.id
         });
+
 
         return res.status(201).json({
             message: "Donor registered successfully.",
@@ -88,7 +90,7 @@ export const getDonorById = async (req, res) => {
 // Update donor info
 export const updateDonor = async (req, res) => {
     try {
-        const { name, description, website, location } = req.body;
+        const { name, description, website, location, donorType } = req.body;
         const file = req.file;
 
         let logo;
@@ -98,7 +100,7 @@ export const updateDonor = async (req, res) => {
             logo = cloudResponse.secure_url;
         }
 
-        const updateData = { name, description, website, location };
+        const updateData = { name, description, website, location, donorType };
         if (logo) updateData.logo = logo;
 
         const donor = await Donor.findByIdAndUpdate(req.params.id, updateData, { new: true });

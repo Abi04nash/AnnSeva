@@ -25,11 +25,13 @@ const DonorSetup = () => {
         description: "",
         website: "",
         location: "",
+        donorType: ""
+
     });
 
 
-    const [newLogoFile, setNewLogoFile] = useState(null); 
-    const [existingLogoUrl, setExistingLogoUrl] = useState(""); 
+    const [newLogoFile, setNewLogoFile] = useState(null);
+    const [existingLogoUrl, setExistingLogoUrl] = useState("");
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -39,7 +41,7 @@ const DonorSetup = () => {
     const changeFileHandler = (e) => {
         const file = e.target.files?.[0];
         if (file) {
-            setNewLogoFile(file); 
+            setNewLogoFile(file);
         }
     }
 
@@ -50,14 +52,16 @@ const DonorSetup = () => {
         formData.append("description", input.description);
         formData.append("website", input.website);
         formData.append("location", input.location);
+        formData.append("donorType", input.donorType);
 
-     
+
+
         if (newLogoFile) {
             formData.append("file", newLogoFile);
         }
 
         try {
-            setLoading(true); 
+            setLoading(true);
             const res = await axios.put(`${DONOR_API_END_POINT}/update/${params.id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
@@ -81,26 +85,28 @@ const DonorSetup = () => {
                 description: singleDonor.description || "",
                 website: singleDonor.website || "",
                 location: singleDonor.location || "",
+                donorType: singleDonor.donorType || ""
+
             });
-            
+
             setExistingLogoUrl(singleDonor.file || "");
             setNewLogoFile(null); // Clear any old file selection
         }
-    }, [singleDonor]); 
+    }, [singleDonor]);
 
     return (
         <div>
             <Navbar />
             <div className='p-4 max-w-xl mx-auto my-10'>
                 <form onSubmit={submitHandler}>
-                     <Button onClick={() => navigate("/admin/donors")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">
-                            <ArrowLeft />
-                            <span>Back</span>
-                        </Button>
+                    <Button onClick={() => navigate("/admin/donors")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">
+                        <ArrowLeft />
+                        <span>Back</span>
+                    </Button>
                     <div className='grid grid-cols-2 gap-4'>
                         {/* Name, Description, Website, Location */}
                         <div>
-                            <Label>Donor Name</Label>
+                            <Label className="my-2">Source Name</Label>
                             <Input
                                 type="text"
                                 name="name"
@@ -109,7 +115,7 @@ const DonorSetup = () => {
                             />
                         </div>
                         <div>
-                            <Label>Description</Label>
+                            <Label className="my-2">Description</Label>
                             <Input
                                 type="text"
                                 name="description"
@@ -118,7 +124,7 @@ const DonorSetup = () => {
                             />
                         </div>
                         <div>
-                            <Label>Website</Label>
+                            <Label className="my-2">Website</Label>
                             <Input
                                 type="text"
                                 name="website"
@@ -127,7 +133,7 @@ const DonorSetup = () => {
                             />
                         </div>
                         <div>
-                            <Label>Location</Label>
+                            <Label className="my-2">Location</Label>
                             <Input
                                 type="text"
                                 name="location"
@@ -135,10 +141,26 @@ const DonorSetup = () => {
                                 onChange={changeEventHandler}
                             />
                         </div>
+                        <div>
+                            <Label className="my-2">Source Type</Label>
+                            <select
+                                name="donorType"
+                                value={input.donorType}
+                                onChange={changeEventHandler}
+                                className="w-full border p-2 rounded"
+                            >
+                                <option value="RESTAURANT">Restaurant</option>
+                                <option value="HOTEL">Hotel</option>
+                                <option value="SHOP">Shop / Store</option>
+                                <option value="EVENT">Event / Catering</option>
+                                <option value="BY_HOUSE">By House</option>
+                            </select>
+                        </div>
+
 
                         <div>
-                            <Label>Logo</Label>
-                      
+                            <Label className="my-2">Logo</Label>
+
                             {(newLogoFile || existingLogoUrl) && (
                                 <div className='my-2'>
                                     <img
@@ -168,7 +190,8 @@ const DonorSetup = () => {
                 </form>
             </div>
         </div>
-    )}
+    )
+}
 
 
 export default DonorSetup

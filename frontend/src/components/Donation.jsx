@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { Bookmark } from 'lucide-react';
+import { Bookmark, Home, Store, Building2, Calendar, ShoppingBag } from 'lucide-react';
 import { Avatar, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
 import { useNavigate } from 'react-router-dom';
@@ -10,26 +10,51 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateDonationInList } from '@/redux/donationSlice';
 import { toast } from 'sonner';
 
+/* ADDED = donorType UI config (NO LOGIC CHANGE) */
+const donorTypeUI = {
+  RESTAURANT: {
+    label: "Restaurant",
+    color: "bg-orange-100 text-orange-700",
+    icon: <Store className="w-3 h-3" />
+  },
+  HOTEL: {
+    label: "Hotel",
+    color: "bg-blue-100 text-blue-700",
+    icon: <Building2 className="w-3 h-3" />
+  },
+  SHOP: {
+    label: "Shop",
+    color: "bg-yellow-100 text-yellow-800",
+    icon: <ShoppingBag className="w-3 h-3" />
+  },
+
+  EVENT: {
+    label: "Event",
+    color: "bg-purple-100 text-purple-700",
+    icon: <Calendar className="w-3 h-3" />
+  },
+  BY_HOUSE: {
+    label: "Home",
+    color: "bg-green-100 text-green-700",
+    icon: <Home className="w-3 h-3" />
+  },
+};
+
 const Donation = ({ donation }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.auth);
 
-  // Redux se latest data lene ki koshish
-  const donationFromStore = useSelector(state => 
+  const donationFromStore = useSelector(state =>
     state.donation.allDonations.find(d => d._id === donation._id)
   );
 
-  // Agar store mein data hai to wo lo / nahi to prop wala use karo
   const donationData = donationFromStore || donation;
-
   const [loading, setLoading] = useState(false);
 
-  // Calculation Logic / String conversion ke saath
   const isApplied = useMemo(() => {
     if (!user || !donationData?.applications) return false;
     return donationData.applications.some(app => {
-      // Applicant ID nikalna (Object ho ya String)
       const applicantId = app.applicant?._id || app.applicant;
       return applicantId?.toString() === user._id?.toString();
     });
@@ -58,9 +83,7 @@ const Donation = ({ donation }) => {
 
       if (res.data.success) {
         toast.success(res.data.message);
-        // Redux update karo/Redux updqate ho raha ha hain 
         dispatch(updateDonationInList(res.data.donation));
-        //  window.location.reload();
       }
     } catch (err) {
       console.error(err);
@@ -87,8 +110,26 @@ const Donation = ({ donation }) => {
             <AvatarImage src={donationData?.donor?.logo} />
           </Avatar>
         </Button>
+
         <div>
-          <h1 className='font-medium text-lg'>{donationData?.donor?.name}</h1>
+          {/* UI Addition (donorType badge) */}
+          <div className="flex items-center gap-2">
+            <h1 className='font-medium text-lg'>
+              {donationData?.donor?.name}
+            </h1>
+
+            {donationData?.donor?.donorType &&
+              donorTypeUI[donationData.donor.donorType] && (
+                <span
+                  className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full font-semibold
+                  ${donorTypeUI[donationData.donor.donorType].color}`}
+                >
+                  {donorTypeUI[donationData.donor.donorType].icon}
+                  {donorTypeUI[donationData.donor.donorType].label}
+                </span>
+              )}
+          </div>
+
           <p className='text-sm text-gray-500'>India</p>
         </div>
       </div>
@@ -120,8 +161,7 @@ const Donation = ({ donation }) => {
           disabled={isApplied || isExpired || loading}
           className={`rounded-lg ${isApplied || isExpired
             ? 'bg-gray-600 cursor-not-allowed'
-            : 'bg-[#F83002] hover:bg-[#d82800]'}
-          `}
+            : 'bg-[#F83002] hover:bg-[#d82800]'}`}
         >
           {loading
             ? 'Processing...'

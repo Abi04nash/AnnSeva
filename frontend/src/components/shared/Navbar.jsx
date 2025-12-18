@@ -60,7 +60,7 @@ const Navbar = () => {
                     to="/admin/donors"
                     className={location.pathname === '/admin/donors' ? 'text-[#F83002]' : ''}
                   >
-                    <i className="fa-brands fa-sourcetree"></i>Sources
+                    <i class="fa-solid fa-bowl-rice"></i>Sources
                   </Link>
                 </li>
                 <li>
@@ -116,7 +116,7 @@ const Navbar = () => {
             ) : (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Avatar className="cursor-pointer">
+                  <Avatar size={20} className="cursor-pointer">
                     {!user?.profile?.profilePhoto ?(<AvatarImage src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?semt=ais_hybrid&w=740&q=80" alt="profile" />):( <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> )}
                   </Avatar>
                 </PopoverTrigger>

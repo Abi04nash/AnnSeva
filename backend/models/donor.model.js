@@ -6,6 +6,11 @@ const donorSchema = new mongoose.Schema({
         required : true,
         unique : true
     },
+    donorType:{
+        type: String,
+        enum: ["RESTAURANT", "HOTEL", "SHOP / STORE", "EVENT / CATERING", "BY_HOUSE"],
+        required: true
+    },
     description:{
         type : String, 
     },

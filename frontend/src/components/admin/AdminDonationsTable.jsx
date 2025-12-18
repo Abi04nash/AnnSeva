@@ -88,7 +88,7 @@ const AdminDonationsTable = () => {
         <TableCaption>A list of your recently posted food donations</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-black font-bold text-lg">Donor Name</TableHead>
+            <TableHead className="text-black font-bold text-lg">Source Name</TableHead>
             <TableHead className="text-black font-bold text-lg">Donation Type</TableHead>
             <TableHead className="text-black font-bold text-lg">Freshness(10)</TableHead>
             <TableHead className="font-bold text-black text-lg">Quantity</TableHead>

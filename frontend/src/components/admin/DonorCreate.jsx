@@ -13,13 +13,15 @@ import { setSingleDonor } from '@/redux/donorSlice';
 const DonorCreate = () => {
     const navigate = useNavigate();
     const [donorName, setDonorName] = useState('');
+    const [donorType, setDonorType] = useState("RESTAURANT");
+
     const dispatch = useDispatch();
 
     const registerNewDonor = async () => {
         try {
             const res = await axios.post(
                 `${DONOR_API_END_POINT}/register`,
-                { donorName },
+                { donorName, donorType },
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -54,9 +56,23 @@ const DonorCreate = () => {
                 <Input
                     type='text'
                     className='my-2'
-                    placeholder='Bawarchi, Haldiram, etc.'
+                    placeholder='Bawarchi, Haldiram, etc. / (Add your name if donating from your home)'
                     onChange={(e) => setDonorName(e.target.value)}
                 />
+
+                <Label>Source Type</Label>
+                <select
+                    className="w-full border p-2 rounded my-2"
+                    value={donorType}
+                    onChange={(e) => setDonorType(e.target.value)}
+                >
+                    <option value="RESTAURANT">Restaurant</option>
+                    <option value="HOTEL">Hotel</option>
+                    <option value="SHOP">Shop / Store</option>
+                    <option value="EVENT">Event / Catering</option>
+                    <option value="BY_HOUSE">By House (Home)</option>
+                </select>
+
                 <div className='flex items-center gap-2 my-10'>
                     <Button variant='outline' onClick={() => navigate('/admin/donors')}>
                         Cancel

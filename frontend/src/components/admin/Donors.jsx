@@ -32,7 +32,7 @@ const Donors = () => {
                         className='bg-[#F83002]'
                         onClick={() => navigate('/admin/donors/create')}
                     >
-                        New Donor
+                        Add Source
                     </Button>
                 </div>
                 <DonorsTable /> 

@@ -49,8 +49,8 @@ app.get('*',(_, res) => {
 // Yahh se update for the server
 const startServer = async () => {
   try {
-    await connectDB();                 // 1. DB connect
-    await handleDonationExpiry();      // 2. Expiry logic run once
+    await connectDB();                 // This = DB connect
+    await handleDonationExpiry();      // This = Expiry logic run once
 
     app.listen(PORT, () => {
       console.log(`🚀 Server running at port ${PORT}`);

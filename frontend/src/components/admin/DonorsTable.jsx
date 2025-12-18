@@ -21,20 +21,20 @@ const DonorsTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  
+
     if (!Array.isArray(donors)) {
-      setFilteredDonors([]); 
-      return; 
+      setFilteredDonors([]);
+      return;
     }
 
-   
+
     const filtered = donors.filter((donor) => {
-      if (!searchDonorByText) return true; 
-  
+      if (!searchDonorByText) return true;
+
       return donor?.name?.toLowerCase().includes(searchDonorByText.toLowerCase());
     });
 
-    setFilteredDonors(filtered); 
+    setFilteredDonors(filtered);
 
   }, [donors, searchDonorByText]);
 
@@ -45,13 +45,14 @@ const DonorsTable = () => {
         <TableHeader>
           <TableRow>
             <TableHead className=" text-black font-bold text-lg">Logo</TableHead>
-            <TableHead className="font-bold text-black text-lg">Donor Name</TableHead>
+            <TableHead className="font-bold text-black text-lg">Source Name</TableHead>
+            <TableHead className="font-bold text-black text-lg">Type</TableHead>
             <TableHead className="font-bold text-black text-lg">Date</TableHead>
             <TableHead className="font-bold text-black text-lg text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-        
+
 
           {filteredDonors?.map((donor) => (
             <TableRow className="bg-amber-50" key={donor._id}>
@@ -62,6 +63,12 @@ const DonorsTable = () => {
                 </Avatar>
               </TableCell>
               <TableCell>{donor.name}</TableCell>
+              <TableCell>
+                <span className="px-2 py-1 text-xs rounded text-orange-600 white font-semibold bg-orange-100">
+                  {donor.donorType}
+                </span>
+              </TableCell>
+
               <TableCell>{donor.createdAt?.split("T")[0]}</TableCell>
               <TableCell className="text-right cursor-pointer">
                 <Popover>
@@ -72,7 +79,7 @@ const DonorsTable = () => {
                       className='flex items-center gap-2 w-fit cursor-pointer'
                     >
                       <Edit2 className='w-4' />
-                        <span>Edit</span>
+                      <span>Edit</span>
                     </div>
                   </PopoverContent>
                 </Popover>

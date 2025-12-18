@@ -115,7 +115,7 @@ export const getAllDonations = async (req, res) => {
 export const getDonationById = async (req, res) => {
   try {
     const donationId = req.params.id;
-    const donation = await Donation.findById(donationId).populate({
+    const donation = await Donation.findById(donationId).populate("donor").populate({
       path: "applications",
       populate: { path: "applicant", model: "User" },
     });
