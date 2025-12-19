@@ -48,20 +48,21 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 ---
 
 ## 📸 Screenshots (Foodbank's Side)
-<img width="1862" height="892" alt="Screenshot 2025-11-09 093834" src="https://github.com/user-attachments/assets/049deb72-3767-4905-ba7b-10b959ec7b15" />
-<img width="1869" height="887" alt="Screenshot 2025-11-09 093911" src="https://github.com/user-attachments/assets/8633354a-fa32-447e-8b5f-e6605dc44647" />
-<img width="1868" height="879" alt="Screenshot 2025-11-09 094124" src="https://github.com/user-attachments/assets/48a7435b-ff4c-4d96-906c-11742b3829b0" />
-<img width="1866" height="887" alt="Screenshot 2025-11-09 094144" src="https://github.com/user-attachments/assets/4867d4f7-9bc5-43bd-9727-0fdfbf5a624b" />
+<img width="1887" height="879" alt="Screenshot 2025-12-19 220414" src="https://github.com/user-attachments/assets/f524020c-0455-46c7-8ae3-89c334d2049f" />
+<img width="1885" height="866" alt="Screenshot 2025-12-19 220551" src="https://github.com/user-attachments/assets/b1eaa0aa-cc44-42d1-a4a9-b2695375abe9" />
+<img width="1888" height="875" alt="Screenshot 2025-12-19 220621" src="https://github.com/user-attachments/assets/06039d50-6d6f-47b8-b59f-ba799022a654" />
+<img width="1901" height="873" alt="Screenshot 2025-12-19 220710" src="https://github.com/user-attachments/assets/a2dc9997-cf74-4117-be9d-00ef5f7af3be" />
+<img width="1889" height="872" alt="Screenshot 2025-12-19 220842" src="https://github.com/user-attachments/assets/d874405e-3801-4339-ab9e-9a5d9a2303da" />
 
 
 
 ## 📸 Donor's Side
+<img width="1904" height="876" alt="Screenshot 2025-12-19 220926" src="https://github.com/user-attachments/assets/c58a6770-3421-41f6-b997-c27a10f79440" />
+<img width="1904" height="872" alt="Screenshot 2025-12-19 221039" src="https://github.com/user-attachments/assets/b8f82a2c-61c3-4d8f-a068-d4474bf68be0" />
+<img width="1911" height="882" alt="Screenshot 2025-12-19 221104" src="https://github.com/user-attachments/assets/7970c59a-6cc6-4380-a7e4-1691d2625a3c" />
+<img width="1874" height="868" alt="Screenshot 2025-12-19 222310" src="https://github.com/user-attachments/assets/4eb04d58-c8d7-4278-b082-bf38f0286f34" />
 
 
-<img width="1870" height="889" alt="Screenshot 2025-11-09 094335" src="https://github.com/user-attachments/assets/c57a1aa9-6eae-4f1c-9d1a-f39b2a263b0a" />
-<img width="1892" height="879" alt="Screenshot 2025-11-09 094250" src="https://github.com/user-attachments/assets/2a9f6ca0-08c1-46d8-9001-b3083fe9a1e6" />
-<img width="1889" height="885" alt="Screenshot 2025-11-09 094409" src="https://github.com/user-attachments/assets/2978e11d-41f4-4cfa-b6ae-31d244a81883" />
-<img width="1887" height="878" alt="Screenshot 2025-11-09 094423" src="https://github.com/user-attachments/assets/215c53c3-5baa-4a83-abf1-ee410f5af226" />
 
 
 
