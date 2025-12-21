@@ -11,6 +11,68 @@ The platform ensures transparency, real-time updates, and a seamless donation pr
 
 ---
 
+## 🧭 How AnnSeva Works
+
+AnnSeva follows a simple and real-world food donation workflow:
+
+1. **Donor Registration**
+   Restaurants, hotels, event organizers, or individuals register as donors.
+
+2. **Post Food Donation**
+   Donors post surplus food with details like quantity, pickup location, source type, and expiry (time or quantity-based).
+
+3. **Active Donation Listing**
+   The donation becomes visible to nearby NGOs and food banks in real-time.
+
+4. **NGO / Food Bank Applies**
+   NGOs or food banks browse available donations and apply for pickup.
+
+5. **Donor Approval**
+   Donors review requests and accept or reject them.
+
+6. **Food Collection & Completion**
+   Approved NGOs collect the food, and the donation status is updated automatically.
+
+7. **Automatic Expiry Handling**
+   Donations automatically expire when time or quantity limits are reached.
+
+---
+
+### 🔁 Donation Flow Diagram
+
+Donor  
+↓  
+Post Donation  
+↓  
+Donation Active  
+↓  
+NGO Applies  
+↓  
+Donor Accepts / Rejects  
+↓  
+Food Collected  
+↓  
+Donation Completed / Expired
+
+---
+
+## 👥 User Roles
+
+### Donor
+- Register and post food donations(Firstly, add a source(Home,resturant,etc.))
+- Set expiry conditions (time or quantity)
+- Accept or reject NGO requests
+- Track donation status
+
+### NGO / Food Bank
+- Browse nearby food donations
+- Update profile to add licence, phone No., location
+- Can Filter donations by **donation type** (meals, fruits, groceries, snacks, etc.)
+- Apply for available donations
+- Track accepted and collected donations
+
+---
+
 ## 🚀 Features
 
 - User Authentication (Register/Login/Logout)
