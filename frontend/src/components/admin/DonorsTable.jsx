@@ -41,7 +41,7 @@ const DonorsTable = () => {
   return (
     <div>
       <Table>
-        <TableCaption>A list of recently registered food donors</TableCaption>
+        <TableCaption>A list of recently registered food sources</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className=" text-black font-bold text-lg">Logo</TableHead>

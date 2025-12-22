@@ -120,13 +120,16 @@ const DonationDescription = () => {
 
     return (
         <div className="max-w-6xl mx-auto px-4 my-10">
-            {/* HERO CARD */}
+            {/* Hero card */}
             <div className="bg-white rounded-2xl shadow-xl p-6 md:p-10 border">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                     <div>
                         <h1 className="text-2xl md:text-3xl font-bold text-[#fb3003]">
                             {singleDonation?.title}
                         </h1>
+                        <p className="text-sm text-grey-500">
+                            by <span className='text-orange-500'>{singleDonation?.donor?.userId?.fullname}</span>
+                        </p>
 
                         <div className="flex flex-wrap gap-2 mt-3">
                             <Badge variant="ghost" className="text-blue-700 font-semibold">
@@ -154,7 +157,7 @@ const DonationDescription = () => {
                 </div>
             </div>
 
-            {/* STATUS BAR */}
+            {/* Status bar */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="bg-white p-4 rounded-xl shadow border flex items-center justify-between">
                     <span className="font-semibold">Status</span>
@@ -200,7 +203,7 @@ const DonationDescription = () => {
 
 
 
-            {/* DETAILS */}
+            {/* Details */}
             <div className="mt-8 bg-white rounded-2xl shadow p-6 md:p-8 border">
                 <h2 className="text-xl font-bold border-b pb-3 mb-6">
                     Donation Details

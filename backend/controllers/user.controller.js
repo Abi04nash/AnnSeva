@@ -36,7 +36,8 @@ export const register = async (req, res) => {
             role,
             profile:{
                 profilePhoto:cloudResponse.secure_url,
-            }
+            },
+            savedDonations: user.savedDonations|| [] 
         });
 
         return res.status(201).json({
@@ -95,7 +96,8 @@ export const login = async (req, res) => {
             email: user.email,
             phoneNumber: user.phoneNumber,
             role: user.role,
-            profile: user.profile
+            profile: user.profile,
+            savedDonations: user.savedDonations|| [] 
         }
 
         return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' }).json({
@@ -177,6 +179,82 @@ export const updateProfile = async (req, res) => {
         res.status(500).json({
             message: "Something went wrong!",
             success: false,
+        });
+    }
+};
+
+
+
+export const toggleSaveDonation = async (req, res) => {
+    try {
+        const userId = req.id; // auth middleware se
+        const { donationId } = req.params;
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false
+            });
+        }
+
+        const alreadySaved = user.savedDonations.includes(donationId);
+
+        if (alreadySaved) {
+           
+            user.savedDonations = user.savedDonations.filter(
+                (id) => id.toString() !== donationId
+            );
+        } else {
+            
+            user.savedDonations.push(donationId);
+        }
+
+        await user.save();
+
+        return res.status(200).json({
+            message: alreadySaved 
+                ? "Donation removed from saved list" 
+                : "Donation saved successfully",
+            success: true
+        });
+
+    } catch (error) {
+        console.log("ERROR in toggleSaveDonation:", error);
+        res.status(500).json({
+            message: "Something went wrong",
+            success: false
+        });
+    }
+};
+
+
+
+export const getSavedDonations = async (req, res) => {
+    try {
+        const userId = req.id;
+
+        const user = await User.findById(userId)
+            .populate('savedDonations');
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            savedDonations: user.savedDonations,
+            success: true
+        });
+
+    } catch (error) {
+        console.log("ERROR in getSavedDonations:", error);
+        res.status(500).json({
+            message: "Something went wrong",
+            success: false
         });
     }
 };

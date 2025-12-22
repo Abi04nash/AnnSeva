@@ -174,7 +174,7 @@ const Navbar = () => {
                     to="/admin/donors"
                     className={location.pathname === '/admin/donors' ? 'text-[#F83002]' : ''}
                   >
-                    <i className="fa-brands fa-sourcetree"></i>Sources
+                    <i class="fa-solid fa-bowl-rice"></i>Sources
                   </Link>
                 </li>
                 <li>

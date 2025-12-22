@@ -1,5 +1,5 @@
 import express from "express";
-import { login, logout, register, updateProfile } from "../controllers/user.controller.js";
+import { login, logout, register, updateProfile, toggleSaveDonation, getSavedDonations } from "../controllers/user.controller.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { singleUpload } from "../middlewares/mutler.js";
  
@@ -12,5 +12,12 @@ router.route("/login").post(login);
 router.route("/logout").get(logout);
 // update user info (mainly for NGOs)
 router.route("/profile/update").post(isAuthenticated,singleUpload,updateProfile);
+
+// save / unsave donation (watchlist)
+router.route("/save-donation/:donationId").post(isAuthenticated, toggleSaveDonation);
+
+// get saved donations
+router.route("/saved-donations").get(isAuthenticated, getSavedDonations);
+
 
 export default router;

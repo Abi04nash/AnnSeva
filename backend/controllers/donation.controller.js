@@ -29,7 +29,7 @@ export const postDonation = async (req, res) => {
       !donationType ||
       !freshnessLevel ||
       !availableUnits ||
-      !donorId || 
+      !donorId ||
       !expiryHours
     ) {
       return res.status(400).json({
@@ -38,7 +38,7 @@ export const postDonation = async (req, res) => {
       });
     }
 
-     // calculate expiryAt
+    // calculate expiryAt
     const expiryAt = new Date(
       Date.now() + Number(expiryHours) * 60 * 60 * 1000
     );
@@ -75,7 +75,7 @@ export const postDonation = async (req, res) => {
 
 export const getAllDonations = async (req, res) => {
   try {
-      await handleDonationExpiry(); // ADD THIS
+    await handleDonationExpiry(); // ADD THIS
     const keyword = req.query.keyword || "";
     const query = {
       $or: [
@@ -85,8 +85,13 @@ export const getAllDonations = async (req, res) => {
     };
 
     const donations = await Donation.find(query)
-      .populate("donor")
-      // CHANGE THIS LINE to Deep Populate
+      .populate({
+        path: "donor",
+        populate: {
+          path: "userId",
+          select: "fullname"
+        }
+      })
       .populate({
         path: "applications",
         populate: {
@@ -115,10 +120,17 @@ export const getAllDonations = async (req, res) => {
 export const getDonationById = async (req, res) => {
   try {
     const donationId = req.params.id;
-    const donation = await Donation.findById(donationId).populate("donor").populate({
-      path: "applications",
-      populate: { path: "applicant", model: "User" },
-    });
+    const donation = await Donation.findById(donationId).populate({
+      path: "donor",
+      populate: {
+        path: "userId",
+        select: "fullname"
+      }
+    })
+      .populate({
+        path: "applications",
+        populate: { path: "applicant", model: "User" },
+      });
 
     if (!donation) {
       return res.status(404).json({
@@ -209,21 +221,21 @@ export const getDonorDonations = async (req, res) => {
 export const updateDonation = async (req, res) => {
   try {
     const donationId = req.params.id;
-    const { 
-      title, 
-      description, 
-      items, 
-      quantity, 
-      pickupLocation, 
-      donationType, 
-      freshnessLevel, 
+    const {
+      title,
+      description,
+      items,
+      quantity,
+      pickupLocation,
+      donationType,
+      freshnessLevel,
       availableUnits,
-      donorId, 
-      expiryHours 
+      donorId,
+      expiryHours
     } = req.body;
     const donation = await Donation.findById(donationId);
 
-     if (donation.status === "expired") {
+    if (donation.status === "expired") {
       return res.status(400).json({ success: false, message: "Expired donations cannot be edited" });
     }
 
@@ -236,7 +248,7 @@ export const updateDonation = async (req, res) => {
     if (donationType) updateData.donationType = donationType;
     if (freshnessLevel) updateData.freshnessLevel = freshnessLevel;
     if (availableUnits) updateData.availableUnits = Number(availableUnits);
-    if (donorId) updateData.donor = donorId; 
+    if (donorId) updateData.donor = donorId;
 
     if (expiryHours) {
       updateData.expiryAt = new Date(
@@ -250,7 +262,7 @@ export const updateDonation = async (req, res) => {
       donationId,
       updateData,
       { new: true, runValidators: true }
-    ).populate("donor"); 
+    ).populate("donor");
 
 
 

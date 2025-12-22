@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { setAllDonations } from '@/redux/donationSlice'
 import { DONATION_API_END_POINT } from '@/utils/constant'
+import DonationMap from '@/components/DonationMap'
 
 const Browse = () => {
     const dispatch = useDispatch()
@@ -25,7 +26,6 @@ const Browse = () => {
                 console.log(error)
             }
         }
-
         fetchAllDonations()
     }, [dispatch])
 
@@ -38,25 +38,39 @@ const Browse = () => {
                     All Donations ({allDonations.length})
                 </h1>
 
-                <div
-                    className="
-                        grid
-                        grid-cols-1
-                        sm:grid-cols-2
-                        lg:grid-cols-3
-                        gap-4
-                    "
-                >
-                    {allDonations.map((donation) => (
-                        <Donation
-                            key={donation._id}
-                            donation={donation}
-                        />
-                    ))}
+
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+                    {/* MAP Section */}
+                    <div className="lg:col-span-2 lg:sticky lg:top-24 h-fit">
+                        <div className="flex items-center justify-between mb-2">
+                            <h2 className="font-semibold text-lg text-gray-900">
+                                Live <span className='text-orange-600'>donations</span> across cities
+                            </h2>
+                        </div>
+
+                        <DonationMap donations={allDonations} />
+                    </div>
+
+                    {/* Donation cards */}
+                    <div className="lg:col-span-3">
+                        <div
+                            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                        >
+                            {allDonations.map((donation) => (
+                                <Donation
+                                    key={donation._id}
+                                    donation={donation}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     )
+
 }
 
 export default Browse

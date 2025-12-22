@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+import '@/utils/fixLeafletIcon';
+import 'leaflet/dist/leaflet.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Toaster } from './components/ui/sonner.jsx'
 import { Provider } from 'react-redux'

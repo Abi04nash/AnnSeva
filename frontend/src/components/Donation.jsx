@@ -6,11 +6,12 @@ import { Badge } from './ui/badge';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { APPLICATION_API_END_POINT } from '@/utils/constant';
+import { USER_API_END_POINT } from '@/utils/constant';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDonationInList } from '@/redux/donationSlice';
+import { updateUserSavedDonations } from '@/redux/authSlice';
 import { toast } from 'sonner';
 
-/* ADDED = donorType UI config (NO LOGIC CHANGE) */
 const donorTypeUI = {
   RESTAURANT: {
     label: "Restaurant",
@@ -45,6 +46,9 @@ const Donation = ({ donation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.auth);
 
+
+
+
   const donationFromStore = useSelector(state =>
     state.donation.allDonations.find(d => d._id === donation._id)
   );
@@ -67,12 +71,43 @@ const Donation = ({ donation }) => {
     return timeExpired || qtyOver;
   }, [donationData]);
 
+
+  const saved = user?.savedDonations?.some(
+    id => id.toString() === donation._id
+  );
+
+
+  const toggleSaveHandler = async () => {
+    if (!user?._id) {
+      toast.error("Please login first");
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        `${USER_API_END_POINT}/save-donation/${donationData._id}`,
+        {},
+        { withCredentials: true }
+      );
+
+      toast.success(res.data.message);
+
+      dispatch(updateUserSavedDonations(donationData._id));
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
+  };
+
+
+
+
+
+
   const applyDonationHandler = async () => {
     if (!user?._id) {
       toast.error('Please login first');
       return;
     }
-
     try {
       setLoading(true);
       const res = await axios.post(
@@ -99,9 +134,19 @@ const Donation = ({ donation }) => {
         <p className='text-sm text-gray-500'>
           {new Date(donationData?.createdAt).toDateString()}
         </p>
-        <Button variant='outline' className='rounded-full' size='icon'>
-          <Bookmark />
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggleSaveHandler}
+          className={`rounded-full transition ${saved ? 'bg-orange-100' : ''}`}
+        >
+          <Bookmark
+            className={`transition ${saved ? 'fill-[#F83002] text-[#F83002]' : ''
+              }`}
+          />
         </Button>
+
+
       </div>
 
       <div className='flex items-center gap-2 my-2'>
@@ -114,9 +159,12 @@ const Donation = ({ donation }) => {
         <div>
           {/* UI Addition (donorType badge) */}
           <div className="flex items-center gap-2">
+
             <h1 className='font-medium text-lg'>
               {donationData?.donor?.name}
             </h1>
+
+
 
             {donationData?.donor?.donorType &&
               donorTypeUI[donationData.donor.donorType] && (
@@ -130,7 +178,9 @@ const Donation = ({ donation }) => {
               )}
           </div>
 
-          <p className='text-sm text-gray-500'>India</p>
+          <p className="text-sm text-grey-500">
+            by <span className='text-orange-500'>{donationData?.donor?.userId?.fullname}</span>
+          </p>
         </div>
       </div>
 

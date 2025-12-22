@@ -26,7 +26,6 @@ const DonorSetup = () => {
         website: "",
         location: "",
         donorType: ""
-
     });
 
 
@@ -149,11 +148,12 @@ const DonorSetup = () => {
                                 onChange={changeEventHandler}
                                 className="w-full border p-2 rounded"
                             >
-                                <option value="RESTAURANT">Restaurant</option>
+                                
                                 <option value="HOTEL">Hotel</option>
                                 <option value="SHOP">Shop / Store</option>
                                 <option value="EVENT">Event / Catering</option>
                                 <option value="BY_HOUSE">By House</option>
+                                <option value="RESTAURANT">Restaurant</option>
                             </select>
                         </div>
 
