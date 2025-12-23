@@ -76,12 +76,12 @@ Donation Completed / Expired
 ## 🚀 Features
 
 - User Authentication (Register/Login/Logout)
-- Add, Remove, Update, View, Request, and Manage Food Donations
+- Add, Remove, Update, View, Bookmark, Request, and Manage Food Donations
 - Time or quantity-based automatic donation expiry(Active/Expired)
 - Categorized donations by source type
 - Donor Dashboard to Accept/Reject Donation's Requests
 - FoodBank Dashboard to view Applied Donations
-- Location-based Filtering of Food Donations
+- Location-based Filtering(through Map) of Food Donations
 - Search Donation
 - Fully responsive design (Mobile_Friendly)
 - JWT-based Authentication
@@ -113,8 +113,10 @@ Donation Completed / Expired
 <img width="1887" height="879" alt="Screenshot 2025-12-19 220414" src="https://github.com/user-attachments/assets/f524020c-0455-46c7-8ae3-89c334d2049f" />
 <img width="1885" height="866" alt="Screenshot 2025-12-19 220551" src="https://github.com/user-attachments/assets/b1eaa0aa-cc44-42d1-a4a9-b2695375abe9" />
 <img width="1888" height="875" alt="Screenshot 2025-12-19 220621" src="https://github.com/user-attachments/assets/06039d50-6d6f-47b8-b59f-ba799022a654" />
-<img width="1901" height="873" alt="Screenshot 2025-12-19 220710" src="https://github.com/user-attachments/assets/a2dc9997-cf74-4117-be9d-00ef5f7af3be" />
-<img width="1889" height="872" alt="Screenshot 2025-12-19 220842" src="https://github.com/user-attachments/assets/d874405e-3801-4339-ab9e-9a5d9a2303da" />
+<img width="1894" height="881" alt="Screenshot 2025-12-23 115737" src="https://github.com/user-attachments/assets/e07a2404-dd36-40d0-8102-6cdad4de9861" />
+<img width="1893" height="882" alt="Screenshot 2025-12-23 115644" src="https://github.com/user-attachments/assets/f215037f-8503-46c2-ad6a-6db35b9219d5" />
+<img width="1893" height="880" alt="Screenshot 2025-12-23 115847" src="https://github.com/user-attachments/assets/bbad9f20-448e-4dfa-a09e-26ecc88af611" />
+<img width="1894" height="879" alt="Screenshot 2025-12-23 115902" src="https://github.com/user-attachments/assets/80836fef-5900-47aa-9308-9c26e662ad0e" />
 
 
 
