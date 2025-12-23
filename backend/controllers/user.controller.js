@@ -37,7 +37,7 @@ export const register = async (req, res) => {
             profile:{
                 profilePhoto:cloudResponse.secure_url,
             },
-            savedDonations: user.savedDonations|| [] 
+            savedDonations: [] 
         });
 
         return res.status(201).json({
