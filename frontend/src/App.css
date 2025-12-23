@@ -1,4 +1,13 @@
 /* Responsive mobile styles */
+
+.leaflet-marker-icon {
+  transition: transform 0.2s ease;
+}
+
+.leaflet-marker-icon:hover {
+  transform: scale(1.15);
+}
+
 @media screen and (max-width: 768px) {
 
     /* Global reset */

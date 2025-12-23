@@ -1,9 +1,19 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { cityCoordinates } from '@/utils/cityCoordinates';
 import { useNavigate } from 'react-router-dom';
+import L from "leaflet";
+
+const tiffinIcon = new L.Icon({
+  iconUrl: "https://img.icons8.com/color/48/meal.png",
+  iconSize: [30, 30],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+});
+
+
 
 const DonationMap = ({ donations }) => {
-   
+
     return (
 
         <div className="relative w-full h-[420px] rounded-2xl overflow-hidden
@@ -29,42 +39,23 @@ const DonationMap = ({ donations }) => {
                     }
 
                     return (
-                        <Marker key={donation._id} position={coords}>
+                        <Marker
+                            key={donation._id}
+                            position={coords}
+                            icon={tiffinIcon}
+                        >
+
                             <Popup className="rounded-xl">
-                                <div className="
-    w-40
-    p-0
-    space-y-2
-    bg-white
-    rounded-xl
-  ">
-
-
+                                <div className="w-40 p-0 space-y-2 bg-white rounded-xl">
                                     <p className="text-sm font-bold text-gray-900 leading-snug">
                                         {donation.title}
                                     </p>
-
-
                                     <div className="flex items-center gap-2">
-                                        <span className="
-        text-[10px]
-        font-semibold
-        bg-amber-100
-        text-amber-700
-        px-2 py-0.5
-        rounded-full
-      ">
+                                        <span className="text-[10px] font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
                                             🍱 {donation.donationType}
                                         </span>
 
-                                        <span className="
-        text-[10px]
-        font-semibold
-        bg-green-100
-        text-green-700
-        px-2 py-0.5
-        rounded-full
-      ">
+                                        <span className=" text-[10px] font-semibold  bg-green-100  text-green-700 px-2 py-0.5 rounded-full">
                                             ● Active
                                         </span>
                                     </div>
@@ -98,7 +89,7 @@ const DonationMap = ({ donations }) => {
                                     {/* Divider */}
                                     <div className="h-[1px] bg-gray-200" />
 
-                                    
+
 
                                 </div>
                             </Popup>
