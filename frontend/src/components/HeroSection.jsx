@@ -34,7 +34,7 @@ const HeroSection = () => {
 
       {/* Content main wala */}
       <div className="relative z-10 flex flex-col gap-7 lg:pt-20 lg:gap-5 my-10 text-white items-center">
-        <h1 className="text-[40px] lg:text-5xl font-bold leading-[1.3] lg:leading-[1.4]">
+        <h1 className="text-[40px] lg:text-5xl font-bold leading-[1.2] lg:leading-[1.4]">
           Turning <span className="text-yellow-400">Surplus</span> into{' '}
           <span className="text-yellow-400">Smiles</span>
           <br />

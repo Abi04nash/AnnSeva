@@ -39,7 +39,7 @@ const ApplyDonationDialog = ({ donation, onClose, onApplied }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+    <div className="fixed px-2 inset-0 flex items-center justify-center bg-black/50 z-50">
       <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold mb-4">{donation.title}</h2>
 
