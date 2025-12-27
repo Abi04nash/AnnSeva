@@ -8,6 +8,7 @@ import { APPLICATION_API_END_POINT, DONATION_API_END_POINT } from '@/utils/const
 import { setSingleDonation } from '@/redux/donationSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
+import ApplyDonationDialog from './ApplyDonationDialog';
 
 const DonationDescription = () => {
     const { singleDonation } = useSelector((store) => store.donation);
@@ -15,6 +16,7 @@ const DonationDescription = () => {
     const dispatch = useDispatch();
     const { id: donationId } = useParams();
     const [remainingTime, setRemainingTime] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const isExpired = singleDonation
         ? new Date(singleDonation.expiryAt).getTime() <= Date.now() ||
@@ -144,8 +146,9 @@ const DonationDescription = () => {
                         </div>
                     </div>
 
+
                     <Button
-                        onClick={!isApplied && !isExpired ? applyDonationHandler : undefined}
+                        onClick={!isApplied && !isExpired ? () => setIsModalOpen(true) : undefined}
                         disabled={isApplied || isExpired}
                         className={`px-6 py-5 text-base rounded-xl ${isApplied || isExpired
                             ? 'bg-gray-500 cursor-not-allowed'
@@ -156,6 +159,16 @@ const DonationDescription = () => {
                     </Button>
                 </div>
             </div>
+
+            {isModalOpen && (
+                <ApplyDonationDialog
+                    donation={singleDonation}
+                    onClose={() => setIsModalOpen(false)}
+                    onApplied={(updatedDonation) => {
+                        dispatch(setSingleDonation(updatedDonation));
+                    }}
+                />
+            )}
 
             {/* Status bar */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">

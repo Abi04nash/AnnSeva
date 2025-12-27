@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateDonationInList } from '@/redux/donationSlice';
 import { updateUserSavedDonations } from '@/redux/authSlice';
 import { toast } from 'sonner';
+import ApplyDonationDialog from './ApplyDonationDialog';
+
 
 const donorTypeUI = {
   RESTAURANT: {
@@ -55,6 +57,8 @@ const Donation = ({ donation }) => {
 
   const donationData = donationFromStore || donation;
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const isApplied = useMemo(() => {
     if (!user || !donationData?.applications) return false;
@@ -207,7 +211,7 @@ const Donation = ({ donation }) => {
         </Button>
 
         <Button
-          onClick={!isApplied && !isExpired ? applyDonationHandler : undefined}
+          onClick={() => setIsModalOpen(true)} 
           disabled={isApplied || isExpired || loading}
           className={`rounded-lg ${isApplied || isExpired
             ? 'bg-gray-600 cursor-not-allowed'
@@ -221,7 +225,20 @@ const Donation = ({ donation }) => {
                 ? 'Expired'
                 : 'Request Donation'}
         </Button>
+
       </div>
+
+
+      {isModalOpen && (
+        <ApplyDonationDialog
+          donation={donationData}
+          onClose={() => setIsModalOpen(false)}
+          onApplied={(updatedDonation) => {
+            dispatch(updateDonationInList(updatedDonation));
+          }}
+        />
+      )}
+
     </div>
   );
 };

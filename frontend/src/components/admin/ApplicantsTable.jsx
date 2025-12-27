@@ -20,6 +20,14 @@ const ApplicantsTable = () => {
             console.log(res);
             if (res.data.success) {
                 toast.success(res.data.message);
+
+                //  REFRESH APPLICANTS
+                const updated = await axios.get(
+                    `${APPLICATION_API_END_POINT}/${applicants._id}/applicants`,
+                    { withCredentials: true }
+                );
+
+                dispatch(setAllApplicants(updated.data.donation));
             }
         } catch (error) {
             toast.error(error.response.data.message);
@@ -35,8 +43,11 @@ const ApplicantsTable = () => {
                         <TableHead className="text-black font-bold text-lg">FullName</TableHead>
                         <TableHead className="text-black font-bold text-lg">Email</TableHead>
                         <TableHead className="text-black font-bold text-lg">Contact</TableHead>
+                        <TableHead className="text-black font-bold text-lg">Req. Items</TableHead>
+                        <TableHead className="text-black font-bold text-lg">Units</TableHead>
                         <TableHead className="text-black font-bold text-lg">License</TableHead>
                         <TableHead className="text-black font-bold text-lg">Date</TableHead>
+                        <TableHead className="text-black font-bold text-lg">Status</TableHead>
                         <TableHead className="text-black font-bold text-lg text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -47,12 +58,28 @@ const ApplicantsTable = () => {
                                 <TableCell>{item?.applicant?.fullname}</TableCell>
                                 <TableCell>{item?.applicant?.email}</TableCell>
                                 <TableCell>{item?.applicant?.phoneNumber}</TableCell>
+                                <TableCell>
+                                    {item?.requestedItems?.join(", ")}
+                                </TableCell>
+
+                                <TableCell>
+                                    {item?.requestedUnits}
+                                </TableCell>
+
                                 <TableCell >
                                     {
                                         item.applicant?.profile?.license ? <a className="text-blue-600 cursor-pointer" href={item?.applicant?.profile?.license} target="_blank" rel="noopener noreferrer">{item?.applicant?.profile?.licenseOriginalName}</a> : <span>NA</span>
                                     }
                                 </TableCell>
                                 <TableCell>{item?.applicant.createdAt.split("T")[0]}</TableCell>
+                                <TableCell className={
+                                    item.status === "accepted" ? "text-green-600"
+                                        : item.status === "rejected" ? "text-red-600"
+                                            : "text-yellow-600"
+                                }>
+                                    {item.status}
+                                </TableCell>
+
                                 <TableCell className="float-right cursor-pointer">
                                     <Popover>
                                         <PopoverTrigger>

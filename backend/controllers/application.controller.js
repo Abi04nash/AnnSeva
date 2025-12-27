@@ -7,6 +7,7 @@ export const applyDonation = async (req, res) => {
     try {
         const userId = req.id;  // logged-in user (NGO)
         const donationId = req.params.id;
+        const { requestedItems, requestedUnits } = req.body;
 
         if (!donationId) {
             return res.status(400).json({
@@ -15,6 +16,13 @@ export const applyDonation = async (req, res) => {
             });
         }
 
+
+        if (!requestedItems || !requestedUnits) {
+            return res.status(400).json({
+                message: "Items and units are required",
+                success: false
+            });
+        }
 
         const existingApplication = await Application.findOne({ donation: donationId, applicant: userId });
         if (existingApplication) {
@@ -37,6 +45,8 @@ export const applyDonation = async (req, res) => {
         const newApplication = await Application.create({
             donation: donationId,
             applicant: userId,
+            requestedItems,
+            requestedUnits
         });
 
         donation.applications.push(newApplication._id);

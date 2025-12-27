@@ -35,7 +35,7 @@ const AppliedDonationTable = () => {
               donation?.status === "rejected"
                 ? "bg-red-500"
                 : donation?.status === "pending"
-                ? "bg-gray-400"
+                ? "bg-yellow-400"
                 : "bg-green-400"
             }`}
           >
