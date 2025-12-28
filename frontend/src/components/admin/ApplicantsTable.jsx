@@ -1,27 +1,29 @@
 import React from 'react'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { MoreHorizontal } from 'lucide-react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { APPLICATION_API_END_POINT } from '@/utils/constant';
 import axios from 'axios';
+import { setAllApplicants } from '@/redux/applicationSlice';
 
 const shortlistingStatus = ["Accepted", "Rejected"];
 
 const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application);
+    const dispatch = useDispatch();
 
     const statusHandler = async (status, id) => {
-        console.log('called');
         try {
             axios.defaults.withCredentials = true;
-            const res = await axios.post(`${APPLICATION_API_END_POINT}/status/${id}/update`, { status });
-            console.log(res);
+            const res = await axios.post(
+                `${APPLICATION_API_END_POINT}/status/${id}/update`,
+                { status }
+            );
+
             if (res.data.success) {
                 toast.success(res.data.message);
 
-                //  REFRESH APPLICANTS
                 const updated = await axios.get(
                     `${APPLICATION_API_END_POINT}/${applicants._id}/applicants`,
                     { withCredentials: true }
@@ -30,86 +32,143 @@ const ApplicantsTable = () => {
                 dispatch(setAllApplicants(updated.data.donation));
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message);
         }
-    }
+    };
 
     return (
-        <div>
-            <Table>
-                <TableCaption>A list of your recent applied user</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="text-black font-bold text-lg">FullName</TableHead>
-                        <TableHead className="text-black font-bold text-lg">Email</TableHead>
-                        <TableHead className="text-black font-bold text-lg">Contact</TableHead>
-                        <TableHead className="text-black font-bold text-lg">Req. Items</TableHead>
-                        <TableHead className="text-black font-bold text-lg">Units</TableHead>
-                        <TableHead className="text-black font-bold text-lg">License</TableHead>
-                        <TableHead className="text-black font-bold text-lg">Date</TableHead>
-                        <TableHead className="text-black font-bold text-lg">Status</TableHead>
-                        <TableHead className="text-black font-bold text-lg text-right">Action</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {
-                        applicants && applicants?.applications?.map((item) => (
-                            <tr className='bg-amber-50' key={item._id}>
-                                <TableCell>{item?.applicant?.fullname}</TableCell>
-                                <TableCell>{item?.applicant?.email}</TableCell>
-                                <TableCell>{item?.applicant?.phoneNumber}</TableCell>
-                                <TableCell>
-                                    {item?.requestedItems?.join(", ")}
-                                </TableCell>
+        <div className="space-y-4 m-2 lg:m-0">
+            {applicants?.applications?.map((item) => (
+                <div
+                    key={item._id}
+                    className="bg-[#f9fafb] border border-gray-300 rounded-lg shadow-sm"
+                >
 
-                                <TableCell>
-                                    {item?.requestedUnits}
-                                </TableCell>
+                    <div className="flex justify-between items-center px-4 py-3 border-b bg-amber-50 rounded-t-lg">
+                        <div>
+                            <p className="text-sm font-semibold text-gray-900">
+                                Donation Application
+                            </p>
+                            <p className="text-xs text-gray-500">
+                                {item?.applicant?.createdAt.split("T")[0]}
+                            </p>
+                        </div>
 
-                                <TableCell >
-                                    {
-                                        item.applicant?.profile?.license ? <a className="text-blue-600 cursor-pointer" href={item?.applicant?.profile?.license} target="_blank" rel="noopener noreferrer">{item?.applicant?.profile?.licenseOriginalName}</a> : <span>NA</span>
-                                    }
-                                </TableCell>
-                                <TableCell>{item?.applicant.createdAt.split("T")[0]}</TableCell>
-                                <TableCell className={
-                                    item.status === "accepted" ? "text-green-600"
-                                        : item.status === "rejected" ? "text-red-600"
-                                            : "text-yellow-600"
-                                }>
-                                    {item.status}
-                                </TableCell>
+                        <div className="flex items-center gap-3">
+                            <StatusBadge status={item.status} />
 
-                                <TableCell className="float-right cursor-pointer">
-                                    <Popover>
-                                        <PopoverTrigger>
-                                            <MoreHorizontal />
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-32">
-                                            {
-                                                shortlistingStatus.map((status, index) => {
-                                                    return (
-                                                        <div onClick={() => statusHandler(status, item?._id)} key={index} className='flex w-fit items-center my-2 cursor-pointer'>
-                                                            <span>{status}</span>
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </PopoverContent>
-                                    </Popover>
+                            <Popover>
+                                <PopoverTrigger>
+                                    <MoreHorizontal className="cursor-pointer text-gray-600" />
+                                </PopoverTrigger>
+                                <PopoverContent className="w-32">
+                                    {shortlistingStatus.map((status, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => statusHandler(status, item._id)}
+                                            className="my-2 cursor-pointer hover:text-blue-600"
+                                        >
+                                            {status}
+                                        </div>
+                                    ))}
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+                    </div>
 
-                                </TableCell>
 
-                            </tr>
-                        ))
-                    }
+                    <div className="bg-amber-50 px-4 py-4 border-b">
+                        <p className="text-xs font-semibold text-gray-500 uppercase mb-3">
+                            Donation Requested
+                        </p>
 
-                </TableBody>
+                        <div className="grid grid-cols-12 gap-y-3 text-sm">
+                            <Label className="col-span-3">Items</Label>
+                            <Value className="col-span-9">
+                                {item?.requestedItems?.join(", ")}
+                            </Value>
 
-            </Table>
+                            <Label className="col-span-3">Units</Label>
+                            <Value className="col-span-9">
+                                {item?.requestedUnits}
+                            </Value>
+                        </div>
+                    </div>
+
+
+                    <div className="bg-amber-50 px-4 py-4">
+                        <p className="text-xs font-semibold text-gray-500 uppercase mb-3">
+                            Applicant Details
+                        </p>
+
+                        <div className="grid grid-cols-12 gap-y-3 text-sm">
+                            <Label className="col-span-3">Full Name</Label>
+                            <Value className="col-span-9">
+                                {item?.applicant?.fullname}
+                            </Value>
+
+                            <Label className="col-span-3">Email</Label>
+                            <Value className="col-span-9">
+                                {item?.applicant?.email}
+                            </Value>
+
+                            <Label className="col-span-3">Contact</Label>
+                            <Value className="col-span-9">
+                                {item?.applicant?.phoneNumber}
+                            </Value>
+
+                            <Label className="col-span-3">License</Label>
+                            <Value className="col-span-9">
+                                {item?.applicant?.profile?.license ? (
+                                    <a
+                                        href={item.applicant.profile.license}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-600 underline font-medium"
+                                    >
+                                        {"License File/Image"}
+                                    </a>
+                                ) : (
+                                    "Not Provided"
+                                )}
+                            </Value>
+                        </div>
+                    </div>
+                </div>
+            ))}
         </div>
-    )
-}
 
 
-export default ApplicantsTable
+
+
+    );
+};
+
+const Value = ({ children, className = "" }) => (
+    <p className={`text-gray-900 ${className}`}>
+        {children || "NA"}
+    </p>
+);
+const Label = ({ children, className = "" }) => (
+    <p className={`text-gray-500 font-medium ${className}`}>
+        {children}
+    </p>
+);
+const StatusBadge = ({ status }) => {
+    const styles = {
+        accepted: "bg-green-100 text-green-700",
+        rejected: "bg-red-100 text-red-700",
+        pending: "bg-yellow-100 text-yellow-700",
+    };
+
+    return (
+        <span
+            className={`px-3 py-1 rounded-full text-xs font-semibold capitalize
+      ${styles[status] || styles.pending}`}
+        >
+            {status}
+        </span>
+    );
+};
+
+export default ApplicantsTable;
