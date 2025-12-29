@@ -7,7 +7,7 @@ import { APPLICATION_API_END_POINT } from '@/utils/constant';
 import axios from 'axios';
 import { setAllApplicants } from '@/redux/applicationSlice';
 
-const shortlistingStatus = ["Accepted", "Rejected"];
+const shortlistingStatus = ["Approved", "Declined"];
 
 const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application);
@@ -156,8 +156,8 @@ const Label = ({ children, className = "" }) => (
 );
 const StatusBadge = ({ status }) => {
     const styles = {
-        accepted: "bg-green-100 text-green-700",
-        rejected: "bg-red-100 text-red-700",
+        approved: "bg-green-100 text-green-700",
+        declined: "bg-red-100 text-red-700",
         pending: "bg-yellow-100 text-yellow-700",
     };
 

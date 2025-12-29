@@ -32,7 +32,7 @@ const AppliedDonationTable = () => {
         <TableCell className="text-right">
           <Badge
             className={`${
-              donation?.status === "rejected"
+              donation?.status === "declined"
                 ? "bg-red-500"
                 : donation?.status === "pending"
                 ? "bg-yellow-400"
