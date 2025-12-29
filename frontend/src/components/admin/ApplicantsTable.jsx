@@ -117,6 +117,11 @@ const ApplicantsTable = () => {
                                 {item?.applicant?.phoneNumber}
                             </Value>
 
+                            <Label className="col-span-3">Address</Label>
+                            <Value className="col-span-9">
+                                {item?.applicant?.profile?.address}
+                            </Value>
+
                             <Label className="col-span-3">License</Label>
                             <Value className="col-span-9">
                                 {item?.applicant?.profile?.license ? (
