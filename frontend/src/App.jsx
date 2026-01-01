@@ -14,6 +14,7 @@ import DonorSetup from './components/admin/DonorSetup'
 import AdminDonations from "./components/admin/AdminDonations";
 import PostDonation from './components/admin/PostDonation'
 import Applicants from './components/admin/Applicants'
+import DonorDashboard from './components/admin/DonorDashboard'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 
 const appRouter = createBrowserRouter([
@@ -45,6 +46,8 @@ const appRouter = createBrowserRouter([
     path: "/profile",
     element: <Profile />
   },
+
+
   // Admin(Donor) routes start here
   {
     path: "/admin/donors",
@@ -74,6 +77,11 @@ const appRouter = createBrowserRouter([
     path: "/admin/donations/:id/applicants",
     element: <ProtectedRoute><Applicants /></ProtectedRoute>
   },
+  {
+    path: "/admin/dashboard",
+    element: <ProtectedRoute><DonorDashboard /></ProtectedRoute>
+  },
+
 ])
 
 function App() {

@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="mx-auto max-w-7xl ">
-        <div className="nav p-1 flex justify-between h-15 items-center">
+        <div className="nav p-1 flex justify-between h-14 items-center">
         
           <div className="w-[15%]  shrink-0">
             <h1 className="text-lg sm:text-3xl font-bold flex items-center gap-1">
@@ -124,7 +124,7 @@ const Navbar = () => {
                   <div>
                     <div className="flex gap-2 space-y-2">
                       <Avatar className="cursor-pointer">
-                        <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                        {!user?.profile?.profilePhoto ?(<AvatarImage src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?semt=ais_hybrid&w=740&q=80" alt="profile" />):( <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> )}
                       </Avatar>
                       <div>
                         <h4 className="font-medium">{user?.fullname}</h4>
@@ -137,6 +137,15 @@ const Navbar = () => {
                           <User2 />
                           <Button className="bg-orange-100 " variant="link">
                             <Link to="/profile">View Profile</Link>
+                          </Button>
+                        </div>
+                      )}
+
+                      {user && user.role === 'donor' && (
+                        <div className="mb-1 flex w-fit items-center gap-2 cursor-pointer">
+                          <User2 />
+                          <Button className="bg-orange-100 " variant="link">
+                            <Link to="/admin/dashboard">Dashboard</Link>
                           </Button>
                         </div>
                       )}

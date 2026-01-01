@@ -16,7 +16,7 @@ const DonationMap = ({ donations }) => {
 
     return (
 
-        <div className="relative w-full h-[420px] rounded-2xl overflow-hidden
+        <div className="relative w-full h-[600px] rounded-2xl overflow-hidden
   border bg-white/60 backdrop-blur-md shadow-lg">
 
             <MapContainer
@@ -87,7 +87,7 @@ const DonationMap = ({ donations }) => {
                                     </div>
 
                                     {/* Divider */}
-                                    <div className="h-[1px] bg-gray-200" />
+                                    <div className="h-px bg-gray-200" />
 
 
 
