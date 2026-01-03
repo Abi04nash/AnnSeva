@@ -211,7 +211,7 @@ const DonorDashboard = () => {
                                     <BarChart
                                         data={applicationStats}
                                         layout="vertical"
-                                        margin={{ top: 0, right: 30, left: 20, bottom: 0 }}
+                                        margin={{ top: 0, right: 10, left: 10, bottom: 0 }}
                                     >
                                         <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#f3f4f6" />
                                         <YAxis
@@ -308,11 +308,11 @@ const DonorDashboard = () => {
                         <table className="w-full text-center border-collapse">
                             <thead className="bg-gray-50 text-black text-xs uppercase font-bold">
                                 <tr>
-                                    <th className="p-4 text-left">Title</th>
-                                    <th className="p-4 text-center">Quantity</th>
-                                    <th className="p-4 text-center">Listed Date</th>
-                                    <th className="p-4 text-center">Requests</th>
-                                    <th className="p-4 text-center">Status</th>
+                                    <th className="p-4 text-left whitespace-nowrap">Title</th>
+                                    <th className="p-4 text-center whitespace-nowrap">Quantity</th>
+                                    <th className="p-4 text-center whitespace-nowrap">Listed Date</th>
+                                    <th className="p-4 text-center whitespace-nowrap">Requests</th>
+                                    <th className="p-4 text-center whitespace-nowrap">Status</th>
                                 </tr>
                             </thead>
                             <tbody className="text-sm text-gray-700">
@@ -325,13 +325,13 @@ const DonorDashboard = () => {
                                             <span className="truncate text-gray-900">{d.title}</span>
                                         </td>
                                         <td className="p-4 text-center text-gray-900">{d.quantity} Units</td>
-                                        <td className="p-4">
+                                        <td className="p-4 whitespace-nowrap">
                                             <div className="flex text-gray-900 items-center justify-center gap-2">
                                                 <Calendar className="w-3 h-3 text-gray-800" />
                                                 {d.createdAt?.split("T")[0]}
                                             </div>
                                         </td>
-                                        <td className="p-4 text-center">
+                                        <td className="p-4 whitespace-nowrap text-center">
                                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                                 {d.applications?.length || 0} Applicants
                                             </span>
