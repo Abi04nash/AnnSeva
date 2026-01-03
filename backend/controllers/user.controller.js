@@ -1,4 +1,5 @@
 import { User } from "../models/user.model.js";
+import {Donor} from "../models/donor.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
@@ -28,7 +29,7 @@ export const register = async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await User.create({
+        const newUser = await User.create({
             fullname,
             email,
             phoneNumber,
@@ -39,6 +40,28 @@ export const register = async (req, res) => {
             },
             savedDonations: [] 
         });
+
+
+        if (role === 'donor') {
+            try {
+                await Donor.create({
+                    name: fullname,              // Source Name = User Name
+                    donorType: 'INDIVIDUAL',       // Default Type
+                    userId: newUser._id,
+                    // location: "",                // Empty location initially
+                    // description: "Default Personal Profile",
+                    logo: cloudResponse.secure_url       
+                });
+            } catch (donorError) {
+                // Rollback if source creation fails
+                await User.findByIdAndDelete(newUser._id);
+                console.log("Donor Auto-Creation Failed:", donorError);
+                return res.status(500).json({ 
+                    message: "Error setting up donor profile.", 
+                    success: false 
+                });
+            }
+        }
 
         return res.status(201).json({
             message: "Account created successfully.",

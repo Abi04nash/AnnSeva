@@ -28,7 +28,7 @@ const Profile = () => {
             </Avatar>
             <div>
               <h1 className='font-medium text-xl'>{user?.fullname}</h1>
-              <p>{user?.profile?.about}</p>
+              <p className='text-gray-600' >{user?.profile?.about}</p>
             </div>
           </div>
           <Button onClick={() => setOpen(true)} className="text-right" variant="outline"><Pen className="text-[#F83002]" /></Button>
@@ -37,22 +37,22 @@ const Profile = () => {
         <div className='my-5'>
 
           <div className='flex items-center gap-3 my-2'>
-            <Mail className='text-gray-500 ' />
-            <span className="text-md font-bold">{user?.email}</span>
+            <Mail className='text-black ' />
+            <span className="text-md font-medium text-gray-600">{user?.email}</span>
           </div>
 
           <div className='flex items-center gap-3 my-2'>
-            <Contact className='text-gray-500 ' />
+            <Contact className='text-black  ' />
 
-            <span className="text-md font-bold">{user?.phoneNumber}</span>
+            <span className="text-md font-medium text-gray-600">{user?.phoneNumber}</span>
           </div>
         </div>
 
         <div className='my-5'>
-          <h1 className="text-md text-gray-500  font-bold ">Address</h1>
-          <div className='flex items-center gap-1'>
+          <h1 className="text-md text-black  font-bold ">Address</h1>
+          <div className='flex items-center text-gray-600 gap-1'>
             {user?.profile?.address ? (
-              <span className='text-md font-bold'>{user.profile.address}</span>
+              <span className='text-md font-medium'>{user.profile.address}</span>
             ) : (
               <span>Not Mentioned</span>
             )}
@@ -60,7 +60,7 @@ const Profile = () => {
         </div>
 
         <div className='grid w-full max-w-sm items-center gap-1.5'>
-          <Label className="text-md text-gray-500  font-bold ">Licence</Label>
+          <Label className="text-md text-black  font-bold ">Licence</Label>
           {user?.profile?.license ? (
             <a
               target='_blank'

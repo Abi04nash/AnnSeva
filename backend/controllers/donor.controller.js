@@ -113,7 +113,7 @@ export const updateDonor = async (req, res) => {
         }
 
         return res.status(200).json({
-            message: "Donor information updated successfully.",
+            message: "Source information updated successfully.",
             donor,
             success: true
         });

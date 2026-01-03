@@ -96,7 +96,7 @@ const DonorSetup = () => {
     return (
         <div>
             <Navbar />
-            <div className='p-4 max-w-xl mx-auto my-10'>
+            <div className='p-4 max-w-xl mx-auto my-10 border border-gray-200 shadow-lg rounded-md'>
                 <form onSubmit={submitHandler}>
                     <Button onClick={() => navigate("/admin/donors")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">
                         <ArrowLeft />
@@ -152,7 +152,7 @@ const DonorSetup = () => {
                                 <option value="HOTEL">Hotel</option>
                                 <option value="SHOP">Shop / Store</option>
                                 <option value="EVENT">Event / Catering</option>
-                                <option value="BY_HOUSE">By House</option>
+                                <option value="INDIVIDUAL">Individual</option>
                                 <option value="RESTAURANT">Restaurant</option>
                             </select>
                         </div>

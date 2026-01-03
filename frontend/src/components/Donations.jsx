@@ -44,7 +44,7 @@ useEffect(() => {
                             <span className='text-center w-full mt-10 text-gray-500 text-lg'>No donations found</span>
                         ) : (
                             <div className='flex-1 h-auto md:h-[88vh] overflow-y-auto pb-5'>
-                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4'>
                                     {
                                         filteredDonations.map((donation, index) => (
                                             <motion.div

@@ -10,7 +10,7 @@ import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading } from '@/redux/authSlice'
-import { Loader2 } from 'lucide-react'
+import { Loader2 , Building2 , HandHeart } from 'lucide-react'
 
 const Signup = () => {
 
@@ -34,6 +34,12 @@ const Signup = () => {
     }
     const submitHandler = async (e) => {
         e.preventDefault();
+
+        if (!input.role) {
+            toast.error("Please select if you are a FoodBank or a Donor");
+            return; 
+        }
+
         const formData = new FormData();    
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
@@ -100,46 +106,59 @@ const Signup = () => {
                             value={input.phoneNumber}
                             name="phoneNumber"
                             onChange={changeEventHandler}
-                            placeholder=". . . . . . . . . ."
+                            placeholder="Phone Number"
                         />
                     </div>
                     <div className='my-2'>
-                        <Label className='my-2'>Password</Label>
+                        <Label className=' my-2'>Password</Label>
                         <Input
                             type="password"
                             value={input.password}
                             name="password"
                             onChange={changeEventHandler}
-                            placeholder=". . . . . . . . . ."
+                            placeholder="Password"
                         />
                     </div>
-                    <div className='flex items-center justify-between'>
-                        <RadioGroup className="flex items-center gap-4 my-5">
-                            <div className="flex items-center space-x-2">
-                                <Input
-                                    type="radio"
-                                    name="role"
-                                    value="ngo"
-                                    checked={input.role === 'ngo'}
-                                    onChange={changeEventHandler}
-                                    className="cursor-pointer"
-                                />
-                                <Label htmlFor="r1">FoodBanks</Label>
+                   
+                  
+                    <div className='my-4'>
+                        <Label className=' '>Register as:</Label>
+                        <div className="grid grid-cols-2 gap-4 mt-2">
+                            
+                            {/* FoodBank/NGO */}
+                            <div 
+                                onClick={() => setInput({ ...input, role: 'ngo' })}
+                                className={`cursor-pointer border p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-200 
+                                ${input.role === 'ngo' 
+                                    ? 'border-[#F83002] bg-orange-50 ring-2 ring-orange-200' 
+                                    : 'border-gray-200 hover:border-orange-300 bg-white'
+                                }`}
+                            >
+                                <Building2 className={`w-8 h-8 ${input.role === 'ngo' ? 'text-[#F83002]' : 'text-gray-500'}`} />
+                                <span className={`text-sm font-semibold ${input.role === 'ngo' ? 'text-[#F83002]' : 'text-gray-600'}`}>
+                                    FoodBank / NGO
+                                </span>
                             </div>
-                            <div className="flex items-center space-x-2">
-                                <Input
-                                    type="radio"
-                                    name="role"
-                                    value="donor"
-                                    checked={input.role === 'donor'}
-                                    onChange={changeEventHandler}
-                                    className="cursor-pointer"
-                                />
-                                <Label htmlFor="r2">Donors</Label>
+
+                            {/* Donor */}
+                            <div 
+                                onClick={() => setInput({ ...input, role: 'donor' })}
+                                className={`cursor-pointer border p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-200 
+                                ${input.role === 'donor' 
+                                    ? 'border-[#F83002] bg-orange-50 ring-2 ring-orange-200' 
+                                    : 'border-gray-200 hover:border-orange-300 bg-white'
+                                }`}
+                            >
+                                <HandHeart className={`w-8 h-8 ${input.role === 'donor' ? 'text-[#F83002]' : 'text-gray-500'}`} />
+                                <span className={`text-sm font-semibold ${input.role === 'donor' ? 'text-[#F83002]' : 'text-gray-600'}`}>
+                                    Donor
+                                </span>
                             </div>
-                        </RadioGroup>
-                        
+
+                        </div>
                     </div>
+
+
                     <div className='flex items-center gap-2'>
                             <Label>Profile</Label>
                             <Input

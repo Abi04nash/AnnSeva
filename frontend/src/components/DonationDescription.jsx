@@ -111,7 +111,7 @@ const DonationDescription = () => {
             color: "bg-purple-100 text-purple-700",
             icon: <Calendar className="w-3 h-3" />
         },
-        BY_HOUSE: {
+        INDIVIDUAL: {
             label: "Home",
             color: "bg-green-100 text-green-700",
             icon: <Home className="w-3 h-3" />

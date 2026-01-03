@@ -8,7 +8,7 @@ const donorSchema = new mongoose.Schema({
     },
     donorType:{
         type: String,
-        enum: ["RESTAURANT", "HOTEL", "SHOP / STORE", "EVENT / CATERING", "BY_HOUSE"],
+        enum: ["RESTAURANT", "HOTEL", "SHOP / STORE", "EVENT / CATERING", "INDIVIDUAL"],
         required: true
     },
     description:{

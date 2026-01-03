@@ -44,7 +44,7 @@ const ApplicantsTable = () => {
                     className="bg-[#f9fafb] border border-gray-300 rounded-lg shadow-sm"
                 >
 
-                    <div className="flex justify-between items-center px-4 py-3 border-b bg-amber-50 rounded-t-lg">
+                    <div className="flex justify-between items-center px-4 py-3 border-b bg-orange-50 rounded-t-lg">
                         <div>
                             <p className="text-sm font-semibold text-gray-900">
                                 Donation Application

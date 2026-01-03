@@ -36,7 +36,7 @@ const donorTypeUI = {
     color: "bg-purple-100 text-purple-700",
     icon: <Calendar className="w-3 h-3" />
   },
-  BY_HOUSE: {
+  INDIVIDUAL: {
     label: "Home",
     color: "bg-green-100 text-green-700",
     icon: <Home className="w-3 h-3" />
@@ -133,7 +133,7 @@ const Donation = ({ donation }) => {
   };
 
   return (
-    <div className='p-5 my-1 rounded-md shadow-xl bg-white border border-gray-100'>
+    <div className='p-5 my-2 rounded-md shadow-xl bg-white border border-gray-100'>
       <div className='flex items-center justify-between'>
         <p className='text-sm text-gray-500'>
           {new Date(donationData?.createdAt).toDateString()}
