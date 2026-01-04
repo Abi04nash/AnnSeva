@@ -42,10 +42,10 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="mx-auto max-w-7xl ">
-        <div className="nav p-1 flex justify-between h-14 items-center">
+        <div className="nav p-1 flex justify-between h-13 items-center">
         
           <div className="w-[15%]  shrink-0">
-            <h1 className="text-lg sm:text-3xl font-bold flex items-center gap-1">
+            <h1 className=" text-transparent bg-clip-text tracking-tight text-lg sm:text-3xl font-bold flex items-center gap-1">
               <span className="text-yellow-400">Ann</span>
               <span className="text-[#F83002]">Seva</span>
             </h1>
@@ -135,7 +135,7 @@ const Navbar = () => {
                       {user && user.role === 'ngo' && (
                         <div className="mb-1 flex w-fit items-center gap-2 cursor-pointer">
                           <User2 />
-                          <Button className="bg-orange-100 " variant="link">
+                          <Button className="bg-orange-50 hover:bg-orange-100" variant="link">
                             <Link to="/profile">View Profile</Link>
                           </Button>
                         </div>
@@ -144,14 +144,14 @@ const Navbar = () => {
                       {user && user.role === 'donor' && (
                         <div className="mb-1 flex w-fit items-center gap-2 cursor-pointer">
                           <User2 />
-                          <Button className="bg-orange-100 " variant="link">
+                          <Button className="bg-orange-50 hover:bg-orange-100" variant="link">
                             <Link to="/admin/dashboard">Dashboard</Link>
                           </Button>
                         </div>
                       )}
                       <div className="mb-1 flex w-fit items-center gap-2 cursor-pointer">
                         <LogOut />
-                        <Button className="bg-orange-100 " onClick={logoutHandler} variant="link">
+                        <Button className="bg-orange-50 hover:bg-orange-100" onClick={logoutHandler} variant="link">
                           Logout
                         </Button>
                       </div>

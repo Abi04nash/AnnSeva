@@ -64,23 +64,23 @@ const DonationMap = ({ donations }) => {
                                     <div className="text-xs text-gray-700 space-y-1">
 
                                         <div className="flex items-start gap-1">
-                                            <span>📍</span>
+                                           
                                             <span className="font-medium">
-                                                {donation.pickupLocation}
+                                                Location: <b>{donation.pickupLocation}</b>
                                             </span>
                                         </div>
 
                                         <div className="flex items-start gap-1">
-                                            <span>📦</span>
+                                           
                                             <span>
                                                 Quantity: <b>{donation.quantity}</b>
                                             </span>
                                         </div>
 
                                         <div className="flex items-start gap-1">
-                                            <span>⏰</span>
+                                            
                                             <span>
-                                                Expires At: <b>{donation.expiryAt}</b>
+                                                Expires At: <b>{donation.expiryAt?.split('T')[0]}</b>
                                             </span>
                                         </div>
 

@@ -180,7 +180,7 @@ const DonationDescription = () => {
                 </div>
 
                 <div className="bg-white p-4 rounded-xl shadow border flex items-center justify-between">
-                    <span className="font-semibold">Donor Type</span>
+                    <span className="font-semibold">Donation From</span>
 
                     {singleDonation?.donor?.donorType &&
                         donorTypeUI[singleDonation.donor.donorType] ? (
