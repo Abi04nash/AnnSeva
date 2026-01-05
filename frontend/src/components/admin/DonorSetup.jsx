@@ -96,7 +96,7 @@ const DonorSetup = () => {
     return (
         <div>
             <Navbar />
-            <div className='p-4 max-w-xl mx-auto my-10 border border-gray-200 shadow-lg rounded-md'>
+            <div className='p-4 max-w-xl mx-auto my-10 border border-gray-200 shadow-lg rounded-md w-[90%] md:w-full'>
                 <form onSubmit={submitHandler}>
                     <Button onClick={() => navigate("/admin/donors")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">
                         <ArrowLeft />
@@ -146,7 +146,7 @@ const DonorSetup = () => {
                                 name="donorType"
                                 value={input.donorType}
                                 onChange={changeEventHandler}
-                                className="w-full border p-2 rounded"
+                                className="w-full h-9 border p-2 rounded-md"
                             >
                                 
                                 <option value="HOTEL">Hotel</option>

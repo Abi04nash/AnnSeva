@@ -67,7 +67,7 @@ const DonorsTable = () => {
                         {filteredDonors.map(donor => (
                             <TableRow
                                 key={donor._id}
-                                className="bg-orange-50 hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0"
+                                className="hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0"
                             >
                           
                                 <TableCell className="px-6 py-4 text-left border-r border-gray-200">

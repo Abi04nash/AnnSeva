@@ -36,7 +36,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/50 to-black/80 z-0"></div>
 
 
-      <div className="relative mb-25 md:mb-0 lg:mb-0 z-10 w-full max-w-7xl mx-auto px-2 flex flex-col items-center gap-9">
+      <div className="relative mb-28 md:mb-0 lg:mb-0 z-10 w-full max-w-7xl mx-auto px-2 flex flex-col items-center gap-9">
 
 
         <motion.div

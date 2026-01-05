@@ -103,7 +103,7 @@ const Navbar = () => {
           </ul>
 
           {/* Right section */}
-          <div className="flex w-[15%] justify-end gap-4">
+          <div className="flex w-[15%] justify-end gap-2 md:gap-4">
             {!user ? (
               <div className="hidden md:flex items-center gap-2">
                 <Link to="/login">
@@ -116,7 +116,7 @@ const Navbar = () => {
             ) : (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Avatar size={20} className="cursor-pointer">
+                  <Avatar className="cursor-pointer h-6 w-6 border-2 border-orange-200 md:h-8 md:w-8">
                     {!user?.profile?.profilePhoto ?(<AvatarImage src="https://img.freepik.com/free-vector/user-circles-set_78370-4704.jpg?semt=ais_hybrid&w=740&q=80" alt="profile" />):( <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> )}
                   </Avatar>
                 </PopoverTrigger>

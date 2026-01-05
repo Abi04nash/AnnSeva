@@ -76,8 +76,8 @@ const Signup = () => {
     return (
         <div>
             <Navbar />
-            <div className='log flex items-center justify-center max-w-7xl mx-auto'>
-                <form onSubmit={submitHandler} className=' w:1/1 lg:w-1/3 border border-gray-200 rounded-md p-4 my-10'>
+            <div className='log md:m-4 flex items-center justify-center max-w-7xl mx-auto'>
+                <form onSubmit={submitHandler} className=' w-1/1 lg:w-1/3 border border-gray-200 rounded-md p-4 my-10'>
                     <h1 className='text-[#F83002] font-bold text-xl mb-5'>Sign Up</h1>
                     <div className='my-2'>
                         <Label className='my-2'>Full Name</Label>

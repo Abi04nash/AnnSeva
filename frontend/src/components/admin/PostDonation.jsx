@@ -115,7 +115,7 @@ const PostDonation = () => {
   return (
     <div>
       <Navbar />
-      <div className='flex items-center  justify-center w-screen my-5'>
+      <div className='flex items-center justify-center w-screen my-5'>
         <form onSubmit={submitHandler} className='mx-2 p-4 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
           <h1 className="text-2xl font-bold mb-5 text-center">
             {id ? "Update Donation" : "Post New Donation"}
