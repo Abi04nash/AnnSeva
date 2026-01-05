@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { Bookmark, Home, Store, Building2, Calendar, ShoppingBag } from 'lucide-react';
+import { Bookmark, Home, Store, Building2, Calendar, ShoppingBag, MapPin, Utensils, Package} from 'lucide-react';
 import { Avatar, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
 import { useNavigate } from 'react-router-dom';
@@ -133,10 +133,13 @@ const Donation = ({ donation }) => {
   };
 
   return (
-    <div className='p-5 my-2 rounded-md shadow-xl bg-white border border-gray-100'>
+    <div className='p-5 my-2 rounded-md shadow-xl hover:shadow-2xl transition-all dur-ation300 overflow-hidden bg-white border border-gray-100'>
       <div className='flex items-center justify-between'>
-        <p className='text-sm text-gray-500'>
+        <p className='text-xs font-medium text-gray-500'>
+          <div className='flex flex-col'>
+         <span className='text-[10px] uppercase tracking-wider font-semibold text-gray-400'>Posted on</span>
           {new Date(donationData?.createdAt).toDateString()}
+          </div>
         </p>
         <Button
           variant="outline"
@@ -153,7 +156,7 @@ const Donation = ({ donation }) => {
 
       </div>
 
-      <div className='flex items-center gap-2 my-2'>
+      <div className='flex items-center gap-2 my-3'>
         <Button className='p-6' variant='outline' size='icon'>
           <Avatar>
             <AvatarImage src={donationData?.donor?.logo} />
@@ -183,38 +186,45 @@ const Donation = ({ donation }) => {
           </div>
 
           <p className="text-sm text-grey-500">
-            by <span className='text-orange-500'>{donationData?.donor?.userId?.fullname}</span>
+            by <span className='text-orange-500 font-medium'>{donationData?.donor?.userId?.fullname}</span>
           </p>
         </div>
       </div>
 
+      <div className="h-px w-full bg-gray-200 mb-4"></div>
+
       <div>
         <h1 className='font-bold text-lg my-2'>{donationData?.title}</h1>
-        <p className='text-sm text-gray-600'>{donationData?.description}</p>
+        <p className='text-sm text-gray-500 leading-relaxed line-clamp-2 min-h-10'>
+          {donationData?.description}
+        </p>
       </div>
 
-      <div className='flex flex-wrap items-center gap-2 mt-4'>
-        <Badge className='text-blue-700 font-bold' variant='ghost'>
+      <div className='flex flex-wrap items-center gap-2 my-4'>
+        <Badge className='text-blue-700 bg-blue-50 text-xs font-medium border border-blue-100' variant='ghost'>
+          <Package className="w-3 h-3" />
           {donationData?.quantity} Units
         </Badge>
-        <Badge className='text-[#F83002] font-bold' variant='ghost'>
+        <Badge className='text-[#F83002] bg-rose-50 text-xs font-medium border border-rose-100' variant='ghost'>
+        <Utensils className='w-3 h-3'/>
           {donationData?.donationType}
         </Badge>
-        <Badge className='text-[#7209b7] font-bold' variant='ghost'>
+        <Badge className='text-[#7209b7] bg-violet-50 text-xs font-medium border border-violet-100' variant='ghost'>
+          <MapPin className="w-3 h-3" />
           {donationData?.pickupLocation}
         </Badge>
       </div>
 
-      <div className='flex items-center gap-4 mt-4'>
-        <Button onClick={() => navigate(`/description/${donationData?._id}`)} variant='outline'>
+      <div className='flex items-center gap-3 mt-auto'>
+        <Button className="flex-1 border-gray-300 hover:bg-gray-50 font-medium" onClick={() => navigate(`/description/${donationData?._id}`)} variant='outline'>
           Details
         </Button>
 
         <Button
           onClick={() => setIsModalOpen(true)} 
           disabled={isApplied || isExpired || loading}
-          className={`rounded-lg ${isApplied || isExpired
-            ? 'bg-gray-600 cursor-not-allowed'
+          className={`flex-1 font-medium shadow-md transition-all ${isApplied || isExpired
+            ? 'bg-gray-500 cursor-not-allowed'
             : 'bg-[#F83002] hover:bg-[#d82800]'}`}
         >
           {loading

@@ -130,7 +130,7 @@ const DonationDescription = () => {
                             {singleDonation?.title}
                         </h1>
                         <p className="text-sm text-grey-500">
-                            by <span className='text-orange-500'>{singleDonation?.donor?.userId?.fullname}</span>
+                            by <span className='text-orange-500 font-medium'>{singleDonation?.donor?.userId?.fullname}</span>
                         </p>
 
                         <div className="flex flex-wrap gap-2 mt-3">

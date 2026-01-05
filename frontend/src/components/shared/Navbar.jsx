@@ -87,7 +87,7 @@ const Navbar = () => {
                     to="/donations"
                     className={location.pathname === '/donations' ? 'text-[#F83002]' : ''}
                   >
-                    <i className="fa-solid fa-gift"></i>Donations
+                    <i class="fa-solid fa-bowl-rice"></i>Donations
                   </Link>
                 </li>
                 <li>
@@ -95,7 +95,7 @@ const Navbar = () => {
                     to="/browse"
                     className={location.pathname === '/browse' ? 'text-[#F83002]' : ''}
                   >
-                    <i className="fa-solid fa-window-maximize"></i>Browse
+                    <i class="fa-brands fa-safari"></i>Browse
                   </Link>
                 </li>
               </>
@@ -210,7 +210,7 @@ const Navbar = () => {
                     to="/donations"
                     className={location.pathname === '/donations' ? 'text-[#F83002]' : ''}
                   >
-                    <i className="fa-solid fa-gift"></i>Donations
+                    <i class="fa-solid fa-bowl-rice"></i>Donations
                   </Link>
                 </li>
                 <li>
@@ -218,7 +218,7 @@ const Navbar = () => {
                     to="/browse"
                     className={location.pathname === '/browse' ? 'text-[#F83002]' : ''}
                   >
-                    <i className="fa-solid fa-window-maximize"></i>Browse
+                    <i class="fa-brands fa-safari"></i>Browse
                   </Link>
                 </li>
               </>

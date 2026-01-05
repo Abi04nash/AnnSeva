@@ -28,9 +28,18 @@ const SavedDonations = () => {
           No saved donations
         </p>
       ) : (
-        donations.map(donation => (
-          <Donation key={donation._id} donation={donation} />
-        ))
+        <div className="lg:col-span-3">
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          >
+            {donations.map((donation) => (
+              <Donation
+                key={donation._id}
+                donation={donation}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

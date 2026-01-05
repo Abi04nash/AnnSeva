@@ -93,7 +93,7 @@ const DonorDashboard = () => {
                     </div>
                     <button
                         onClick={() => navigate("/admin/donations/create")}
-                        className="bg-[#F83002] hover:bg-[#d92902] text-white px-6 py-2.5 rounded-full font-medium shadow-lg shadow-orange-200 transition-all flex items-center gap-2"
+                        className="bg-[#F83002] hover:bg-[#d92902] text-white px-6 py-2.5 rounded-full font-medium shadow-lg transition-all flex items-center gap-2"
                     >
                         <Utensils className="w-4 h-4"/>
                         Donate Food
@@ -319,9 +319,6 @@ const DonorDashboard = () => {
                                 {allAdminDonations?.slice(0, 5).map((d) => (
                                     <tr key={d._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                                         <td className="p-4 font-medium flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded bg-orange-100 shrink-0 flex items-center justify-center text-[#F83002]">
-                                                <Utensils className="w-4 h-4" />
-                                            </div>
                                             <span className="truncate text-gray-900">{d.title}</span>
                                         </td>
                                         <td className="p-4 text-center text-gray-900">{d.quantity} Units</td>

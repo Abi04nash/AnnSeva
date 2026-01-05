@@ -96,7 +96,7 @@ const DonorSetup = () => {
     return (
         <div>
             <Navbar />
-            <div className='p-4 max-w-xl mx-auto my-10 border border-gray-200 shadow-lg rounded-md w-[90%] md:w-full'>
+            <div className='p-4 max-w-xl mx-auto my-10 border border-gray-200 shadow-lg rounded-md w-[95%] md:w-full'>
                 <form onSubmit={submitHandler}>
                     <Button onClick={() => navigate("/admin/donors")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">
                         <ArrowLeft />

@@ -7,6 +7,9 @@ import { useDispatch } from 'react-redux'
 import AdminDonationsTable from './AdminDonationsTable'
 import useGetAllAdminDonations from '@/hooks/useGetAllAdminDonations'
 import { setSearchDonationByText } from '@/redux/donationSlice'
+import {
+    Utensils,
+} from "lucide-react";
 
 const AdminDonations = () => {
   useGetAllAdminDonations();
@@ -29,6 +32,7 @@ const AdminDonations = () => {
             onChange={(e) => setInput(e.target.value)}
           />
           <Button className="bg-[#F83002]" onClick={() => navigate("/admin/donations/create")}>
+            {/* <Utensils className="w-2 h-2"/> */}
             New Donation
           </Button>
         </div>
