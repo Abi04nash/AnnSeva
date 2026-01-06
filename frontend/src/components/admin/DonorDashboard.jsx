@@ -5,20 +5,8 @@ import { Card, CardContent } from "../ui/card";
 import { APPLICATION_API_END_POINT } from "@/utils/constant";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LabelList
-} from 'recharts';
-import {
-    Activity,
-    Users,
-    Package,
-    CheckCircle,
-    XCircle,
-    Clock,
-    Utensils,
-    Calendar,
-    Loader2
-} from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LabelList } from 'recharts';
+import { Activity, Users, Package, CheckCircle, XCircle, Clock, Utensils, Calendar, Loader2 } from "lucide-react";
 import useGetAllAdminDonations from '@/hooks/useGetAllAdminDonations'
 
 const DonorDashboard = () => {
@@ -32,16 +20,18 @@ const DonorDashboard = () => {
     const [isLoadingApplicants, setIsLoadingApplicants] = useState(true);
 
     useEffect(() => {
+
+        setApplicants([]);
+        setIsLoadingApplicants(true);
+
+
+        if (!allAdminDonations || allAdminDonations.length === 0) {
+            setIsLoadingApplicants(false);
+            return;
+        }
+
         const fetchApplicants = async () => {
-
-            setIsLoadingApplicants(true);
             try {
-                if (allAdminDonations.length === 0) {
-                    setApplicants([]);
-                    setIsLoadingApplicants(false);
-                    return;
-                }
-
                 const allApplicants = await Promise.all(
                     allAdminDonations.map(async (donation) => {
                         const res = await axios.get(
@@ -59,11 +49,9 @@ const DonorDashboard = () => {
             }
         };
 
-
-        if (allAdminDonations) {
-            fetchApplicants();
-        }
+        fetchApplicants();
     }, [allAdminDonations]);
+
 
     const totalDonations = allAdminDonations?.length || 0;
     const activeDonations = allAdminDonations?.filter(d => d.status === "active").length || 0;
@@ -84,6 +72,7 @@ const DonorDashboard = () => {
             <Navbar />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
 
+
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
                         <h1 className="text-3xl font-bold text-black">Dashboard</h1>
@@ -95,7 +84,7 @@ const DonorDashboard = () => {
                         onClick={() => navigate("/admin/donations/create")}
                         className="bg-[#F83002] hover:bg-[#d92902] text-white px-6 py-2.5 rounded-full font-medium shadow-lg transition-all flex items-center gap-2"
                     >
-                        <Utensils className="w-4 h-4"/>
+                        <Utensils className="w-4 h-4" />
                         Donate Food
                     </button>
                 </div>
@@ -115,7 +104,6 @@ const DonorDashboard = () => {
                         </CardContent>
                     </Card>
 
-
                     <Card className="border-none shadow-sm hover:shadow-md transition-shadow">
                         <CardContent className="p-6 flex items-center justify-between">
                             <div>
@@ -127,7 +115,6 @@ const DonorDashboard = () => {
                             </div>
                         </CardContent>
                     </Card>
-
 
                     <Card className="border-none shadow-sm hover:shadow-md transition-shadow">
                         <CardContent className="p-6 flex items-center justify-between">
@@ -143,7 +130,6 @@ const DonorDashboard = () => {
                         </CardContent>
                     </Card>
 
-
                     <Card className="border-none shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-green-500">
                         <CardContent className="p-6 flex items-center justify-between">
                             <div>
@@ -152,12 +138,11 @@ const DonorDashboard = () => {
                                     {isLoadingApplicants ? <Loader2 className="w-6 h-6 animate-spin text-green-200" /> : approved}
                                 </h3>
                             </div>
-                             <div className="p-3 bg-green-50 rounded-full">
-                            <CheckCircle className="w-8 h-8 text-green-400" />
+                            <div className="p-3 bg-green-50 rounded-full">
+                                <CheckCircle className="w-8 h-8 text-green-400" />
                             </div>
                         </CardContent>
                     </Card>
-
 
                     <Card className="border-none shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-orange-500">
                         <CardContent className="p-6 flex items-center justify-between">
@@ -168,11 +153,10 @@ const DonorDashboard = () => {
                                 </h3>
                             </div>
                             <div className="p-3 bg-orange-50 rounded-full">
-                            <Clock className="w-8 h-8 text-orange-400" />
+                                <Clock className="w-8 h-8 text-orange-400" />
                             </div>
                         </CardContent>
                     </Card>
-
 
                     <Card className="border-none shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-red-500">
                         <CardContent className="p-6 flex items-center justify-between">
@@ -183,7 +167,7 @@ const DonorDashboard = () => {
                                 </h3>
                             </div>
                             <div className="p-3 bg-red-50 rounded-full">
-                            <XCircle className="w-8 h-8 text-red-400" />
+                                <XCircle className="w-8 h-8 text-red-400" />
                             </div>
                         </CardContent>
                     </Card>
@@ -191,7 +175,6 @@ const DonorDashboard = () => {
 
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-
 
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 lg:col-span-2 hover:shadow-md transition-shadow duration-300">
                         <div className="flex justify-between items-center mb-6">
@@ -205,6 +188,10 @@ const DonorDashboard = () => {
                             {isLoadingApplicants ? (
                                 <div className="h-full w-full flex items-center justify-center">
                                     <Loader2 className="w-10 h-10 animate-spin text-gray-300" />
+                                </div>
+                            ) : totalApplications === 0 ? (
+                                <div className="h-full w-full flex items-center justify-center text-gray-400">
+                                    No application data available
                                 </div>
                             ) : (
                                 <ResponsiveContainer width="100%" height="100%">
@@ -267,41 +254,49 @@ const DonorDashboard = () => {
                         </div>
                     </div>
 
-
+                    {/* Chart */}
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <h3 className="text-lg font-bold mb-6 text-black">Active vs Inactive</h3>
-                        <div className="h-[250px] w-full flex justify-center">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
-                                    <Pie
-                                        data={[
-                                            { name: 'Active', value: activeDonations, color: '#22c55e' },
-                                            { name: 'Inactive', value: totalDonations - activeDonations, color: '#e5e7eb' }
-                                        ]}
-                                        cx="50%"
-                                        cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={80}
-                                        paddingAngle={5}
-                                        dataKey="value"
-                                    >
-                                        <Cell fill="#22c55e" />
-                                        <Cell fill="#e5e7eb" />
-                                    </Pie>
-                                    <Tooltip />
-                                </PieChart>
-                            </ResponsiveContainer>
-                        </div>
-                        <div className="text-center mt-4">
-                            <span className="text-3xl font-bold text-gray-800">{activeDonations}</span>
-                            <p className="text-gray-500 text-sm">Active Donations Now</p>
-                        </div>
+                        {totalDonations === 0 ? (
+                            <div className="h-[250px] flex items-center justify-center text-gray-400">
+                                No donation data
+                            </div>
+                        ) : (
+                            <>
+                                <div className="h-[250px] w-full flex justify-center">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <PieChart>
+                                            <Pie
+                                                data={[
+                                                    { name: 'Active', value: activeDonations, color: '#22c55e' },
+                                                    { name: 'Inactive', value: totalDonations - activeDonations, color: '#e5e7eb' }
+                                                ]}
+                                                cx="50%"
+                                                cy="50%"
+                                                innerRadius={60}
+                                                outerRadius={80}
+                                                paddingAngle={5}
+                                                dataKey="value"
+                                            >
+                                                <Cell fill="#22c55e" />
+                                                <Cell fill="#e5e7eb" />
+                                            </Pie>
+                                            <Tooltip />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </div>
+                                <div className="text-center mt-4">
+                                    <span className="text-3xl font-bold text-gray-800">{activeDonations}</span>
+                                    <p className="text-gray-500 text-sm">Active Donations Now</p>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
 
-
+                {/* Table */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <div className="p-4 border-b border-gray-100 flex justify-between items-center">
                         <h3 className="text-lg font-bold text-black">Recent <span className="text-[#F83002]">Donations</span></h3>
                     </div>
                     <div className="overflow-x-auto">
@@ -334,7 +329,7 @@ const DonorDashboard = () => {
                                             </span>
                                         </td>
                                         <td className="p-4 text-center">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                                                 ${d.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                                                 {d.status === 'active' ? 'Active' : 'Expired'}
                                             </span>
@@ -356,5 +351,10 @@ const DonorDashboard = () => {
         </div>
     );
 };
+
+
+
+
+
 
 export default DonorDashboard;

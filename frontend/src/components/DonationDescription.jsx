@@ -3,7 +3,7 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Home, Store, Building2, Calendar, ShoppingBag } from 'lucide-react';
+import { Home, Store, Building2, Calendar, ShoppingBag, Package, Utensils, MapPin } from 'lucide-react';
 import { APPLICATION_API_END_POINT, DONATION_API_END_POINT } from '@/utils/constant';
 import { setSingleDonation } from '@/redux/donationSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -134,13 +134,16 @@ const DonationDescription = () => {
                         </p>
 
                         <div className="flex flex-wrap gap-2 mt-3">
-                            <Badge variant="ghost" className="text-blue-700 font-semibold">
+                            <Badge variant="ghost" className="text-blue-700 bg-blue-50 text-xs font-medium border border-blue-100">
+                                <Package className="w-3 h-3" />
                                 {singleDonation?.quantity} Units
                             </Badge>
-                            <Badge variant="ghost" className="text-[#F83002] font-semibold">
+                            <Badge variant="ghost" className="text-[#F83002] bg-rose-50 text-xs font-medium border border-rose-100">
+                                <Utensils className='w-3 h-3' />
                                 {singleDonation?.donationType}
                             </Badge>
-                            <Badge variant="ghost" className="text-[#7209b7] font-semibold">
+                            <Badge variant="ghost" className="text-[#7209b7] bg-violet-50 text-xs font-medium border border-violet-100">
+                                <MapPin className="w-3 h-3" />
                                 {singleDonation?.pickupLocation}
                             </Badge>
                         </div>

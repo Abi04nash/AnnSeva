@@ -145,7 +145,7 @@ const PostDonation = () => {
             </div>
 
             <div>
-              <Label>Items()</Label>
+              <Label>Items</Label>
               <Input
                 type="text"
                 name="items"
