@@ -57,7 +57,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="mt-4 text-3xl md:text-5xl font-light text-white italic"
+            className="mt-4 text-3xl md:text-5xl font-medium text-transparent bg-clip-text bg-linear-to-r  from-orange-600 to-yellow-200 italic"
           >
             One Click at a Time
           </motion.span>
