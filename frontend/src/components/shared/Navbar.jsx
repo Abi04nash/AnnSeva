@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="mx-auto max-w-7xl ">
-        <div className="nav p-1 flex justify-between h-13 items-center">
+        <div className="nav p-2 flex justify-between h-13 items-center">
         
           <div className="w-[15%]  shrink-0">
             <h1 className=" text-transparent bg-clip-text tracking-tight text-lg sm:text-3xl font-bold flex items-center gap-1">

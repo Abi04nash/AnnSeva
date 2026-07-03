@@ -1,5 +1,5 @@
 import { User } from "../models/user.model.js";
-import {Donor} from "../models/donor.model.js";
+import { Donor } from "../models/donor.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
@@ -15,11 +15,13 @@ export const register = async (req, res) => {
                 success: false
             });
         };
-        
         const file = req.file;
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        let cloudResponse = { secure_url: "" }; // Acts as a fallback so your code below doesn't crash
 
+        if (file) {
+            const fileUri = getDataUri(file);
+            cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        }
         const user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({
@@ -35,10 +37,10 @@ export const register = async (req, res) => {
             phoneNumber,
             password: hashedPassword,
             role,
-            profile:{
-                profilePhoto:cloudResponse.secure_url,
+            profile: {
+                profilePhoto: cloudResponse.secure_url,
             },
-            savedDonations: [] 
+            savedDonations: []
         });
 
 
@@ -50,15 +52,15 @@ export const register = async (req, res) => {
                     userId: newUser._id,
                     // location: "",                // Empty location initially
                     // description: "Default Personal Profile",
-                    logo: cloudResponse.secure_url       
+                    logo: cloudResponse.secure_url
                 });
             } catch (donorError) {
                 // Rollback if source creation fails
                 await User.findByIdAndDelete(newUser._id);
                 console.log("Donor Auto-Creation Failed:", donorError);
-                return res.status(500).json({ 
-                    message: "Error setting up donor profile.", 
-                    success: false 
+                return res.status(500).json({
+                    message: "Error setting up donor profile.",
+                    success: false
                 });
             }
         }
@@ -120,7 +122,7 @@ export const login = async (req, res) => {
             phoneNumber: user.phoneNumber,
             role: user.role,
             profile: user.profile,
-            savedDonations: user.savedDonations|| [] 
+            savedDonations: user.savedDonations || []
         }
 
         return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' }).json({
@@ -132,6 +134,8 @@ export const login = async (req, res) => {
         console.log(error);
     }
 }
+
+
 export const logout = async (req, res) => {
     try {
         return res.status(200).cookie("token", "", { maxAge: 0 }).json({
@@ -172,7 +176,7 @@ export const updateProfile = async (req, res) => {
 
         // File upload handle yah hua
         if (req.file) {
-            const fileUri = getDataUri(req.file); 
+            const fileUri = getDataUri(req.file);
             const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
             updateData['profile.license'] = cloudResponse.secure_url;
             updateData['profile.licenseOriginalName'] = req.file.originalname;
@@ -225,20 +229,20 @@ export const toggleSaveDonation = async (req, res) => {
         const alreadySaved = user.savedDonations.includes(donationId);
 
         if (alreadySaved) {
-           
+
             user.savedDonations = user.savedDonations.filter(
                 (id) => id.toString() !== donationId
             );
         } else {
-            
+
             user.savedDonations.push(donationId);
         }
 
         await user.save();
 
         return res.status(200).json({
-            message: alreadySaved 
-                ? "Donation removed from saved list" 
+            message: alreadySaved
+                ? "Donation removed from saved list"
                 : "Donation saved successfully",
             success: true
         });

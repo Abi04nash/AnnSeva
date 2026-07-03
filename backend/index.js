@@ -40,7 +40,7 @@ app.use("/api/v1/application", applicationRoute);
 
 
 app.use(express.static(path.join(_dirname , "/frontend/dist")));
-app.get('*',(_, res) => {
+app.get(/.*/,(_, res) => {
   res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
 });
 

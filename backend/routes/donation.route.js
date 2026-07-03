@@ -44,10 +44,10 @@ const router = express.Router();
 router.route("/post").post(isAuthenticated, postDonation);
 
 // NGO will view all available donations
-router.route("/get").get(isAuthenticated , getAllDonations);
+router.route("/get").get(getAllDonations);
 
 // NGO will view donation details by ID
-router.route("/get/:id").get(isAuthenticated, getDonationById);
+router.route("/get/:id").get(getDonationById);
 
 // Donor can view all donations created by them
 router.route("/getdonordonations").get(isAuthenticated, getDonorDonations);

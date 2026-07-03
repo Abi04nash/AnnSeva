@@ -179,15 +179,27 @@ const PostDonation = () => {
             </div>
 
             <div>
-              <Label>Donation Type</Label>
-              <Input
-                type="text"
+              <Label htmlFor="donationType">Donation Type</Label>
+              <select
+                id="donationType"
                 name="donationType"
                 value={input.donationType}
                 onChange={changeEventHandler}
-                placeholder="e.g. Food / Clothes / Groceries"
-                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-              />
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 my-1"
+              >
+                {/* Default placeholder option */}
+                <option value="" disabled>
+                  Select a donation type...
+                </option>
+
+                {/* Dropdown options */}
+                <option value="Foods">Foods</option>
+                <option value="Groceries">Groceries</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Others">Others</option>
+              </select>
             </div>
 
             <div>
@@ -196,7 +208,14 @@ const PostDonation = () => {
                 type="number"
                 name="freshnessLevel"
                 value={input.freshnessLevel}
-                onChange={changeEventHandler}
+                onChange={(e) => {
+                  // Only update state if the value is empty, or between 1 and 10
+                  if (e.target.value === "" || (Number(e.target.value) >= 1 && Number(e.target.value) <= 10)) {
+                    changeEventHandler(e);
+                  }
+                }}
+                min="1"
+                max="10"
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
               />
             </div>
