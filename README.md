@@ -134,7 +134,7 @@ Donation Completed / Expired
 
 **Abinash Mishra**
 
-Built with ❤️ using React, Node.js, MongoDB, Gemini AI, and modern web technologies.
+Built with ❤️ using React, Node.js, MongoDB, Express, and modern technologies.
 
 
 
