@@ -127,6 +127,15 @@ Donation Completed / Expired
 <img width="1874" height="868" alt="Screenshot 2025-12-19 222310" src="https://github.com/user-attachments/assets/4eb04d58-c8d7-4278-b082-bf38f0286f34" />
 
 
+---
+
+
+## 👨‍💻 Author
+
+**Abinash Mishra**
+
+Built with ❤️ using React, Node.js, MongoDB, Gemini AI, and modern web technologies.
+
 
 
 
