@@ -4,6 +4,7 @@ import { MoreHorizontal } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { APPLICATION_API_END_POINT } from '@/utils/constant';
+import { updateDonationInList } from '@/redux/donationSlice'; // YEH LINE ADD KAR
 import axios from 'axios';
 import { setAllApplicants } from '@/redux/applicationSlice';
 
@@ -29,7 +30,12 @@ const ApplicantsTable = () => {
                     { withCredentials: true }
                 );
 
+                // Yeh applicants table ko update karta hai
                 dispatch(setAllApplicants(updated.data.donation));
+                
+                // FIX: Yeh Redux mein main donation object ko update karega taaki 
+                // quantity 0 aur status 'expired' instantly Donor feed mein dikhe bina refresh ke!
+                dispatch(updateDonationInList(updated.data.donation)); 
             }
         } catch (error) {
             toast.error(error.response?.data?.message);

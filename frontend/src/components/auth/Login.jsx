@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import { RadioGroup } from '../ui/radio-group'
 import { Button } from '../ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -10,7 +9,7 @@ import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setUser } from '@/redux/authSlice'
-import { Loader2, Building2, HandHeart } from 'lucide-react'
+import { Loader2, Building2, HandHeart, LockKeyhole, Mail } from 'lucide-react'
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -48,97 +47,130 @@ const Login = () => {
             dispatch(setLoading(false));
         }
     }
+
     useEffect(() => {
         if (user) {
             navigate("/");
         }
-    }, [])
+    }, [user, navigate])
+
     return (
-        <div>
+        <div className="min-h-screen bg-gray-50 flex flex-col">
             <Navbar />
-            <div className='log flex items-center justify-center max-w-7xl mx-auto'>
-                <form onSubmit={submitHandler} className='w-1/1 lg:w-1/3 border border-gray-200 rounded-md p-4 my-10'>
-                    <h1 className='font-bold text-xl mb-5 text-[#F83002]'>Login</h1>
-                    <div className='my-2'>
-                        <Label className='my-2'>Email</Label>
-                        <Input
-                            type="email"
-                            value={input.email}
-                            name="email"
-                            onChange={changeEventHandler}
-                            placeholder="email@gmail.com"
-                        />
-                    </div>
-
-                    <div className='my-2'>
-                        <Label className='my-2'>Password</Label>
-                        <Input
-                            type="password"
-                            value={input.password}
-                            name="password"
-                            onChange={changeEventHandler}
-                            placeholder="Password"
-                        />
-                    </div>
-
-
-
-                    <div className='my-4'>
-                        <Label className=''>Login as:</Label>
-                        <div className="grid grid-cols-2 gap-4 mt-2">
-
-                            {/* FoodBank/NGO */}
-                            <div
-                                onClick={() => setInput({ ...input, role: 'ngo' })}
-                                className={`cursor-pointer border p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-200 
-                                ${input.role === 'ngo'
-                                        ? 'border-[#F83002] bg-orange-50 ring-2 ring-orange-200'
-                                        : 'border-gray-200 hover:border-orange-300 bg-white'
-                                    }`}
-                            >
-                                <Building2 className={`w-8 h-8 ${input.role === 'ngo' ? 'text-[#F83002]' : 'text-gray-500'}`} />
-                                <span className={`text-sm font-semibold ${input.role === 'ngo' ? 'text-[#F83002]' : 'text-gray-600'}`}>
-                                    FoodBank / NGO
-                                </span>
-                            </div>
-
-                            {/* Donor */}
-                            <div
-                                onClick={() => setInput({ ...input, role: 'donor' })}
-                                className={`cursor-pointer border p-4 rounded-xl flex flex-col items-center justify-center gap-2 transition-all duration-200 
-                                ${input.role === 'donor'
-                                        ? 'border-[#F83002] bg-orange-50 ring-2 ring-orange-200'
-                                        : 'border-gray-200 hover:border-orange-300 bg-white'
-                                    }`}
-                            >
-                                <HandHeart className={`w-8 h-8 ${input.role === 'donor' ? 'text-[#F83002]' : 'text-gray-500'}`} />
-                                <span className={`text-sm font-semibold ${input.role === 'donor' ? 'text-[#F83002]' : 'text-gray-600'}`}>
-                                    Donor
-                                </span>
-                            </div>
-
+            
+            {/* ✅ FIX: Reduced gap using py-4 and a tiny mt-2 */}
+            <div className="flex-1 flex items-center justify-center relative px-4 sm:px-6 py-4 mt-2">
+                
+                {/* Decorative blobs */}
+                <div className="absolute top-10 left-10 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                <div className="absolute top-10 right-10 w-64 h-64 bg-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                
+                <form 
+                    onSubmit={submitHandler} 
+                    className="w-full max-w-md bg-white/80 backdrop-blur-xl border border-white/40 shadow-2xl rounded-3xl p-8 z-10"
+                >
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-100 text-[#F83002] mb-4 shadow-inner">
+                            <LockKeyhole className="w-8 h-8" />
                         </div>
+                        <h1 className='font-extrabold text-3xl text-gray-900 tracking-tight'>Welcome Back</h1>
+                        <p className="text-gray-500 mt-2 text-sm font-medium">Log in to continue your journey with AnnSeva</p>
                     </div>
 
+                    <div className="space-y-5">
+                        
+                        <div className="space-y-2">
+                            <Label className="text-gray-700 font-semibold text-sm">Email Address</Label>
+                            <div className="relative">
+                                <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                                <Input
+                                    type="email"
+                                    value={input.email}
+                                    name="email"
+                                    onChange={changeEventHandler}
+                                    placeholder="name@example.com"
+                                    className="pl-10 h-12 bg-gray-50/50 border-gray-200 focus-visible:ring-[#F83002] rounded-xl transition-all"
+                                />
+                            </div>
+                        </div>
 
+                        <div className="space-y-2">
+                            <Label className="text-gray-700 font-semibold text-sm">Password</Label>
+                            <div className="relative">
+                                <LockKeyhole className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                                <Input
+                                    type="password"
+                                    value={input.password}
+                                    name="password"
+                                    onChange={changeEventHandler}
+                                    placeholder="••••••••"
+                                    className="pl-10 h-12 bg-gray-50/50 border-gray-200 focus-visible:ring-[#F83002] rounded-xl transition-all"
+                                />
+                            </div>
+                        </div>
 
-                    {/* {
-                        loading ? <Button className="w-full my-4 bg-[#F83002]"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4 bg-[#F83002]">Login</Button>
-                    } */}
+                        <div className="pt-2">
+                            <Label className="text-gray-700 font-semibold text-sm mb-3 block">Login as:</Label>
+                            <div className="grid grid-cols-2 gap-4">
+                                
+                                <div
+                                    onClick={() => setInput({ ...input, role: 'ngo' })}
+                                    className={`cursor-pointer border-2 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all duration-300 transform hover:-translate-y-1
+                                    ${input.role === 'ngo'
+                                            ? 'border-[#F83002] bg-orange-50 shadow-md'
+                                            : 'border-gray-100 hover:border-orange-200 bg-white hover:bg-orange-50/30 hover:shadow-sm'
+                                        }`}
+                                >
+                                    <div className={`p-2 rounded-full ${input.role === 'ngo' ? 'bg-[#F83002] text-white' : 'bg-gray-50 text-gray-400'}`}>
+                                        <Building2 className="w-6 h-6" />
+                                    </div>
+                                    <span className={`text-sm font-bold tracking-wide ${input.role === 'ngo' ? 'text-[#F83002]' : 'text-gray-500'}`}>
+                                        NGO / Bank
+                                    </span>
+                                </div>
 
-                    {
-                        loading ? (
-                            <Button className="w-full my-4 bg-[#F83002] whitespace-nowrap h-10">
-                                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                                Please wait
-                            </Button>
-                        ) : (
-                            <Button type="submit" className="w-full my-4 whitespace-nowrap bg-[#F83002] h-10">
-                                Login
-                            </Button>
-                        )
-                    }
-                    <span className='text-sm'>Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
+                                <div
+                                    onClick={() => setInput({ ...input, role: 'donor' })}
+                                    className={`cursor-pointer border-2 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 transition-all duration-300 transform hover:-translate-y-1
+                                    ${input.role === 'donor'
+                                            ? 'border-[#F83002] bg-orange-50 shadow-md'
+                                            : 'border-gray-100 hover:border-orange-200 bg-white hover:bg-orange-50/30 hover:shadow-sm'
+                                        }`}
+                                >
+                                    <div className={`p-2 rounded-full ${input.role === 'donor' ? 'bg-[#F83002] text-white' : 'bg-gray-50 text-gray-400'}`}>
+                                        <HandHeart className="w-6 h-6" />
+                                    </div>
+                                    <span className={`text-sm font-bold tracking-wide ${input.role === 'donor' ? 'text-[#F83002]' : 'text-gray-500'}`}>
+                                        Donor
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div className="pt-4">
+                            {loading ? (
+                                <Button disabled className="w-full h-12 rounded-xl text-base font-bold bg-[#F83002]/80 cursor-not-allowed">
+                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                    Authenticating...
+                                </Button>
+                            ) : (
+                                <Button type="submit" className="w-full h-12 rounded-xl text-base font-bold bg-[#F83002] hover:bg-[#d82800] text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                                    Log In
+                                </Button>
+                            )}
+                        </div>
+
+                        <div className="text-center pt-2">
+                            <span className="text-sm text-gray-500 font-medium">
+                                Don't have an account?{' '}
+                                <Link to="/signup" className="text-[#F83002] font-bold hover:underline transition-all">
+                                    Sign up here
+                                </Link>
+                            </span>
+                        </div>
+                        
+                    </div>
                 </form>
             </div>
         </div>

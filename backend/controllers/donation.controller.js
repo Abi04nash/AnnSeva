@@ -75,8 +75,9 @@ export const postDonation = async (req, res) => {
 
 export const getAllDonations = async (req, res) => {
   try {
-    await handleDonationExpiry(); // ADD THIS
+    await handleDonationExpiry(); 
     const keyword = req.query.keyword || "";
+    
     const query = {
       $or: [
         { title: { $regex: keyword, $options: "i" } },
@@ -95,7 +96,7 @@ export const getAllDonations = async (req, res) => {
       .populate({
         path: "applications",
         populate: {
-          path: "applicant" // This ensures applicant is always a User Object
+          path: "applicant" 
         }
       })
       .sort({ createdAt: -1 });
@@ -233,8 +234,10 @@ export const updateDonation = async (req, res) => {
       donorId,
       expiryHours
     } = req.body;
+    
     const donation = await Donation.findById(donationId);
 
+    // Agar already expired hai, toh update nahi karne dena
     if (donation.status === "expired") {
       return res.status(400).json({ success: false, message: "Expired donations cannot be edited" });
     }
@@ -243,11 +246,25 @@ export const updateDonation = async (req, res) => {
     if (title) updateData.title = title;
     if (description) updateData.description = description;
     if (items) updateData.items = Array.isArray(items) ? items : items.split(",").map(i => i.trim());
-    if (quantity) updateData.quantity = Number(quantity);
+    
+    // FIX: Quantity update logic with status change
+    if (quantity !== undefined) {
+        updateData.quantity = Number(quantity);
+        // Agar manually quantity 0 kar di, toh expire kar do
+        if (updateData.quantity <= 0) {
+            updateData.status = "expired";
+        }
+    }
+    
     if (pickupLocation) updateData.pickupLocation = pickupLocation;
     if (donationType) updateData.donationType = donationType;
     if (freshnessLevel) updateData.freshnessLevel = freshnessLevel;
-    if (availableUnits) updateData.availableUnits = Number(availableUnits);
+    
+    // Available units ke sath bhi same logic
+    if (availableUnits !== undefined) {
+        updateData.availableUnits = Number(availableUnits);
+    }
+    
     if (donorId) updateData.donor = donorId;
 
     if (expiryHours) {
@@ -256,15 +273,11 @@ export const updateDonation = async (req, res) => {
       );
     }
 
-
-
     const updatedDonation = await Donation.findByIdAndUpdate(
       donationId,
       updateData,
       { new: true, runValidators: true }
     ).populate("donor");
-
-
 
     if (!updatedDonation) {
       return res.status(404).json({ message: "Donation not found.", success: false });

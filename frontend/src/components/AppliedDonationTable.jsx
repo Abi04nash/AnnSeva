@@ -11,10 +11,12 @@ import {
 import { useSelector } from 'react-redux'
 import useGetAppliedDonations from '@/hooks/useGetAppliedDonations'
 import { Calendar, MapPin, Building2, Tag } from 'lucide-react'
+import { useNavigate } from 'react-router-dom' // <-- 1. Import useNavigate
 
 const AppliedDonationTable = () => {
     useGetAppliedDonations()
     const { allAppliedDonations } = useSelector(store => store.donation)
+    const navigate = useNavigate() // <-- 2. Initialize navigate
 
     return (
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
@@ -29,7 +31,6 @@ const AppliedDonationTable = () => {
                             A list of your requested donations
                         </TableCaption>
                     )}
-
 
                     <TableHeader className="bg-gray-50 border-b border-gray-300">
                         <TableRow>
@@ -46,16 +47,16 @@ const AppliedDonationTable = () => {
                         </TableRow>
                     </TableHeader>
 
-
                     <TableBody>
                         {Array.isArray(allAppliedDonations) &&
                             allAppliedDonations.length > 0 &&
                             allAppliedDonations.map(donation => (
                                 <TableRow
                                     key={donation._id}
-                                    className="hover:bg-gray-50 transition-colors border-b border-gray-200 last:border-b-0"
+                                    // <-- 3. Add onClick event and cursor pointer style -->
+                                    onClick={() => navigate(`/description/${donation?.donation?._id}`)}
+                                    className="hover:bg-gray-100 transition-colors border-b border-gray-200 last:border-b-0 cursor-pointer"
                                 >
-
                                     <TableCell className="px-6 py-4 text-left border-r whitespace-nowrap border-gray-200">
                                         <div className="flex items-center gap-2">
                                             <Calendar className="w-3 h-3 text-gray-800" />
@@ -63,14 +64,12 @@ const AppliedDonationTable = () => {
                                         </div>
                                     </TableCell>
 
-
                                     <TableCell className="px-6 py-4 text-left border-r border-gray-200">
                                         <div className="flex items-center gap-1.5">
                                             <Tag className="w-3 h-3 text-gray-800" />
                                             {donation?.donation?.donationType}
                                         </div>
                                     </TableCell>
-
 
                                     <TableCell className="px-6 py-4 text-left border-r border-gray-200">
                                         <div className="flex items-center gap-1.5">
@@ -81,7 +80,6 @@ const AppliedDonationTable = () => {
                                         </div>
                                     </TableCell>
 
-
                                     <TableCell className="px-6 py-4 text-left border-r border-gray-200">
                                         <div className="flex items-center gap-1">
                                             <MapPin className="w-3 h-3 text-gray-800" />
@@ -91,11 +89,10 @@ const AppliedDonationTable = () => {
                                         </div>
                                     </TableCell>
 
-
                                     <TableCell className="px-6 py-4 text-left">
                                         <span
                                             className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border
-                        ${donation?.status === 'declined'
+                                        ${donation?.status === 'declined'
                                                     ? 'bg-red-100 text-red-700 border-red-200'
                                                     : donation?.status === 'pending'
                                                         ? 'bg-yellow-100 text-yellow-700 border-yellow-200'
@@ -104,7 +101,7 @@ const AppliedDonationTable = () => {
                                         >
                                             <span
                                                 className={`w-1.5 h-1.5 rounded-full mr-1.5 
-                          ${donation?.status === 'declined'
+                                          ${donation?.status === 'declined'
                                                         ? 'bg-red-600'
                                                         : donation?.status === 'pending'
                                                             ? 'bg-yellow-600'

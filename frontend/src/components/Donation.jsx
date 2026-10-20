@@ -71,8 +71,10 @@ const Donation = ({ donation }) => {
   const isExpired = useMemo(() => {
     if (!donationData) return false;
     const timeExpired = new Date(donationData.expiryAt).getTime() <= Date.now();
-    const qtyOver = (donationData.quantity - (donationData.applications?.length || 0)) <= 0;
-    return timeExpired || qtyOver;
+    const qtyOver = Number(donationData.quantity) <= 0; // sirf quantity check kar rahe hain
+    const statusExpired = donationData.status === 'expired';
+    
+    return timeExpired || qtyOver || statusExpired;
   }, [donationData]);
 
 
@@ -229,10 +231,10 @@ const Donation = ({ donation }) => {
         >
           {loading
             ? 'Processing...'
-            : isApplied
-              ? 'Already Requested'
-              : isExpired
-                ? 'Expired'
+            : isExpired
+              ? 'Expired'
+              : isApplied
+                ? 'Already Requested'
                 : 'Request Donation'}
         </Button>
 

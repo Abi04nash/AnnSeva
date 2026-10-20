@@ -9,6 +9,7 @@ import { setSingleDonation } from '@/redux/donationSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import ApplyDonationDialog from './ApplyDonationDialog';
+import LocationMap from './LocationMap'; // path apne hisaab se adjust kar lena
 
 const DonationDescription = () => {
     const { singleDonation } = useSelector((store) => store.donation);
@@ -18,9 +19,10 @@ const DonationDescription = () => {
     const [remainingTime, setRemainingTime] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const isExpired = singleDonation
+ const isExpired = singleDonation
         ? new Date(singleDonation.expiryAt).getTime() <= Date.now() ||
-        (singleDonation.quantity - (singleDonation.applications?.length || 0)) <= 0
+          Number(singleDonation.quantity) <= 0 ||
+          singleDonation.status === 'expired'
         : false;
 
     const isApplied = singleDonation?.applications?.some(app => {
@@ -158,7 +160,7 @@ const DonationDescription = () => {
                             : 'bg-[#F83002] hover:bg-[#e02c04]'
                             }`}
                     >
-                        {isApplied ? 'Already Requested' : isExpired ? 'Expired' : 'Request Donation'}
+                        {isExpired ? 'Expired' : isApplied ? 'Already Requested' : 'Request Donation'}
                     </Button>
                 </div>
             </div>
@@ -243,6 +245,11 @@ const DonationDescription = () => {
                             ))
                             : <span>N/A</span>}
                     </div>
+                </div>
+                <div className="mt-8">
+                    <h3 className="font-bold mb-3 border-b pb-2">Pickup Location Map</h3>
+                    {/* LocationMap ko backend se aayi string pass kar di */}
+                    <LocationMap address={singleDonation?.pickupLocation} />
                 </div>
             </div>
         </div>

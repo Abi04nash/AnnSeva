@@ -16,7 +16,6 @@ export const applyDonation = async (req, res) => {
             });
         }
 
-
         if (!requestedItems || !requestedUnits) {
             return res.status(400).json({
                 message: "Items and units are required",
@@ -41,6 +40,13 @@ export const applyDonation = async (req, res) => {
             });
         }
 
+        if (donation.quantity < requestedUnits) {
+            return res.status(400).json({
+                message: `Cannot request more than available. Only ${donation.quantity} units left.`,
+                success: false
+            });
+        }
+
         // Create a new donation request
         const newApplication = await Application.create({
             donation: donationId,
@@ -51,11 +57,8 @@ export const applyDonation = async (req, res) => {
 
         donation.applications.push(newApplication._id);
         await donation.save();
-        // after application is saved
-        if (donation.quantity <= donation.applications.length) {
-            donation.status = "expired";
-            await donation.save();
-        }
+        
+        // FIX REMOVED: The weird `donation.quantity <= donation.applications.length` check has been deleted.
 
         if (donation.expiryAt && new Date(donation.expiryAt) <= new Date()) {
             donation.status = "expired";
@@ -79,6 +82,7 @@ export const applyDonation = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+        return res.status(500).json({ message: "Internal server error", success: false });
     }
 };
 
@@ -148,30 +152,71 @@ export const updateApplicationStatus = async (req, res) => {
         const applicationId = req.params.id;
 
         if (!status) {
-            return res.status(400).json({
-                message: "Status is required.",
-                success: false
-            });
+            return res.status(400).json({ message: "Status is required.", success: false });
         }
 
-        // Find application
-        const application = await Application.findOne({ _id: applicationId });
+        const application = await Application.findById(applicationId);
         if (!application) {
-            return res.status(404).json({
-                message: "Application not found.",
-                success: false
+            return res.status(404).json({ message: "Application not found.", success: false });
+        }
+
+        const donation = await Donation.findById(application.donation);
+        if (!donation) {
+            return res.status(404).json({ message: "Donation not found.", success: false });
+        }
+
+        const incomingStatus = status.toLowerCase();
+        const currentStatus = application.status.toLowerCase();
+
+        if (incomingStatus === 'approved' && currentStatus !== 'approved') {
+            if (donation.quantity < application.requestedUnits) {
+                return res.status(400).json({
+                    message: `Not enough units available. Only ${donation.quantity} units left.`,
+                    success: false
+                });
+            }
+
+            const newQuantity = donation.quantity - application.requestedUnits;
+            let newAvailable = donation.availableUnits;
+            if (newAvailable !== undefined) {
+                newAvailable = donation.availableUnits - application.requestedUnits;
+            }
+
+            await Donation.findByIdAndUpdate(donation._id, {
+                quantity: newQuantity,
+                availableUnits: newAvailable,
+                status: (newQuantity <= 0 || newAvailable <= 0) ? 'expired' : donation.status
+            });
+        }
+        
+        else if (incomingStatus === 'declined' && currentStatus === 'approved') {
+            const newQuantity = donation.quantity + application.requestedUnits;
+            let newAvailable = donation.availableUnits;
+            if (newAvailable !== undefined) {
+                newAvailable = donation.availableUnits + application.requestedUnits;
+            }
+
+            let newStatus = donation.status;
+            
+            if (newQuantity > 0 && new Date(donation.expiryAt).getTime() > Date.now()) {
+                newStatus = 'active';
+            }
+
+            await Donation.findByIdAndUpdate(donation._id, {
+                quantity: newQuantity,
+                availableUnits: newAvailable,
+                status: newStatus
             });
         }
 
-        // Update the status
-        application.status = status.toLowerCase();
+        application.status = incomingStatus;
         await application.save();
 
-        return res.status(200).json({
-            message: "Application status updated successfully.",
-            success: true
-        });
+        return res.status(200).json({ message: "Application status updated successfully.", success: true });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({ message: "Internal server error", success: false });
     }
 };
+
+

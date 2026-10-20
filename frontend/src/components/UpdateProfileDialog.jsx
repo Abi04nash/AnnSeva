@@ -3,21 +3,19 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
-import { Loader2 } from 'lucide-react'
+import { Loader2, FileText, CheckCircle2 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
 
-// This component is for updating the LICENSE, not the profile photo.
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector(store => store.auth);
   const dispatch = useDispatch();
 
-  // --- FIX: State for the new LICENSE file ---
-  const [newFile, setNewFile] = useState(null); // Holds the new File object
+  const [newFile, setNewFile] = useState(null); 
   const [existingLicenseUrl, setExistingLicenseUrl] = useState(user?.profile?.license || "");
   const [existingLicenseName, setExistingLicenseName] = useState(user?.profile?.licenseOriginalName || "");
 
@@ -29,9 +27,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     address: user?.profile?.address || "",
   });
 
-  // Reset form when dialog opens/closes or user data changes
   useEffect(() => {
-    // Reset text inputs
     setInput({
       fullname: user?.fullname || "",
       email: user?.email || "",
@@ -39,11 +35,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       about: user?.profile?.about || "",
       address: user?.profile?.address || "",
     });
-    // Reset file inputs
     setExistingLicenseUrl(user?.profile?.license || "");
     setExistingLicenseName(user?.profile?.licenseOriginalName || "");
     setNewFile(null);
-  }, [open, user]); // Re-run if 'open' or 'user' changes
+  }, [open, user]);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -51,13 +46,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   const fileChangeHandler = (e) => {
     const file = e.target.files?.[0];
-    if (!file) return; // User cancelled
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+    if (!file) return; 
+    if (file.size > 5 * 1024 * 1024) { 
       toast.error("File too large! Max 5MB.");
       return;
     }
-    console.log("Selected file:", file);
-    setNewFile(file); // Store the File object
+    setNewFile(file); 
   };
 
   const submitHandler = async (e) => {
@@ -70,7 +64,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formData.append("address", input.address);
 
     if (newFile) {
-      formData.append("file", newFile); // Backend expects 'file'
+      formData.append("file", newFile); 
     }
 
     try {
@@ -81,7 +75,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       });
       if (res.data.success) {
         dispatch(setUser(res.data.user));
-        // --- FIX: Update state with LICENSE info from response ---
         setExistingLicenseUrl(res.data.user?.profile?.license || "");
         setExistingLicenseName(res.data.user?.profile?.licenseOriginalName || "");
         toast.success(res.data.message);
@@ -92,86 +85,107 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     } finally {
       setLoading(false);
       setOpen(false);
-      setNewFile(null); // Clear the file selection
+      setNewFile(null); 
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Update Profile</DialogTitle>
+      
+      <DialogContent className="w-[95vw] sm:max-w-[550px] max-h-[90vh] p-0 flex flex-col rounded-3xl bg-white border border-gray-100 shadow-2xl">
+        
+        <DialogHeader className="px-6 sm:px-8 pt-6 pb-4 bg-gray-50/50 border-b border-gray-100 shrink-0">
+          <DialogTitle className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight">Update Profile</DialogTitle>
+          <p className="text-sm text-gray-500 font-medium mt-1">Make changes to your personal and organization details.</p>
         </DialogHeader>
-        <form onSubmit={submitHandler}>
-          <div className='grid gap-4 py-4'>
 
-            
-            <div className='grid grid-cols-4 items-center gap-4'>
-              <Label htmlFor="fullname" className="text-right">Name</Label>
-              <Input id="fullname" name="fullname" value={input.fullname} onChange={changeEventHandler} className="col-span-3" />
-            </div>
-            <div className='grid grid-cols-4 items-center gap-4'>
-              <Label htmlFor="email" className="text-right">Email</Label>
-              <Input id="email" name="email" type="email" value={input.email} onChange={changeEventHandler} className="col-span-3" />
-            </div>
-            <div className='grid grid-cols-4 items-center gap-4'>
-              <Label htmlFor="phoneNumber" className="text-right">Number</Label>
-              <Input id="phoneNumber" name="phoneNumber" value={input.phoneNumber} onChange={changeEventHandler} className="col-span-3" />
-            </div>
-            <div className='grid grid-cols-4 items-center gap-4'>
-              <Label htmlFor="about" className="text-right">About</Label>
-              <Input id="about" name="about" value={input.about} onChange={changeEventHandler} className="col-span-3" />
-            </div>
-            <div className='grid grid-cols-4 items-center gap-4'>
-              <Label htmlFor="address" className="text-right">Address</Label>
-              <Input id="address" name="address" value={input.address} onChange={changeEventHandler} className="col-span-3" />
-            </div>
+        <form onSubmit={submitHandler} className="flex flex-col overflow-hidden flex-1">
+          <div className='flex flex-col gap-5 px-6 sm:px-8 py-6 overflow-y-auto flex-1'>
 
-            {/* license / not profilePhoto */}
-            <div className='grid grid-cols-4 items-center gap-4'>
-              <Label htmlFor="license" className="text-right">License</Label>
-             <div className="col-span-3">
-              
-
-                {(newFile || existingLicenseUrl) && (
-                  <div className="flex flex-col gap-1 mb-2">
-                    <p className="text-xs text-gray-500">
-                      {newFile ? `New File: ${newFile.name}` : "Current File:"}
-                  </p>
-                  
-                    {!newFile && existingLicenseUrl && (
-                      <a
-                        target='_blank'
-                        href={existingLicenseUrl}
-                        rel="noopener noreferrer" // Good practice for target='_blank'
-                        className='text-blue-500 text-xs hover:underline'
-                      >
-                        {existingLicenseName || "View File"}
-                      </a>
-                    )}
-                  </div>
-                )}
-                <Input
-                  id="license"
-                  name="license"
-                  type="file"
-                  accept="image/*,application/pdf"
-                  onChange={fileChangeHandler}
-                  className=""
-                />
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+              <div className="space-y-1.5">
+                <Label htmlFor="fullname" className="text-gray-700 font-semibold text-sm">Full Name</Label>
+                <Input id="fullname" name="fullname" value={input.fullname} onChange={changeEventHandler} className="bg-gray-50 focus-visible:ring-[#F83002] rounded-xl h-11" placeholder="e.g. John Doe" />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-gray-700 font-semibold text-sm">Email Address</Label>
+                <Input id="email" name="email" type="email" value={input.email} onChange={changeEventHandler} className="bg-gray-50 focus-visible:ring-[#F83002] rounded-xl h-11" placeholder="john@example.com" />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="phoneNumber" className="text-gray-700 font-semibold text-sm">Phone Number</Label>
+                <Input id="phoneNumber" name="phoneNumber" value={input.phoneNumber} onChange={changeEventHandler} className="bg-gray-50 focus-visible:ring-[#F83002] rounded-xl h-11" placeholder="e.g. 9876543210" />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="about" className="text-gray-700 font-semibold text-sm">About / Bio</Label>
+                <Input id="about" name="about" value={input.about} onChange={changeEventHandler} className="bg-gray-50 focus-visible:ring-[#F83002] rounded-xl h-11" placeholder="Brief description" />
               </div>
             </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="address" className="text-gray-700 font-semibold text-sm">Full Address</Label>
+              <Input id="address" name="address" value={input.address} onChange={changeEventHandler} className="bg-gray-50 focus-visible:ring-[#F83002] rounded-xl h-11" placeholder="e.g. 123 Main St, City, Country" />
+            </div>
+
+            <div className="space-y-2 mt-2">
+              <Label htmlFor="license" className="text-gray-700 font-semibold text-sm">Organization License / Document</Label>
+              
+              <div className="p-4 rounded-2xl border border-dashed border-gray-300 bg-gray-50/50 hover:bg-orange-50/30 transition-colors">
+                
+                {(newFile || existingLicenseUrl) && (
+                  <div className="flex items-center gap-3 mb-3 p-3 bg-white rounded-xl border border-gray-100 shadow-sm">
+                    <div className="p-2 bg-green-50 rounded-lg shrink-0">
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    </div>
+                    <div className="flex flex-col overflow-hidden">
+                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                        {newFile ? "New File Ready" : "Current Document"}
+                      </span>
+                      {!newFile && existingLicenseUrl ? (
+                        <a
+                          target='_blank'
+                          href={existingLicenseUrl}
+                          rel="noopener noreferrer"
+                          className='text-sm font-semibold text-blue-600 hover:text-blue-800 hover:underline truncate'
+                        >
+                          {existingLicenseName || "View License Document"}
+                        </a>
+                      ) : (
+                        <span className="text-sm font-semibold text-gray-900 truncate">
+                          {newFile?.name}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
+                <div className="flex items-center justify-center w-full overflow-hidden">
+                  <Input
+                    id="license"
+                    name="license"
+                    type="file"
+                    accept="image/*,application/pdf"
+                    onChange={fileChangeHandler}
+                    className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-[#F83002] hover:file:bg-orange-100 cursor-pointer w-full text-sm text-gray-500 bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0 p-0 h-auto"
+                  />
+                </div>
+              </div>
+            </div>
+
           </div>
-          <DialogFooter>
+
+          <DialogFooter className="px-6 sm:px-8 py-4 border-t border-gray-100 bg-white shrink-0">
             {loading ? (
-              <Button className="w-full my-4 bg-[#F83002]" disabled>
-                <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait
+              <Button className="w-full sm:w-auto px-8 rounded-xl h-11 text-base font-bold bg-[#F83002]/80" disabled>
+                <Loader2 className='mr-2 h-5 w-5 animate-spin' /> Updating...
               </Button>
             ) : (
-              <Button type="submit" className="w-full my-4 bg-[#F83002]">Update</Button>
+              <Button type="submit" className="w-full sm:w-auto px-8 rounded-xl h-11 text-base font-bold bg-[#F83002] hover:bg-[#d82800] text-white shadow-md hover:shadow-lg transition-all">
+                Save Changes
+              </Button>
             )}
           </DialogFooter>
         </form>
+
       </DialogContent>
     </Dialog>
   )
