@@ -34,6 +34,8 @@ const Login = () => {
                     "Content-Type": "application/json"
                 },
                 withCredentials: true,
+
+                timeout: 20000,
             });
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
@@ -42,7 +44,13 @@ const Login = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+                toast.error("Server is waking up from sleep mode. Please try again in 1 minute.");
+            } else if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Network error. Please check your connection.");
+            }
         } finally {
             dispatch(setLoading(false));
         }
