@@ -1,143 +1,88 @@
-# AnnSeva
+# 🚀 AnnSeva - Empowering Communities to End Food Waste
 
-**AnnSeva** is a full-stack food donation and management web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js).
-It helps reduce food wastage by connecting individual donors with NGOs and food banks, where individual donors can register and post food donations collected from restaurants, hotels, or events. NGOs and food banks can view and request these donations for redistribution to underprivileged people.
-The platform ensures transparency, real-time updates, and a seamless donation process for all users.
+**AnnSeva** is a production-grade, full-stack MERN SaaS platform designed to bridge the gap between food surplus and food scarcity. It seamlessly connects individual donors, restaurants, and event organizers with NGOs and food banks in real-time. 
 
----
-## 🌐 Live Demo
+Through advanced geographical mapping, dynamic state management, and an automated lifecycle for donations, AnnSeva ensures a transparent and highly efficient redistribution process.
 
-🔗 [Visit AnnSeva](https://annseva-edbw.onrender.com/)  
+🌐 **Live Demo:** [Visit AnnSeva](#) *(Add your deployed link here)*
 
 ---
 
-## How AnnSeva Works
+## ✨ Key Features & Technical Highlights
 
-AnnSeva follows a simple and real-world food donation workflow:
-
-1. **Donor Registration**
-   Restaurants, hotels, event organizers, or individuals register as donors.
-
-2. **Post Food Donation**
-   Donors post surplus food with details like quantity, pickup location, source type, and expiry (time or quantity-based).
-
-3. **Active Donation Listing**
-   The donation becomes visible to nearby NGOs and food banks in real-time.
-
-4. **NGO / Food Bank Applies**
-   NGOs or food banks browse available donations and apply for pickup.
-
-5. **Donor Approval**
-   Donors review requests and accept or reject them.
-
-6. **Food Collection & Completion**
-   Approved NGOs collect the food, and the donation status is updated automatically.
-
-7. **Automatic Expiry Handling**
-   Donations automatically expire when time or quantity limits are reached.
+- 🌍 **Real-Time Geographical Tracking:** Integrated **Leaflet.js** and **OpenStreetMap (Nominatim API)** to render live active donations on an interactive map. Implemented a smart geocoding fallback algorithm strictly scoped to Indian coordinates for maximum accuracy and speed.
+- ⚡ **Dynamic State-Driven Filtering:** Engineered a dynamic location filtering system using **Redux Toolkit** and React `useMemo`. The platform automatically extracts and aggregates unique cities from active donations, capping the UI at the top 6 locations to maintain a clutter-free experience.
+- 🎨 **Premium Modern UI/UX:** Designed a responsive, glassmorphism-inspired interface using **Tailwind CSS** and **ShadCN UI**. Features role-based distinct dashboards, floating layout cards, and smooth micro-interactions for a premium SaaS feel.
+- ⏳ **Automated Data Integrity & Expiry:** Smart donation forms with auto-calculating workflows and read-only fallback inputs. Donations automatically transition to "Expired" based on strictly calculated time or quantity thresholds.
+- 🔒 **Secure & Scalable:** JWT-based robust authentication, role-based access control (Donor vs NGO), and seamless media uploads via **Cloudinary**.
 
 ---
 
-### Donation Flow Diagram
+## 📸 Platform Previews
+*(Bhai, yahan apne naye UI ke 3 mast screenshots ya GIFs upload karke link dalna zaroori hai!)*
 
-Donor  
-↓  
-Post Donation  
-↓  
-Donation Active  
-↓  
-NGO Applies  
-↓  
-Donor Accepts / Rejects  
-↓  
-Food Collected  
-↓  
-Donation Completed / Expired
+1. **Live Map & Dynamic Filtering:** `![Map View](link_to_image)`
+2. **Premium Donor Dashboard:** `![Dashboard View](link_to_image)`
+3. **Smart Donation Form:** `![Form View](link_to_image)`
 
 ---
 
-## User Roles
+## 🔄 How AnnSeva Works
 
-### Donor
-- Register and post food donations(Firstly, add a source(Home,resturant,etc.))
-- Set expiry conditions (time or quantity)
-- Accept or reject NGO requests
-- Track donation status
+AnnSeva follows a frictionless, real-world workflow:
 
-### NGO / Food Bank
-- Browse nearby food donations
-- Update profile to add licence, phone No., location
-- Can Filter donations by **donation type** (meals, fruits, groceries, snacks, etc.)
-- Apply for available donations
-- Track accepted and collected donations
+1. **Source Registration:** Restaurants, hotels, or individuals register as Donors and establish their pickup sources.
+2. **Post Donation:** Donors list surplus food, defining exact quantities, source types, and time-based freshness limits.
+3. **Live Broadcasting:** The donation goes live instantly on the Interactive Map and Browse feeds for nearby NGOs.
+4. **Application Phase:** Verified NGOs/Food Banks review available listings and apply for pickup.
+5. **Approval & Collection:** Donors approve the most suitable NGO request. Upon physical collection, the cycle is marked as complete.
+6. **Automated Expiry:** If uncollected within the freshness window, the system automatically safely expires the listing.
 
----
-
-## Features
-
-- User Authentication (Register/Login/Logout)
-- Add, Remove, Update, View, Bookmark, Request, and Manage Food Donations
-- Time or quantity-based automatic donation expiry(Active/Expired)
-- Categorized donations by source type
-- Donor Dashboard to Accept/Reject Donation's Requests
-- FoodBank Dashboard to view Applied Donations
-- Location-based Filtering(through Map) of Food Donations
-- Search Donation
-- Fully responsive design (Mobile_Friendly)
-- JWT-based Authentication
-- Image Upload using Cloudinary
+### 🛣️ Donation Flow
+`Post Donation` ➔ `Active Listing` ➔ `NGO Applies` ➔ `Donor Approves` ➔ `Food Collected` ➔ `Completed/Expired`
 
 ---
 
-## Tech Stack
+## 👥 User Roles
 
-### Frontend:
-- **React.js**
-- **Redux Toolkit**
-- **React Router DOM**
-- **Tailwind CSS**
-- **ShadCN UI**
+### 🫂 Donor
+- Register and manage pickup sources (Home, Restaurant, Event, etc.).
+- Post surplus food with automated quantity and expiry bindings.
+- Review incoming NGO requests and Accept/Reject them via a dedicated Dashboard.
+- Track real-time status of all historical donations.
 
-### Backend:
-- **Node.js**
-- **Express.js**
-- **MongoDB with Mongoose**
-- **JWT for Authentication**
-- **Cloudinary for Image Upload**
-- **Multer for File Handling**
-
+### 🏢 NGO / Food Bank
+- Maintain a verified organizational profile (Licenses, Address, Contacts).
+- Explore live donations geographically via the Interactive Radar Map.
+- Utilize dynamic category and location filters to find exact needs.
+- Apply for active donations and track them in a dedicated "Applied/Watchlist" Dashboard.
 
 ---
 
-## Screenshots (Foodbank's Side)
-<img width="1887" height="879" alt="Screenshot 2025-12-19 220414" src="https://github.com/user-attachments/assets/f524020c-0455-46c7-8ae3-89c334d2049f" />
-<img width="1885" height="866" alt="Screenshot 2025-12-19 220551" src="https://github.com/user-attachments/assets/b1eaa0aa-cc44-42d1-a4a9-b2695375abe9" />
-<img width="1888" height="875" alt="Screenshot 2025-12-19 220621" src="https://github.com/user-attachments/assets/06039d50-6d6f-47b8-b59f-ba799022a654" />
-<img width="1894" height="881" alt="Screenshot 2025-12-23 115737" src="https://github.com/user-attachments/assets/e07a2404-dd36-40d0-8102-6cdad4de9861" />
-<img width="1893" height="882" alt="Screenshot 2025-12-23 115644" src="https://github.com/user-attachments/assets/f215037f-8503-46c2-ad6a-6db35b9219d5" />
-<img width="1893" height="880" alt="Screenshot 2025-12-23 115847" src="https://github.com/user-attachments/assets/bbad9f20-448e-4dfa-a09e-26ecc88af611" />
-<img width="1894" height="879" alt="Screenshot 2025-12-23 115902" src="https://github.com/user-attachments/assets/80836fef-5900-47aa-9308-9c26e662ad0e" />
+## 🛠️ Tech Stack
 
+**Frontend Architecture:**
+- **React.js** (Functional Components, Hooks)
+- **Redux Toolkit** (Global State Management, Memoization)
+- **Tailwind CSS** & **ShadCN UI** (Styling, Glassmorphism)
+- **Leaflet.js & React-Leaflet** (Interactive Maps)
+- **Lucide React** (Premium Iconography)
 
-
-## Donor's Side
-<img width="1904" height="876" alt="Screenshot 2025-12-19 220926" src="https://github.com/user-attachments/assets/c58a6770-3421-41f6-b997-c27a10f79440" />
-<img width="1904" height="872" alt="Screenshot 2025-12-19 221039" src="https://github.com/user-attachments/assets/b8f82a2c-61c3-4d8f-a068-d4474bf68be0" />
-<img width="1911" height="882" alt="Screenshot 2025-12-19 221104" src="https://github.com/user-attachments/assets/7970c59a-6cc6-4380-a7e4-1691d2625a3c" />
-<img width="1874" height="868" alt="Screenshot 2025-12-19 222310" src="https://github.com/user-attachments/assets/4eb04d58-c8d7-4278-b082-bf38f0286f34" />
-
+**Backend Architecture:**
+- **Node.js & Express.js** (RESTful API Design)
+- **MongoDB & Mongoose** (NoSQL Database)
+- **JSON Web Tokens (JWT)** (Stateless Authentication)
+- **OpenStreetMap Nominatim API** (Geocoding capabilities)
+- **Cloudinary & Multer** (Media storage and file handling)
 
 ---
 
+## 💻 Local Setup
 
-## 👨‍💻 Author
-
-**Abinash Mishra**
-
-Built with ❤️ using React, Node.js, MongoDB, Express, and modern technologies.
-
-
-
-
-
-
+1. Clone the repository: `git clone https://github.com/your-username/AnnSeva.git`
+2. Install Backend Dependencies: `cd backend && npm install`
+3. Install Frontend Dependencies: `cd frontend && npm install`
+4. Set up `.env` files for both frontend and backend (MongoDB URI, JWT Secret, Cloudinary keys).
+5. Run the development servers:
+   - Backend: `npm run dev`
+   - Frontend: `npm run dev`
