@@ -3,7 +3,7 @@
 AnnSeva is a full-stack food donation and management web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js). It helps reduce food wastage by connecting individual donors with NGOs and food banks, where individual donors can register and post food donations collected from restaurants, hotels, or events. NGOs and food banks can view and request these donations for redistribution to underprivileged people. The platform ensures transparency, real-time updates, and a seamless donation process for all users.
 
 ### 🌐 Live Demo
-🔗 [https://annseva-edbw.onrender.com/](#)
+🔗 [Visit AnnSeva Live](https://annseva-edbw.onrender.com/)
 
 ---
 
