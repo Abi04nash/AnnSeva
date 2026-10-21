@@ -1,88 +1,89 @@
-# 🚀 AnnSeva - Empowering Communities to End Food Waste
+# AnnSeva
 
-**AnnSeva** is a production-grade, full-stack MERN SaaS platform designed to bridge the gap between food surplus and food scarcity. It seamlessly connects individual donors, restaurants, and event organizers with NGOs and food banks in real-time. 
+AnnSeva is a full-stack food donation and management web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js). It helps reduce food wastage by connecting individual donors with NGOs and food banks, where individual donors can register and post food donations collected from restaurants, hotels, or events. NGOs and food banks can view and request these donations for redistribution to underprivileged people. The platform ensures transparency, real-time updates, and a seamless donation process for all users.
 
-Through advanced geographical mapping, dynamic state management, and an automated lifecycle for donations, AnnSeva ensures a transparent and highly efficient redistribution process.
-
-🌐 **Live Demo:** [Visit AnnSeva](#) *(Add your deployed link here)*
-
----
-
-## ✨ Key Features & Technical Highlights
-
-- 🌍 **Real-Time Geographical Tracking:** Integrated **Leaflet.js** and **OpenStreetMap (Nominatim API)** to render live active donations on an interactive map. Implemented a smart geocoding fallback algorithm strictly scoped to Indian coordinates for maximum accuracy and speed.
-- ⚡ **Dynamic State-Driven Filtering:** Engineered a dynamic location filtering system using **Redux Toolkit** and React `useMemo`. The platform automatically extracts and aggregates unique cities from active donations, capping the UI at the top 6 locations to maintain a clutter-free experience.
-- 🎨 **Premium Modern UI/UX:** Designed a responsive, glassmorphism-inspired interface using **Tailwind CSS** and **ShadCN UI**. Features role-based distinct dashboards, floating layout cards, and smooth micro-interactions for a premium SaaS feel.
-- ⏳ **Automated Data Integrity & Expiry:** Smart donation forms with auto-calculating workflows and read-only fallback inputs. Donations automatically transition to "Expired" based on strictly calculated time or quantity thresholds.
-- 🔒 **Secure & Scalable:** JWT-based robust authentication, role-based access control (Donor vs NGO), and seamless media uploads via **Cloudinary**.
+### 🌐 Live Demo
+🔗 [Visit AnnSeva](#) *(https://annseva-edbw.onrender.com/)*
 
 ---
 
-## 📸 Platform Previews
-*(Bhai, yahan apne naye UI ke 3 mast screenshots ya GIFs upload karke link dalna zaroori hai!)*
+### How AnnSeva Works
+AnnSeva follows a simple and real-world food donation workflow:
+1. **Donor Registration:** Restaurants, hotels, event organizers, or individuals register as donors.
+2. **Post Food Donation:** Donors post surplus food with details like quantity, pickup location, source type, and expiry (time or quantity-based).
+3. **Active Donation Listing:** The donation becomes visible to nearby NGOs and food banks in real-time on an interactive map.
+4. **NGO / Food Bank Applies:** NGOs or food banks browse available donations and apply for pickup.
+5. **Donor Approval:** Donors review requests and accept or reject them.
+6. **Food Collection & Completion:** Approved NGOs collect the food, and the donation status is updated automatically.
+7. **Automatic Expiry Handling:** Donations automatically expire when time or quantity limits are reached.
 
-1. **Live Map & Dynamic Filtering:** `![Map View](link_to_image)`
-2. **Premium Donor Dashboard:** `![Dashboard View](link_to_image)`
-3. **Smart Donation Form:** `![Form View](link_to_image)`
-
----
-
-## 🔄 How AnnSeva Works
-
-AnnSeva follows a frictionless, real-world workflow:
-
-1. **Source Registration:** Restaurants, hotels, or individuals register as Donors and establish their pickup sources.
-2. **Post Donation:** Donors list surplus food, defining exact quantities, source types, and time-based freshness limits.
-3. **Live Broadcasting:** The donation goes live instantly on the Interactive Map and Browse feeds for nearby NGOs.
-4. **Application Phase:** Verified NGOs/Food Banks review available listings and apply for pickup.
-5. **Approval & Collection:** Donors approve the most suitable NGO request. Upon physical collection, the cycle is marked as complete.
-6. **Automated Expiry:** If uncollected within the freshness window, the system automatically safely expires the listing.
-
-### 🛣️ Donation Flow
-`Post Donation` ➔ `Active Listing` ➔ `NGO Applies` ➔ `Donor Approves` ➔ `Food Collected` ➔ `Completed/Expired`
-
----
-
-## 👥 User Roles
-
-### 🫂 Donor
-- Register and manage pickup sources (Home, Restaurant, Event, etc.).
-- Post surplus food with automated quantity and expiry bindings.
-- Review incoming NGO requests and Accept/Reject them via a dedicated Dashboard.
-- Track real-time status of all historical donations.
-
-### 🏢 NGO / Food Bank
-- Maintain a verified organizational profile (Licenses, Address, Contacts).
-- Explore live donations geographically via the Interactive Radar Map.
-- Utilize dynamic category and location filters to find exact needs.
-- Apply for active donations and track them in a dedicated "Applied/Watchlist" Dashboard.
+### Donation Flow Diagram
+    Donor
+      ↓
+    Post Donation
+      ↓
+    Donation Active
+      ↓
+    NGO Applies
+      ↓
+    Donor Accepts / Rejects
+      ↓
+    Food Collected
+      ↓
+    Donation Completed / Expired
 
 ---
 
-## 🛠️ Tech Stack
+### User Roles
 
-**Frontend Architecture:**
-- **React.js** (Functional Components, Hooks)
-- **Redux Toolkit** (Global State Management, Memoization)
-- **Tailwind CSS** & **ShadCN UI** (Styling, Glassmorphism)
-- **Leaflet.js & React-Leaflet** (Interactive Maps)
-- **Lucide React** (Premium Iconography)
+**Donor**
+- Register and post food donations (Firstly, add a source like Home, Restaurant, etc.)
+- Set expiry conditions (time or quantity)
+- Accept or reject NGO requests
+- Track donation status
 
-**Backend Architecture:**
-- **Node.js & Express.js** (RESTful API Design)
-- **MongoDB & Mongoose** (NoSQL Database)
-- **JSON Web Tokens (JWT)** (Stateless Authentication)
-- **OpenStreetMap Nominatim API** (Geocoding capabilities)
-- **Cloudinary & Multer** (Media storage and file handling)
+**NGO / Food Bank**
+- Browse nearby food donations using dynamic filters and interactive live maps
+- Update profile to add licence, phone No., location
+- Can Filter donations by donation type (meals, fruits, groceries, snacks, etc.)
+- Apply for available donations
+- Track accepted and collected donations
 
 ---
 
-## 💻 Local Setup
+### Features
+- User Authentication (Register/Login/Logout)
+- Add, Remove, Update, View, Bookmark, Request, and Manage Food Donations
+- Time or quantity-based automatic donation expiry (Active/Expired)
+- Categorized donations by source type
+- Donor Dashboard to Accept/Reject Donation's Requests
+- FoodBank Dashboard to view Applied Donations
+- **Real-time Location-based Tracking (through Leaflet Map & Nominatim API)**
+- **Smart Dynamic Filters powered by Redux Toolkit to show only active cities**
+- **Premium Glassmorphism UI with responsive design across all devices**
+- **Smart Auto-filling forms for accurate quantity and expiry management**
+- Search Donation
+- Fully responsive design (Mobile_Friendly)
+- JWT-based Authentication
+- Image Upload using Cloudinary
 
-1. Clone the repository: `git clone https://github.com/your-username/AnnSeva.git`
-2. Install Backend Dependencies: `cd backend && npm install`
-3. Install Frontend Dependencies: `cd frontend && npm install`
-4. Set up `.env` files for both frontend and backend (MongoDB URI, JWT Secret, Cloudinary keys).
-5. Run the development servers:
-   - Backend: `npm run dev`
-   - Frontend: `npm run dev`
+---
+
+### Tech Stack
+
+**Frontend:**
+- React.js
+- Redux Toolkit
+- React Router DOM
+- Tailwind CSS
+- ShadCN UI
+- **Leaflet.js & React-Leaflet** *(For Interactive Maps)*
+
+**Backend & APIs:**
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT for Authentication
+- Cloudinary for Image Upload
+- Multer for File Handling
+- **OpenStreetMap Nominatim API** *(For Address Geocoding)*
