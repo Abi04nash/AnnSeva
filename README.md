@@ -58,10 +58,9 @@ AnnSeva follows a simple and real-world food donation workflow:
 - Categorized donations by source type
 - Donor Dashboard to Accept/Reject Donation's Requests
 - FoodBank Dashboard to view Applied Donations
-- **Real-time Location-based Tracking (through Leaflet Map & Nominatim API)**
-- **Smart Dynamic Filters powered by Redux Toolkit to show only active cities**
-- **Premium Glassmorphism UI with responsive design across all devices**
-- **Smart Auto-filling forms for accurate quantity and expiry management**
+- Real-time Location-based Tracking (through Leaflet Map & Nominatim API)
+- Smart Dynamic Filters powered by Redux Toolkit to show only active cities
+- Smart Auto-filling forms for accurate quantity and expiry management
 - Search Donation
 - Fully responsive design (Mobile_Friendly)
 - JWT-based Authentication
@@ -77,7 +76,7 @@ AnnSeva follows a simple and real-world food donation workflow:
 - React Router DOM
 - Tailwind CSS
 - ShadCN UI
-- **Leaflet.js & React-Leaflet** *(For Interactive Maps)*
+- Leaflet.js & React-Leaflet *(For Interactive Maps)*
 
 **Backend & APIs:**
 - Node.js
@@ -86,4 +85,4 @@ AnnSeva follows a simple and real-world food donation workflow:
 - JWT for Authentication
 - Cloudinary for Image Upload
 - Multer for File Handling
-- **OpenStreetMap Nominatim API** *(For Address Geocoding)*
+- OpenStreetMap Nominatim API *(For Address Geocoding)*
