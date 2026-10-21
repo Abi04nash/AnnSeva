@@ -8,6 +8,10 @@ import CategoryCarousel from './CategoryCarousel';
 import { motion } from 'framer-motion'; 
 
 const HeroSection = () => {
+  useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    
   const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();

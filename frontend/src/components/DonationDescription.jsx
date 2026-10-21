@@ -12,6 +12,11 @@ import ApplyDonationDialog from './ApplyDonationDialog';
 import LocationMap from './LocationMap'; // path apne hisaab se adjust kar lena
 
 const DonationDescription = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    
     const { singleDonation } = useSelector((store) => store.donation);
     const { user } = useSelector((store) => store.auth);
     const dispatch = useDispatch();
