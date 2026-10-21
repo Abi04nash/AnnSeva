@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Button } from './ui/button';
 import { Search, Sparkles } from 'lucide-react';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,7 @@ const HeroSection = () => {
   useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-    
+
   const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
